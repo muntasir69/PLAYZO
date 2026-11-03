@@ -720,6 +720,36 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .kp-place{font-weight:800;font-size:1.1rem;margin:0}
 .kp-place small{font-weight:600;opacity:.9}
 .kp-dim{opacity:.75}
+
+/* v17: readable Tycoon board on phones */
+.tt .ts{display:none}
+.typhone .tt .tn{display:none}
+.typhone .tt .ts{display:block;font-size:6.4px;font-weight:800;line-height:1.05;margin-top:1px;color:#222;max-width:100%;overflow:hidden;text-overflow:clip;word-break:break-all}
+.typhone .tt .tp{display:block;font-size:6px;line-height:1;color:#444}
+.typhone .tt .ticon{font-size:.6rem;line-height:1}
+.typhone .tt.corner .ts{font-size:7px}
+.tyzbtn{display:block;margin:0 0 6px auto}
+.tyzoomwrap.on .tyzoom{overflow:auto;max-height:72vh;border-radius:14px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.tyzoomwrap.on .tyzoom .bframe{width:860px;max-width:none}
+.tyzoomwrap.on .tyb{max-width:none}
+.tyzoomwrap.on .tt .tn{font-size:.62rem}
+.tyzoomwrap.on .tt .tp{font-size:.56rem}
+.tyzoomwrap.on .tt .ticon{font-size:1.1rem}
+.tyzoomwrap.on .tylogo{font-size:2.4rem}
+.tyzoomwrap.on .tyt.bchip{width:5.6%}
+
+/* v17b: phone readability */
+.board-phone .slc span{font-size:8.5px;font-weight:800;color:rgba(0,0,0,.6)}
+.phone{padding-bottom:84px}
+
+/* v18: scoreboard rows move up and down */
+.kq-row{position:relative}
+.kq-row.move{animation:kqmove 1.9s cubic-bezier(.55,0,.2,1) both;animation-delay:var(--d)}
+.kq-row.move.climb{z-index:3;animation:kqmove 1.9s cubic-bezier(.55,0,.2,1) both,kqclimb 1.9s ease both;animation-delay:var(--d),var(--d)}
+@keyframes kqmove{0%,38%{transform:translateY(calc(var(--dy) * (100% + 10px)))}100%{transform:translateY(0)}}
+@keyframes kqclimb{0%,35%{box-shadow:none;scale:1}60%{box-shadow:0 0 0 3px #fff,0 10px 30px rgba(0,0,0,.45);scale:1.04}100%{box-shadow:none;scale:1}}
+.kq-down{background:#e21b3c;color:#fff;font-size:.7em;padding:3px 8px;border-radius:99px}
+.kq-row b{min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -3451,8 +3481,15 @@ function walkSet(key, id, pts, ms = WALK_MS, slide = false){
 }
 function walkOn(key){ const w = WALKS[key]; if (!w) return false; if (performance.now() - w.t0 > w.n * w.ms + 60) { delete WALKS[key]; return false; } return true; }
 let walkQueued = false;
+function runCounts(){
+  document.querySelectorAll("[data-count]").forEach(el => { if (el._cnt) return; el._cnt = 1;
+    const [a, b] = el.dataset.count.split(":").map(Number), t0 = performance.now() + 900, dur = 1300;
+    const step = now => { const u = Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - u, 3);
+      el.textContent = Math.round(a + (b - a) * e).toLocaleString(); if (u < 1 && el.isConnected) requestAnimationFrame(step); };
+    requestAnimationFrame(step); });
+}
 function runWalks(){
-  walkQueued = false;
+  walkQueued = false; runCounts();
   document.querySelectorAll("[data-walk]").forEach(el => {
     if (el._walk || !el.animate) return; const w = WALKS[el.dataset.walk]; if (!w) return;
     const fr = [], P = v => v.toFixed(2) + "%";
@@ -3618,7 +3655,7 @@ function tyBoardHTML(T, opt = {}){
     const own = T.owner[i], side = c === 0 ? "sl" : c === 10 ? "sr" : r === 0 ? "st" : "sb";
     tiles += `<div class="tt ${corner ? "corner" : side} ${s.k}" style="grid-area:${r+1}/${c+1};${own !== null && own !== undefined ? `--own:${TY_COL[own]}` : ""}">
       ${s.g && !s.icon ? `<span class="band" style="background:${TY_GROUPS[s.g]}"></span>` : ""}
-      ${s.icon ? `<span class="ticon">${s.icon}</span>` : ""}<span class="tn">${esc(s.n)}</span>${s.$ && s.k === "p" ? `<span class="tp">$${s.$}</span>` : s.k === "tax" ? `<span class="tp">-$${s.$}</span>` : ""}
+      ${s.icon ? `<span class="ticon">${s.icon}</span>` : ""}<span class="tn">${esc(s.n)}</span><span class="ts">${esc(s.k === "gojail" ? "Go Jam" : s.k === "luck" ? "Luck" : s.n.split(" ")[0])}</span>${s.$ && s.k === "p" ? `<span class="tp">$${s.$}</span>` : s.k === "tax" ? `<span class="tp">-$${s.$}</span>` : ""}
       ${own !== null && own !== undefined ? `<span class="owner"></span>` : ""}</div>`; });
   const count = {}, bk = T.bk || "b"; let toks = "";
   for (const x of T.tokens) {
@@ -3640,7 +3677,7 @@ const SL_LADDERS = [[4,25],[13,46],[33,49],[42,63],[50,69],[62,81],[74,92]];
 const SL_SNAKES = [[27,5],[40,3],[43,18],[54,31],[66,45],[76,58],[89,53],[99,41]];
 const SL_COL = ["#ff4d5e", "#3d8bff", "#2fbf71", "#f5b622", "#a77bff", "#ff8fd0"];
 function slXY(n){ // center of square n in 0..100 units
-  if (n < 1) return [-4, 95];
+  if (n < 1) return [2.5, 97];
   const r = Math.floor((n - 1) / 10), k = (n - 1) % 10, c = r % 2 === 0 ? k : 9 - k;
   return [(c + 0.5) * 10, (9 - r + 0.5) * 10];
 }
@@ -4246,7 +4283,8 @@ function startHost(){
     for (const pid in S.answers) counts[S.answers[pid].choice]++;
     let majority = [];
     if (q.kind === "herd") { const mx = Math.max(...counts); majority = mx > 0 ? counts.map((c,i) => c === mx ? i : -1).filter(i => i >= 0) : []; }
-    const lost = {}; S.prevRank = Object.assign({}, ranks().map);
+    const lost = {}; S.prevRank = Object.assign({}, ranks().map); S.prevPts = {}; S.prevOrder = ranks().order.slice();
+    for (const [pid, p] of plist()) S.prevPts[pid] = Math.round(p.pts);
     for (const [pid, p] of plist()) { const a = S.answers[pid];
       const right = a && (q.kind === "herd" ? majority.includes(a.choice) : a.choice === q.correct);
       if (!right) { if ((p.streak || 0) >= 2) lost[pid] = true; p.streak = 0; continue; }
@@ -5118,9 +5156,10 @@ function startHost(){
     if (ph === "mc-board") {
       const a = fresh("kqb", S.round), prev = S.prevRank || {};
       if (S.mode === "teams") return `<section class="stage kq">${top}<div class="kq-title">Scoreboard</div><div class="kq-board">${teamRows().map((t, i) => `<div class="kq-row ${a ? "anim" : ""} ${i === 0 ? "lead" : ""}" style="--d:${i * 0.12}s"><span class="kq-tdot" style="background:${t.c}"></span><span class="nm">${esc(t.name)}</span><b>${fmt(t.v)}</b></div>`).join("")}</div></section>`;
-      const order = plist().sort((x, y) => y[1].pts - x[1].pts).slice(0, 5);
-      return `<section class="stage kq">${top}<div class="kq-title">Scoreboard</div><div class="kq-board">${order.map(([pid, p], i) => { const up = prev[pid] ? prev[pid] - (i + 1) : 0;
-        return `<div class="kq-row ${a ? "anim" : ""} ${i === 0 ? "lead" : ""}" style="--d:${i * 0.12}s">${Avatar.svg(p.av, 44)}<span class="nm">${esc(p.name)}${p.streak >= 2 ? ` <span class="kq-fire">🔥${p.streak}</span>` : ""}</span>${up > 0 ? `<span class="kq-up">▲ ${up}</span>` : ""}<b>${fmt(Math.round(p.pts))}</b></div>`; }).join("")}</div></section>`;
+      const order = plist().sort((x, y) => y[1].pts - x[1].pts).slice(0, 5), po = S.prevOrder || [], pp = S.prevPts || {}, pv = Object.values(pp), flat = !pv.length || pv.every(v => v === pv[0]);
+      return `<section class="stage kq">${top}<div class="kq-title">Scoreboard</div><div class="kq-board">${order.map(([pid, p], i) => {
+        const was = flat ? i : po.indexOf(pid), from = was < 0 ? 5 : Math.min(5, was), dy = from - i, up = was >= 0 ? was - i : 0, now = Math.round(p.pts), old = pp[pid] !== undefined ? pp[pid] : now;
+        return `<div class="kq-row ${a ? "move" : ""} ${i === 0 ? "lead" : ""} ${a && up > 0 ? "climb" : ""}" style="--dy:${dy};--d:${0.15 + i * 0.05}s">${Avatar.svg(p.av, 44, {crown: i === 0})}<span class="nm">${esc(p.name)}${p.streak >= 2 ? ` <span class="kq-fire">🔥${p.streak}</span>` : ""}</span>${up > 0 ? `<span class="kq-up">▲ ${up}</span>` : up < 0 ? `<span class="kq-down">▼ ${-up}</span>` : ""}<b ${a && old !== now ? `data-count="${old}:${now}"` : ""}>${fmt(a ? old : now)}</b></div>`; }).join("")}</div></section>`;
     }
     const rev = ph === "mc-rev", a = fresh(rev ? "kqr" : "kqm", S.round), answered = Object.keys(S.answers).length;
     let mid;
@@ -5514,7 +5553,9 @@ function startPlayer(code){
     const key = html.replace(/data-left>\d+</g, "data-left><");
     if (key === lastKey) return;
     const nmEl = document.getElementById("nm"), typed = nmEl ? nmEl.value : null, gv = document.getElementById("gv"), guessTyped = gv ? gv.value : null;
+    const zEl = app.querySelector(".tyzoom"), zs = zEl ? [zEl.scrollLeft, zEl.scrollTop] : null;
     lastKey = key; app.innerHTML = html;
+    if (zs) { const z2 = app.querySelector(".tyzoom"); if (z2) { z2.scrollLeft = zs[0]; z2.scrollTop = zs[1]; } }
     if (typed !== null && document.getElementById("nm")) document.getElementById("nm").value = typed;
     if (guessTyped !== null && document.getElementById("gv")) document.getElementById("gv").value = guessTyped;
   }
@@ -5681,7 +5722,8 @@ function startPlayer(code){
       <div class="cashrow" style="--tc:${col}"><span class="label">Your cash</span><span class="cash">$${T.cash}</span><span class="hint">on ${esc(here.n)}</span></div>
       <div class="row center-row">${dieHTML(T.dice[0], fresh("ptd1", T.rollId), 54)}${dieHTML(T.dice[1], fresh("ptd2", T.rollId), 54)}<p class="hint" style="max-width:22ch">${esc(T.log)}</p></div>
       ${card}${controls}
-      ${tyBoardHTML({bk:"me", owner:T.owner, moved:T.moved, tokens:T.toks, center:`<div class="tylogo">TYCOON<br>TOWN</div><div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`}, {phone:true})}
+      <div class="tyzoomwrap ${P.tyZoom ? "on" : ""}"><button class="ghost sm tyzbtn" data-act="tyzoom">${P.tyZoom ? "↙ Fit board" : "🔍 Zoom board"}</button>
+      <div class="tyzoom">${tyBoardHTML({bk:"me", owner:T.owner, moved:T.moved, tokens:T.toks, center:`<div class="tylogo">TYCOON<br>TOWN</div><div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`}, {phone: !P.tyZoom})}</div></div>
       <div class="label">Your streets (${T.mine.length})</div>
       <div class="streets">${T.mine.map(i => `<span class="street" style="--g:${TY_GROUPS[TY[i].g]}">${esc(TY[i].n)}</span>`).join("") || `<span class="hint">None yet. Land on an empty street to buy it.</span>`}</div>
       <div class="label">Players</div>
@@ -5735,6 +5777,7 @@ function startPlayer(code){
     if (b.dataset.cell !== undefined) { Sound.sfx("pop"); send({t:"lu", a:"play", i:P.luSel, cell:+b.dataset.cell}); P.luSel = null; return; }
     if (b.dataset.act === "ludoroll") { Sound.sfx("dice"); send({t:"ludo", a:"roll"}); return; }
     if (b.dataset.lmove !== undefined) { Sound.sfx("pop"); send({t:"ludo", a:"move", k:+b.dataset.lmove}); return; }
+    if (b.dataset.act === "tyzoom") { P.tyZoom = !P.tyZoom; render(); return; }
     if (b.dataset.act === "slroll") { Sound.sfx("dice"); send({t:"sl", a:"roll"}); return; }
     if (b.dataset.act === "tyroll") { Sound.sfx("dice"); send({t:"ty", a:"roll"}); return; }
     if (b.dataset.act === "tybuy") { Sound.sfx("buy"); send({t:"ty", a:"buy"}); return; }
