@@ -616,6 +616,110 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .typhone .tyt.bchip{width:10.5%}
 .board-phone .bchip{box-shadow:0 0 0 2.5px var(--tc),0 0 0 3.5px rgba(0,0,0,.55),0 3px 5px rgba(0,0,0,.45)}
 .board-phone .bchip.me{box-shadow:0 0 0 2.5px var(--tc),0 0 0 4.5px #fff,0 0 10px 4px rgba(255,255,255,.7)}
+
+/* v16: Kahoot-style quiz */
+.stage.kq{position:relative;overflow:hidden;background:#46178f;background-image:radial-gradient(circle at 12% 18%,rgba(255,255,255,.07) 0 60px,transparent 61px),radial-gradient(circle at 88% 78%,rgba(255,255,255,.06) 0 90px,transparent 91px),linear-gradient(160deg,#5523a8,#46178f 45%,#381272);
+  border:0;border-radius:22px;padding:16px;min-height:min(80vh,820px);display:flex;flex-direction:column;gap:14px;color:#fff}
+.kq-top{display:flex;align-items:center;gap:10px}
+.kq-pill{background:#fff;color:#333;font-weight:800;border-radius:6px;padding:6px 12px;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.kq-game{flex:1;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+.kq-btn{background:#fff;color:#333;border:0;border-radius:6px;padding:10px 18px;font-weight:800;font-size:1rem;box-shadow:0 4px 0 rgba(0,0,0,.25);cursor:pointer}
+.kq-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.kq-btn.next{background:#fff;color:#46178f;font-size:1.15rem;padding:12px 26px}
+.kq-q{background:#fff;color:#222;border-radius:8px;padding:clamp(12px,1.6vw,22px);text-align:center;font-weight:800;font-size:clamp(1.2rem,2.4vw,2.3rem);line-height:1.2;box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.kq-q small{display:block;font-size:.5em;color:#666;font-weight:600}
+.kq-emoji{display:block;font-size:2.2em;letter-spacing:.08em}
+.kq-emoji.sm{font-size:1.7em}
+.kq-q.anim{animation:kqdrop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes kqdrop{from{transform:translateY(-30px) scale(.9);opacity:0}}
+.kq-mid{flex:1;display:grid;grid-template-columns:120px 1fr 120px;align-items:center;gap:16px;min-height:180px}
+.kq-mid.rev{grid-template-columns:1fr}
+.kq-timer{width:clamp(80px,9vw,120px);aspect-ratio:1;border-radius:50%;background:#864cbf;display:grid;place-items:center;box-shadow:0 5px 0 rgba(0,0,0,.25);justify-self:center}
+.kq-timer b{font-size:clamp(2rem,3.6vw,3.4rem);font-weight:900}
+.kq-count{text-align:center;justify-self:center;display:flex;flex-direction:column}
+.kq-count b{font-size:clamp(2rem,3.6vw,3.4rem);font-weight:900;line-height:1}
+.kq-count span{font-weight:700;opacity:.9}
+.kq-media{display:grid;place-items:center;height:100%}
+.kq-media img{max-height:min(38vh,360px);max-width:100%;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.35);background:#fff}
+.kq-art{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:min(240px,60%)}
+.kq-art span{aspect-ratio:1;border-radius:14px;background:var(--c);display:grid;place-items:center;box-shadow:0 6px 0 rgba(0,0,0,.25);animation:kqfloat 2.4s ease-in-out infinite;animation-delay:calc(var(--i) * .3s)}
+.kq-art svg{width:55%;fill:#fff}
+@keyframes kqfloat{50%{transform:translateY(-8px) rotate(-4deg)}}
+.kq-bar .timer{height:8px;background:rgba(255,255,255,.2);border-radius:99px;margin:0}
+.kq-bar .timer i{background:#fff}
+.kq-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kq-opt{position:relative;background:var(--c);border-radius:6px;min-height:clamp(70px,11vh,120px);display:flex;align-items:center;gap:14px;padding:10px 16px;font-weight:800;font-size:clamp(1rem,1.8vw,1.7rem);box-shadow:0 5px 0 rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.25);transition:opacity .4s,filter .4s}
+.kq-sh svg{width:clamp(30px,3vw,48px);height:clamp(30px,3vw,48px);fill:#fff;display:block;filter:drop-shadow(0 2px 0 rgba(0,0,0,.2))}
+.kq-ot{flex:1;line-height:1.15}
+.kq-opts.anim .kq-opt{animation:kqpop .45s cubic-bezier(.2,1.5,.4,1) backwards;animation-delay:calc(.25s + var(--d))}
+@keyframes kqpop{from{transform:scale(.6);opacity:0}}
+.kq-opt.no{opacity:.35;filter:saturate(.6)}
+.kq-opt.ok{animation:kqok .6s ease-out}
+@keyframes kqok{40%{transform:scale(1.04)}}
+.kq-mark{font-size:1.8em;font-weight:900}
+.kq-chart{display:flex;justify-content:center;align-items:flex-end;gap:clamp(12px,2vw,28px);height:clamp(160px,30vh,300px)}
+.kq-col{width:clamp(60px,9vw,130px);height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.kq-col i{display:block;width:100%;background:var(--c);border-radius:4px 4px 0 0;box-shadow:0 4px 0 rgba(0,0,0,.25);transform-origin:bottom}
+.kq-chart.anim .kq-col i{animation:kqgrow .8s cubic-bezier(.2,1.2,.4,1) backwards}
+@keyframes kqgrow{from{transform:scaleY(0)}}
+.kq-col.no{opacity:.45}
+.kq-cnt{font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem)}
+.kq-cs{background:var(--c);width:100%;display:grid;place-items:center;padding:6px 0;border-radius:0 0 4px 4px}
+.kq-cs svg{width:26px;height:26px;fill:#fff}
+.kq.intro{justify-content:space-between}
+.kq-introbox{margin:auto;width:min(92%,1100px);background:#fff;color:#222;border-radius:10px;padding:clamp(20px,4vw,50px);text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.kq-introbox.anim{animation:kqzoom .7s cubic-bezier(.2,1.5,.4,1)}
+@keyframes kqzoom{from{transform:scale(.3) rotate(-4deg);opacity:0}}
+.kq-qnum{display:inline-block;background:#46178f;color:#fff;border-radius:99px;padding:6px 16px;font-weight:800;margin-bottom:14px}
+.kq-qbig{font-weight:900;font-size:clamp(1.6rem,3.6vw,3.4rem);line-height:1.15}
+.kq-load{height:10px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
+.kq-load i{display:block;height:100%;background:#fff;width:0;animation:kqload linear forwards}
+@keyframes kqload{to{width:100%}}
+.kq-title{align-self:center;background:#fff;color:#222;font-weight:900;font-size:clamp(1.4rem,2.6vw,2.4rem);padding:8px 30px;border-radius:8px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.kq-board{width:min(100%,900px);margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.kq-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.12);border-radius:8px;padding:10px 18px;font-weight:800;font-size:clamp(1.05rem,1.8vw,1.6rem)}
+.kq-row.lead{background:#fff;color:#222}
+.kq-row .nm{flex:1;display:flex;align-items:center;gap:8px}
+.kq-row.anim{animation:kqslide .55s cubic-bezier(.2,1.3,.4,1) backwards;animation-delay:var(--d)}
+@keyframes kqslide{from{transform:translateX(-60px);opacity:0}}
+.kq-up{background:#26890c;color:#fff;font-size:.7em;padding:3px 8px;border-radius:99px}
+.kq-fire{font-size:.75em}
+.kq-tdot{width:22px;height:22px;border-radius:50%}
+@media (max-width:760px){.kq-mid{grid-template-columns:80px 1fr 80px}.kq-opts{grid-template-columns:1fr}}
+/* phone */
+.kp{margin:-4px -2px;border-radius:20px;min-height:calc(100dvh - 210px);margin-bottom:64px;display:flex;flex-direction:column;background:#46178f;color:#fff;overflow:hidden;position:relative}
+.kp.res.ok{background:#26890c}.kp.res.no{background:#e21b3c}
+.kp-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:800;background:rgba(0,0,0,.18)}
+.kp-head b{background:#fff;color:#46178f;border-radius:99px;min-width:36px;text-align:center;padding:2px 8px}
+.kp-foot{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,0,0,.28);font-weight:800}
+.kp-foot span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kp-foot b{background:#333;border-radius:6px;padding:3px 10px}
+.kp-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px;text-align:center}
+.kp-center h2{margin:0;font-size:1.5rem}
+.kp-qn{background:#fff;color:#46178f;border-radius:99px;padding:5px 14px;font-weight:900}
+.kp-qt{font-weight:800;font-size:1.3rem;line-height:1.25;animation:kqzoom .6s cubic-bezier(.2,1.5,.4,1)}
+.kp-spin{width:54px;height:54px;border-radius:50%;border:7px solid rgba(255,255,255,.25);border-top-color:#fff;animation:kpspin .9s linear infinite}
+@keyframes kpspin{to{transform:rotate(360deg)}}
+.kp-qs{padding:10px 14px 0;font-weight:800;text-align:center;line-height:1.25}
+.kp-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px;padding:12px;min-height:52vh}
+.kp-grid.two{grid-template-columns:1fr}
+.kp-btn{background:var(--c);border:0;border-radius:6px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:800;font-size:1rem;padding:10px;box-shadow:0 5px 0 rgba(0,0,0,.28);cursor:pointer;animation:kqpop .4s cubic-bezier(.2,1.5,.4,1) backwards}
+.kp-btn:nth-child(2){animation-delay:.06s}.kp-btn:nth-child(3){animation-delay:.12s}.kp-btn:nth-child(4){animation-delay:.18s}
+.kp-btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
+.kp-btn .kq-sh svg{width:56px;height:56px}
+.kp-ot{line-height:1.15;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.kp-chosen{width:110px;height:110px;border-radius:12px;background:var(--c);display:grid;place-items:center;box-shadow:0 6px 0 rgba(0,0,0,.25);animation:kqpop .5s cubic-bezier(.2,1.5,.4,1)}
+.kp-chosen svg{width:60%;fill:#fff}
+.kp-verdict{font-size:2rem !important;animation:kqzoom .5s cubic-bezier(.2,1.5,.4,1)}
+.kp-icon{width:84px;height:84px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:3rem;font-weight:900;animation:kqzoom .6s .1s cubic-bezier(.2,1.6,.4,1) backwards}
+.kp.res.ok .kp-icon{color:#26890c}.kp.res.no .kp-icon{color:#e21b3c}
+.kp-streak{font-weight:800;background:rgba(0,0,0,.2);border-radius:99px;padding:6px 14px}
+.kp-streak span{font-size:1.2em}
+.kp-pts{background:rgba(0,0,0,.3);border-radius:6px;padding:8px 22px;font-size:1.6rem;font-weight:900;animation:kqpop .5s .3s cubic-bezier(.2,1.5,.4,1) backwards}
+.kp-ans{background:rgba(0,0,0,.2);border-radius:8px;padding:8px 14px}
+.kp-place{font-weight:800;font-size:1.1rem;margin:0}
+.kp-place small{font-weight:600;opacity:.9}
+.kp-dim{opacity:.75}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -2952,6 +3056,8 @@ const TEAMS = [
   {id:3, name:"Violet Owls", c:"var(--t3)"},
 ];
 const SHAPES = ["▲","◆","●","■"];
+const KQ_COL = ["#e21b3c", "#1368ce", "#d89e00", "#26890c"];
+function kqShape(i){ return `<svg viewBox="0 0 24 24" aria-hidden="true">${['<path d="M12 3 L22 20 H2 Z"/>', '<path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z"/>', '<circle cx="12" cy="12" r="10"/>', '<rect x="3" y="3" width="18" height="18" rx="1.5"/>'][i]}</svg>`; }
 const OPT_COLORS = ["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
 
 const FIXED_MODE = {lineup:"teams", crash:"solo", ludo:"solo", tycoon:"solo", snakes:"solo", react:"solo", imposter:"solo"};
@@ -2961,22 +3067,22 @@ const GAMES = {
     desc:"Quick-fire multiple choice. Faster right answers score more.",
     about:"A classic quiz show. The question and up to four answers appear on the big screen, and everyone answers on their phone at the same time. Hosts can use the built-in trivia or make their own quiz with pictures.",
     rules:["Read the question on the big screen.","On your phone, tap the color and shape that match your answer.","You get one answer per question, so choose carefully.","When time runs out, the right answer and the scores appear."],
-    scoring:"Right answer: 100 points, plus up to 50 more for answering fast. Wrong or no answer: 0."},
+    scoring:"Right answer: up to 1,000 points, and the faster you answer, the more you get. Answer streaks add up to 500 bonus points. Wrong or no answer: 0."},
   emoji: {name:"Emoji Decode", tag:"Quiz", color:"var(--t0)", players:"2–200+", mins:"5 min",
     desc:"Which movie do the emojis spell? Pick the title before time runs out.",
     about:"Famous movies told only with emojis. Some are easy, some will have the whole room arguing.",
     rules:["Look at the emojis on the big screen.","Pick the movie title you think they spell from the four choices on your phone.","One answer per round."],
-    scoring:"Right answer: 100 points, plus up to 50 more for speed."},
+    scoring:"Right answer: up to 1,000 points for speed, plus answer-streak bonus points."},
   tf: {name:"True or False", tag:"Quiz", color:"var(--t1)", players:"2–200+", mins:"3 min",
     desc:"Surprising facts and common myths. Two buttons, ten seconds.",
     about:"Fast rounds of facts that sound wrong and myths that sound right. Great as a warm-up.",
     rules:["Read the statement on the big screen.","Tap True or False on your phone within 10 seconds."],
-    scoring:"Right answer: 100 points, plus up to 50 more for speed."},
+    scoring:"Right answer: up to 1,000 points for speed, plus answer-streak bonus points."},
   herd: {name:"Herd Mind", tag:"Party", color:"var(--t3)", players:"3–200+", mins:"4 min",
     desc:"No right answers. Score by picking what most people pick.",
     about:"A game about thinking like the crowd. Questions have no correct answer, like “Cats or dogs?”. The most popular answer wins.",
     rules:["Read the question on the big screen.","Pick the answer you think most people will pick, not just your favorite.","When time runs out, the most popular answer is revealed."],
-    scoring:"Picked the most popular answer: 100 points. If answers tie for the top, they all score."},
+    scoring:"Picked the most popular answer: up to 1,000 points for speed, plus streak bonus. If answers tie for the top, they all score."},
   imposter: {name:"Guess the Imposter", tag:"Party", color:"var(--bad)", players:"3–200+", mins:"8–10 min",
     desc:"Everyone gets the same secret word, except the imposter. Give clues, then vote.",
     about:"A bluffing and detective game. Big groups are split into small groups of about 7. Everyone in a group gets the same secret word on their phone, except one imposter, who only sees the category.",
@@ -3114,7 +3220,7 @@ const WORDS = {
 };
 
 const CFG = {
-  quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
+  introSec:4, quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
   ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
@@ -3997,14 +4103,15 @@ function startHost(){
     if (rankCache) return rankCache;
     const order = plist().sort((a,b) => b[1].pts - a[1].pts), map = {};
     let place = 0; order.forEach(([pid,p], i) => { if (i === 0 || p.pts !== order[i-1][1].pts) place = i + 1; map[pid] = place; });
-    return rankCache = {map, n: order.length, top: order.slice(0, 10).map(([pid,p]) => ({name:p.name, av:p.av, pts:Math.round(p.pts), team:p.team}))};
+    return rankCache = {map, n: order.length, order: order.map(([pid]) => pid), top: order.slice(0, 10).map(([pid,p]) => ({name:p.name, av:p.av, pts:Math.round(p.pts), team:p.team}))};
   }
   function base(){
     const st = {t:"state", phase:S.phase, game:S.game, mode:S.mode, round:S.round, total:S.total,
       endsIn: Math.max(0, S.endsAt - Date.now()),
       teams: teams().map(t => ({id:t.id, name:t.name, c:t.c, score:Math.round(teamScore(t.id))}))};
-    if (S.mode === "solo" && (S.phase === "final" || S.phase.endsWith("-res") || S.phase === "mc-rev" || S.phase === "guess-rev")) st.top = ranks().top.slice(0,5);
+    if (S.mode === "solo" && (S.phase === "final" || S.phase.endsWith("-res") || S.phase === "mc-rev" || S.phase === "mc-board" || S.phase === "guess-rev")) st.top = ranks().top.slice(0,5);
     const q = S.list[S.round];
+    if (S.phase === "mc-intro") st.q = {text:q.text, kind:q.kind, options:q.options};
     if (S.phase === "mc" || S.phase === "mc-rev") {
       st.q = {text:q.text, options:q.options, img: !!q.img, kind:q.kind};
       if (S.phase === "mc-rev") { st.correct = q.correct; st.counts = S.last.counts; st.majority = S.last.majority; }
@@ -4021,7 +4128,9 @@ function startHost(){
     const rk = ranks();
     st.you = {name:p.name, team:p.team, pts:Math.round(p.pts), rank:rk.map[pid], of:rk.n};
     const a = S.answers[pid];
-    if (S.phase === "mc" || S.phase === "mc-rev") { if (a) st.mine = a.choice; if (S.phase === "mc-rev") st.gained = S.last.gained[pid] || 0; }
+    if (S.phase === "mc" || S.phase === "mc-rev") { if (a) st.mine = a.choice; if (S.phase === "mc-rev") { st.gained = S.last.gained[pid] || 0; st.lostStreak = !!(S.last.lost && S.last.lost[pid]); } }
+    if (S.phase === "mc-rev" || S.phase === "mc-board") { st.streak = p.streak || 0;
+      const i = rk.order.indexOf(pid); if (i > 0) { const q2 = S.players[rk.order[i - 1]]; if (q2) st.ahead = {name:q2.name, gap:Math.max(1, Math.round(q2.pts - p.pts))}; } }
     if (S.phase === "guess" || S.phase === "guess-rev") { if (a !== undefined) st.mine = a; if (S.phase === "guess-rev") st.gained = S.last.gained[pid] || 0; }
     if (S.phase.startsWith("react")) { if (a) st.mine = a; if (S.phase === "react-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase === "tap-res") st.gained = S.last.gained[pid] || 0;
@@ -4089,7 +4198,7 @@ function startHost(){
   function broadcast(){ rankCache = null; const b = base(); for (const pid in S.players) { const p = S.players[pid]; if (p.on && p.link) p.link.send(stateFor(pid, b)); } }
 
   /* ---- game flow ---- */
-  function resetScores(){ for (const pid in S.players) S.players[pid].pts = 0; rankCache = null; }
+  function resetScores(){ for (const pid in S.players) { S.players[pid].pts = 0; S.players[pid].streak = 0; } rankCache = null; }
   function mcList(){
     if (S.game === "quiz") {
       if (S.source !== "builtin") { const qz = Quizzes.all().find(q => q.id === S.source);
@@ -4129,18 +4238,23 @@ function startHost(){
   const go = (phase, secs) => { S.phase = phase; S.answers = {}; S.startedAt = Date.now(); S.endsAt = secs ? S.startedAt + secs*1000 : 0; broadcast(); render(); };
 
   // multiple choice (quiz, emoji, true/false, herd)
-  function startMC(){ go("mc", S.list[S.round].time || CFG.quizSec); }
+  function startMC(){ go("mc-intro", CFG.introSec); }
+  function beginMC(){ Sound.sfx("go"); go("mc", S.list[S.round].time || CFG.quizSec); }
   function endMC(){
     if (S.phase !== "mc") return;
     const q = S.list[S.round], counts = q.options.map(() => 0), gained = {}, T = (q.time || CFG.quizSec) * 1000;
     for (const pid in S.answers) counts[S.answers[pid].choice]++;
     let majority = [];
     if (q.kind === "herd") { const mx = Math.max(...counts); majority = mx > 0 ? counts.map((c,i) => c === mx ? i : -1).filter(i => i >= 0) : []; }
-    for (const pid in S.answers) { const a = S.answers[pid], p = S.players[pid]; if (!p) continue;
-      const right = q.kind === "herd" ? majority.includes(a.choice) : a.choice === q.correct;
-      const pts = right ? (q.kind === "herd" ? 100 : 100 + Math.round(50 * Math.max(0, 1 - a.ms / T))) : 0;
+    const lost = {}; S.prevRank = Object.assign({}, ranks().map);
+    for (const [pid, p] of plist()) { const a = S.answers[pid];
+      const right = a && (q.kind === "herd" ? majority.includes(a.choice) : a.choice === q.correct);
+      if (!right) { if ((p.streak || 0) >= 2) lost[pid] = true; p.streak = 0; continue; }
+      p.streak = (p.streak || 0) + 1;
+      const pts = Math.round(1000 * (1 - Math.min(1, a.ms / T) / 2)) + Math.min(500, 100 * (p.streak - 1));
       gained[pid] = pts; p.pts += pts; }
-    S.last = {counts, gained, majority}; S.phase = "mc-rev"; S.endsAt = 0;
+    rankCache = null;
+    S.last = {counts, gained, majority, lost}; S.phase = "mc-rev"; S.endsAt = 0;
     Sound.sfx("reveal"); broadcast(); render();
   }
   // tug of war
@@ -4769,9 +4883,10 @@ function startHost(){
     return 1;
   }
   function next(){
+    if (S.phase === "mc-rev" && S.round + 1 < S.total) { S.phase = "mc-board"; S.endsAt = 0; Sound.sfx("reveal"); broadcast(); render(); return; }
     if (S.round + 1 >= S.total) { S.phase = "final"; S.endsAt = 0; Sound.mood("lobby"); Sound.sfx("win"); broadcast(); render(); Confetti.burst(6500); return; }
     S.round++;
-    if (S.phase === "mc-rev") startMC(); else if (S.phase === "tap-res") startTapReady();
+    if (S.phase === "mc-rev" || S.phase === "mc-board") startMC(); else if (S.phase === "tap-res") startTapReady();
     else if (S.phase === "react-res") startReactWait(); else if (S.phase === "guess-rev") startGuess();
     else if (S.phase === "imp-res") startImposter();
   }
@@ -4790,7 +4905,7 @@ function startHost(){
     if (!S.endsAt) return;
     const left = S.endsAt - Date.now();
     if (left <= 0) {
-      if (S.phase === "mc") endMC(); else if (S.phase === "tap-ready") startTap(); else if (S.phase === "tap") endTap();
+      if (S.phase === "mc") endMC(); else if (S.phase === "mc-intro") beginMC(); else if (S.phase === "tap-ready") startTap(); else if (S.phase === "tap") endTap();
       else if (S.phase === "react-go") endReact(); else if (S.phase === "guess") endGuess();
       else if (S.phase === "imp-talk") startVote(); else if (S.phase === "imp-vote") endVote();
       return;
@@ -4874,7 +4989,7 @@ function startHost(){
   const secsLeft = () => Math.ceil(Math.max(0, S.endsAt - Date.now()) / 1000);
   function tick(){
     const t = app.querySelector(".timer i"), s = app.querySelectorAll("[data-left]"), left = Math.max(0, S.endsAt - Date.now());
-    const total = S.phase === "mc" ? (S.list[S.round].time || CFG.quizSec) * 1000 : S.phase === "tap" ? CFG.tapSec*1000 : S.phase === "guess" ? CFG.guessSec*1000
+    const total = S.phase === "mc" ? (S.list[S.round].time || CFG.quizSec) * 1000 : S.phase === "mc-intro" ? CFG.introSec * 1000 : S.phase === "tap" ? CFG.tapSec*1000 : S.phase === "guess" ? CFG.guessSec*1000
       : S.phase === "imp-talk" ? CFG.impTalkSec*1000 : S.phase === "imp-vote" ? CFG.impVoteSec*1000 : 3000;
     if (t) t.style.width = (100*left/total) + "%";
     s.forEach(el => el.textContent = Math.ceil(left/1000));
@@ -4886,7 +5001,7 @@ function startHost(){
     else if (S.view === "home") body = homeView();
     else if (S.view === "editor") body = editorView();
     else if (S.phase === "lobby") body = lobbyView();
-    else if (S.phase === "mc" || S.phase === "mc-rev") body = mcView();
+    else if (S.phase.startsWith("mc")) body = kqView();
     else if (S.phase.startsWith("tap")) body = tapView();
     else if (S.phase.startsWith("react")) body = reactView();
     else if (S.phase.startsWith("guess")) body = guessView();
@@ -4987,6 +5102,39 @@ function startHost(){
         <div class="row"><button class="big" data-act="start" ${n<1?"disabled":""}>▶ Start ${esc(GAMES[S.game].name)}</button>
           <span class="hint">${n<1 ? "Waiting for the first player to scan the code." : `${n} player${n===1?'':'s'} ready. Late joiners can still jump in.`}</span></div>
       </div></div>`;
+  }
+  /* ---- Kahoot-style quiz screens (host) ---- */
+  function kqView(){
+    const q = S.list[S.round], ph = S.phase, herd = q.kind === "herd", n = q.options.length;
+    const isRight = i => herd ? S.last.majority.includes(i) : i === q.correct;
+    const top = `<div class="kq-top"><span class="kq-pill">${S.round + 1} of ${S.total}</span><span class="kq-game">${esc(GAMES[S.game].name)}</span>
+      ${ph === "mc" ? `<button class="kq-btn" data-act="skip">Skip</button>` : ph === "mc-rev" || ph === "mc-board" ? `<button class="kq-btn next" data-act="next">${S.round + 1 >= S.total ? "Podium 🏆" : "Next"}</button>` : `<span></span>`}</div>`;
+    const qtext = q.kind === "emoji" ? `<span class="kq-emoji">${esc(q.text)}</span><small>Which movie is this?</small>` : esc(q.text);
+    if (ph === "mc-intro") {
+      const a = fresh("kqi", S.round);
+      return `<section class="stage kq intro">${top}<div class="kq-introbox ${a ? "anim" : ""}"><div class="kq-qnum">Question ${S.round + 1}</div><div class="kq-qbig">${qtext}</div></div>
+        <div class="kq-load"><i style="animation-duration:${CFG.introSec}s"></i></div></section>`;
+    }
+    if (ph === "mc-board") {
+      const a = fresh("kqb", S.round), prev = S.prevRank || {};
+      if (S.mode === "teams") return `<section class="stage kq">${top}<div class="kq-title">Scoreboard</div><div class="kq-board">${teamRows().map((t, i) => `<div class="kq-row ${a ? "anim" : ""} ${i === 0 ? "lead" : ""}" style="--d:${i * 0.12}s"><span class="kq-tdot" style="background:${t.c}"></span><span class="nm">${esc(t.name)}</span><b>${fmt(t.v)}</b></div>`).join("")}</div></section>`;
+      const order = plist().sort((x, y) => y[1].pts - x[1].pts).slice(0, 5);
+      return `<section class="stage kq">${top}<div class="kq-title">Scoreboard</div><div class="kq-board">${order.map(([pid, p], i) => { const up = prev[pid] ? prev[pid] - (i + 1) : 0;
+        return `<div class="kq-row ${a ? "anim" : ""} ${i === 0 ? "lead" : ""}" style="--d:${i * 0.12}s">${Avatar.svg(p.av, 44)}<span class="nm">${esc(p.name)}${p.streak >= 2 ? ` <span class="kq-fire">🔥${p.streak}</span>` : ""}</span>${up > 0 ? `<span class="kq-up">▲ ${up}</span>` : ""}<b>${fmt(Math.round(p.pts))}</b></div>`; }).join("")}</div></section>`;
+    }
+    const rev = ph === "mc-rev", a = fresh(rev ? "kqr" : "kqm", S.round), answered = Object.keys(S.answers).length;
+    let mid;
+    if (rev) { const c = S.last.counts, mx = Math.max(1, ...c);
+      mid = `<div class="kq-chart ${a ? "anim" : ""}">${q.options.map((o, i) => `<div class="kq-col ${isRight(i) ? "ok" : "no"}" style="--c:${KQ_COL[i]}"><span class="kq-cnt">${isRight(i) ? "✓ " : ""}${c[i]}</span><i style="height:${Math.max(6, 100 * c[i] / mx)}%"></i><span class="kq-cs">${kqShape(i)}</span></div>`).join("")}</div>`;
+    } else mid = `<div class="kq-timer"><b data-left>${secsLeft()}</b></div>
+        <div class="kq-media">${q.img ? `<img src="${q.img}" alt="Question picture">` : q.kind === "emoji" ? "" : `<div class="kq-art">${[0,1,2,3].map(i => `<span style="--c:${KQ_COL[i]};--i:${i}">${kqShape(i)}</span>`).join("")}</div>`}</div>
+        <div class="kq-count"><b>${answered}</b><span>Answer${answered === 1 ? "" : "s"}</span></div>`;
+    return `<section class="stage kq">${top}
+      <div class="kq-q ${a && !rev ? "anim" : ""}">${qtext}</div>
+      <div class="kq-mid ${rev ? "rev" : ""}">${mid}</div>
+      ${rev ? "" : `<div class="kq-bar">${timer((q.time || CFG.quizSec) * 1000)}</div>`}
+      <div class="kq-opts ${n === 2 ? "two" : ""} ${a && !rev ? "anim" : ""}">${q.options.map((o, i) => `<div class="kq-opt ${rev ? (isRight(i) ? "ok" : "no") : ""}" style="--c:${KQ_COL[i]};--d:${i * 0.07}s"><span class="kq-sh">${kqShape(i)}</span><span class="kq-ot">${esc(o)}</span>${rev ? `<span class="kq-mark">${isRight(i) ? "✓" : "✕"}</span>` : ""}</div>`).join("")}</div>
+    </section>`;
   }
   function mcView(){
     const q = S.list[S.round], rev = S.phase === "mc-rev", answered = Object.keys(S.answers).length, herd = q.kind === "herd";
@@ -5312,7 +5460,7 @@ function startPlayer(code){
         if (m.phase === "final") { Sound.sfx("win");
           const won = m.mode === "solo" ? m.you && m.you.rank === 1 : m.teams.slice().sort((a,b) => b.score - a.score)[0].id === P.team;
           if (won) Confetti.burst(5000); }
-        if (m.phase === "mc" || m.phase === "guess" || m.phase === "imp-talk") Sound.sfx("pop");
+        if (m.phase === "mc" || m.phase === "mc-intro" || m.phase === "guess" || m.phase === "imp-talk") Sound.sfx("pop");
       }
       render();
     },
@@ -5347,8 +5495,7 @@ function startPlayer(code){
       ${INAPP ? `<p class="warn">You opened this inside another app. If it stays on this screen, tap ⋯ or the share icon and choose <b>Open in browser</b>.</p>` : ""}</div>`;
     else if (!P.joined) body = joinForm(st);
     else if (st.phase === "lobby") body = lobbyWait(st);
-    else if (st.phase === "mc") body = mcQ(st);
-    else if (st.phase === "mc-rev") body = mcRev(st);
+    else if (st.phase.startsWith("mc")) body = kqPhone(st);
     else if (st.phase === "tap-ready") body = `<div class="msg"><div class="label">Round ${st.round+1} of ${st.total}</div><h2>Get ready to tap…</h2><div class="big-num" data-left>${Math.ceil(left()/1000)}</div></div>`;
     else if (st.phase === "tap") { const t = team();
       body = `<div class="msg"><div class="label">Tap! <b data-left>${Math.ceil(left()/1000)}</b> s</div>
@@ -5385,6 +5532,36 @@ function startPlayer(code){
     return `<div class="msg"><div class="bounce">${Avatar.svg(P.av, 120)}</div><div class="label">You're in, ${esc(P.name)}!</div><h2 style="color:${t?t.c:'var(--t2)'}">${t ? esc(t.name) : "Get ready"}</h2>
       <p class="muted">Watch the big screen. The game starts when the host is ready.</p>
       ${st.mode === "teams" ? `<div class="teampick">${st.teams.map(x => `<button style="--c:${x.c}" data-team="${x.id}" aria-pressed="${x.id===P.team}">${esc(x.name)}</button>`).join("")}</div><p class="hint">Tap a team to switch.</p>` : ""}</div>`;
+  }
+  /* ---- Kahoot-style quiz screens (phone) ---- */
+  function kqFoot(st){ return `<div class="kp-foot">${Avatar.svg(P.av, 30)}<span>${esc(P.name)}</span><b>${fmt(st.you ? st.you.pts : 0)}</b></div>`; }
+  function kqPhone(st){
+    const q = st.q, ph = st.phase, head = `<div class="kp-head"><span>${st.round + 1} of ${st.total}</span>${ph === "mc" && st.mine === undefined ? `<b data-left>${Math.ceil(left()/1000)}</b>` : ""}</div>`;
+    if (ph === "mc-intro") return `<div class="kp intro">${head}<div class="kp-center"><div class="kp-qn">Question ${st.round + 1}</div>
+      <div class="kp-qt">${q.kind === "emoji" ? `<span class="kq-emoji">${esc(q.text)}</span>` : esc(q.text)}</div><div class="kp-spin"></div><p>Get ready!</p></div>${kqFoot(st)}</div>`;
+    if (ph === "mc") {
+      if (st.mine !== undefined) { const lines = ["Were you tooooo fast?", "Drumroll, please…", "Fingers crossed! 🤞", "Waiting for the slowpokes…", "Hmm, let's see…"];
+        return `<div class="kp wait">${head}<div class="kp-center"><div class="kp-chosen" style="--c:${KQ_COL[st.mine]}">${kqShape(st.mine)}</div><div class="kp-spin"></div><h2>${lines[st.round % lines.length]}</h2></div>${kqFoot(st)}</div>`; }
+      return `<div class="kp play">${head}<div class="kp-qs">${q.kind === "emoji" ? `<span class="kq-emoji sm">${esc(q.text)}</span>` : esc(q.text)}</div>
+        <div class="kp-grid ${q.options.length === 2 ? "two" : ""}">${q.options.map((o, i) => `<button class="kp-btn" style="--c:${KQ_COL[i]}" data-choice="${i}"><span class="kq-sh">${kqShape(i)}</span><span class="kp-ot">${esc(o)}</span></button>`).join("")}</div>${kqFoot(st)}</div>`;
+    }
+    if (ph === "mc-rev") {
+      const herd = q.kind === "herd", ok = st.gained > 0, none = st.mine === undefined;
+      const right = herd ? st.majority.map(i => q.options[i]).join(" / ") : q.options[st.correct];
+      const ah = st.ahead, place = st.you ? st.you.rank : 0;
+      return `<div class="kp res ${ok ? "ok" : "no"}">${head}<div class="kp-center">
+        <h2 class="kp-verdict">${none ? "Time's up" : ok ? (herd ? "With the herd!" : "Correct") : "Incorrect"}</h2>
+        <div class="kp-icon">${ok ? "✓" : "✕"}</div>
+        ${ok ? `${st.streak >= 2 ? `<div class="kp-streak">Answer streak <span>🔥 ${st.streak}</span></div>` : ""}<div class="kp-pts">+ ${fmt(st.gained)}</div>`
+             : `${st.lostStreak ? `<div class="kp-streak">Answer streak lost 💔</div>` : ""}<div class="kp-ans">${herd ? "Most people picked" : "The answer was"} <b>${esc(right)}</b></div>`}
+        ${st.mode === "solo" && place ? `<p class="kp-place">${place <= 3 ? "You're on the podium! 🏆" : "You're in " + ordinal(place) + " place"}${ah ? `<br><small>${fmt(ah.gap)} points behind ${esc(ah.name)}</small>` : ""}</p>` : ""}
+        </div>${kqFoot(st)}</div>`;
+    }
+    // scoreboard
+    const place = st.you ? st.you.rank : 0;
+    return `<div class="kp board">${head}<div class="kp-center"><div class="bounce">${Avatar.svg(P.av, 110, {crown: place === 1})}</div>
+      ${st.mode === "solo" ? `<h2>${place === 1 ? "You're in the lead! 👑" : "You're " + ordinal(place)}</h2>${st.ahead ? `<p>${fmt(st.ahead.gap)} points behind ${esc(st.ahead.name)}</p>` : ""}` : standing(st)}
+      <p class="kp-dim">Next question coming up…</p></div>${kqFoot(st)}</div>`;
   }
   function mcQ(st){
     const q = st.q;
