@@ -954,6 +954,24 @@ body.driving{overflow:hidden}
 .dcount.pop{animation:kqzoom .45s cubic-bezier(.2,1.5,.4,1)}
 .dmap{position:absolute;left:0;right:0;top:44%;text-align:center;color:#fff;font-weight:900;font-size:1.3rem;text-shadow:0 2px 8px rgba(0,0,0,.6);pointer-events:none}
 .dtilt{top:auto;bottom:calc(var(--ctl) + 10px)}
+
+/* v24: board games use the whole screen */
+.stage:has(.ltables),.stage:has(.ttables){padding:12px 14px;gap:8px}
+.stage:has(.ltables) > .hint,.stage:has(.ttables) > .hint{display:none}
+.bframe.tilt{transform:perspective(1900px) rotateX(9deg);transform-origin:50% 55%}
+.ltables.one .ltable,.ttables.one .ttable{position:relative;padding:8px;background:none}
+.ltables.one .cc-head,.ttables.one .cc-head{position:absolute;top:8px;right:8px;z-index:5}
+.ltables.one .cc-head > b,.ttables.one .cc-head > b{display:none}
+.ltables.one .lbody,.ttables.one .tbody{grid-template-columns:minmax(0,1fr) minmax(210px,270px);gap:18px}
+.ltables.one .bframe,.ttables.one .bframe{max-width:min(100%,calc(100vh - 205px))}
+.ltables.one .lside,.ttables.one .lside{padding-top:44px}
+.ltables:not(.one) .lbody,.ttables:not(.one) .tbody{grid-template-columns:minmax(0,1fr) 178px;gap:10px}
+.ltables:not(.one) .seat .cnt,.ttables:not(.one) .seat .cnt{font-size:.7rem}.ltables:not(.one) .seat .sn,.ttables:not(.one) .seat .sn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
+.ltables:not(.one) .bframe,.ttables:not(.one) .bframe{max-width:min(100%,calc(100vh - 210px))}
+.ltables:not(.one),.ttables:not(.one){grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:10px}
+.ltables:not(.one) .ltable,.ttables:not(.one) .ttable{padding:10px;gap:6px}
+.ltables:not(.one) .seat,.ttables:not(.one) .seat{font-size:.8rem;padding:4px 8px}
+@media (max-width:760px){.ltables.one .lbody,.ttables.one .tbody,.ltables:not(.one) .lbody,.ttables:not(.one) .tbody{grid-template-columns:1fr}.ltables.one .lside,.ttables.one .lside{padding-top:0}}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
