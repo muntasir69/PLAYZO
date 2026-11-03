@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Playzo</title>
-<meta name="description" content="Playzo by Muntasir Mamun: QR party games for groups: trivia, Guess the Imposter, Tug of War and more. Scan, pick a team, play.">
+<meta name="description" content="Playzo, crafted by Muntasir Mamun: QR party games for groups: trivia, Guess the Imposter, Tug of War and more. Scan, pick a team, play.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
@@ -557,6 +557,9 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .tyb.small .tytok{width:13px}
 .tytok.me{box-shadow:none;filter:drop-shadow(0 0 4px #fff)}
 .tok.me{box-shadow:none}
+.slart .tongue{transform-box:fill-box;transform-origin:0 50%;animation:tongue 2.6s ease-in-out infinite}
+.slart .snake:nth-child(odd) .tongue{animation-delay:1.3s}
+@keyframes tongue{0%,70%,100%{transform:scaleX(0)}76%,88%{transform:scaleX(1)}82%{transform:scaleX(.7)}}
 /* push-to-talk */
 .voicebar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px)}
 .voicebar .ptt{display:flex;align-items:center;gap:8px;background:var(--vc,var(--t2));color:var(--ink);border-radius:999px;padding:12px 18px;font-weight:700;box-shadow:0 6px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.4);user-select:none;-webkit-user-select:none;touch-action:none;white-space:nowrap}
@@ -2905,6 +2908,8 @@ const TEAMS = [
 const SHAPES = ["▲","◆","●","■"];
 const OPT_COLORS = ["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
 
+const FIXED_MODE = {lineup:"teams", crash:"solo", ludo:"solo", tycoon:"solo", snakes:"solo", react:"solo", imposter:"solo"};
+const DEFAULT_MODE = {tap:"teams"};
 const GAMES = {
   quiz: {name:"Trivia Blitz", tag:"Quiz", color:"var(--t2)", players:"2–200+", mins:"5–8 min",
     desc:"Quick-fire multiple choice. Faster right answers score more.",
@@ -3387,35 +3392,69 @@ function slXY(n){ // center of square n in 0..100 units
 let SL_ART = null;
 function slArt(){
   if (SL_ART) return SL_ART;
-  let s = "", defs = "";
+  const f = n => n.toFixed(2);
+  // ladders: 3D wooden rails and rungs
+  let s = "", defs = `<filter id="slsh" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".7"/></filter>
+    <pattern id="slsc" width="1.3" height="1.1" patternUnits="userSpaceOnUse"><path d="M0 1.1 Q.33 .25 .65 1.1 Q.98 .25 1.3 1.1 M-.65 .55 Q-.32 -.3 0 .55 Q.33 -.3 .65 .55 Q.98 -.3 1.3 .55" fill="none" stroke="#000" stroke-width=".09" opacity=".35"/></pattern>
+    <linearGradient id="slrail" x1="0" x2="1"><stop offset="0" stop-color="#6e4219"/><stop offset=".45" stop-color="#c4884a"/><stop offset="1" stop-color="#7b4c1f"/></linearGradient>`;
   for (const [a, b] of SL_LADDERS) {
     const [x1, y1] = slXY(a), [x2, y2] = slXY(b), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy), px = -dy / len * 1.9, py = dx / len * 1.9;
     let rungs = "", rs = "", rh = "";
     for (let t = 0.07; t < 0.97; t += 4 / len) { const ax = x1 + dx*t + px, ay = y1 + dy*t + py, bx = x1 + dx*t - px, by = y1 + dy*t - py;
-      rs += `<line x1="${ax + .5}" y1="${ay + .7}" x2="${bx + .5}" y2="${by + .7}"/>`; rungs += `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>`; rh += `<line x1="${ax}" y1="${ay - .25}" x2="${bx}" y2="${by - .25}"/>`; }
-    const rail = (o, w, c, op = 1) => `<line x1="${x1 + px + o}" y1="${y1 + py + o * 1.4}" x2="${x2 + px + o}" y2="${y2 + py + o * 1.4}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/><line x1="${x1 - px + o}" y1="${y1 - py + o * 1.4}" x2="${x2 - px + o}" y2="${y2 - py + o * 1.4}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/>`;
-    s += `<g class="ladder"><g stroke="#000" stroke-width="1" opacity=".28" stroke-linecap="round">${rs}</g>${rail(.6, 1.6, "#000", .28)}
-      <g stroke="#7d4f22" stroke-width="1" stroke-linecap="round">${rungs}</g><g stroke="#d9a46a" stroke-width=".3" stroke-linecap="round">${rh}</g>
-      ${rail(0, 1.5, "#8f5a28")}${rail(-.25, .45, "#e3b47e", .9)}</g>`;
+      rs += `<line x1="${f(ax + .6)}" y1="${f(ay + .9)}" x2="${f(bx + .6)}" y2="${f(by + .9)}"/>`; rungs += `<line x1="${f(ax)}" y1="${f(ay)}" x2="${f(bx)}" y2="${f(by)}"/>`; rh += `<line x1="${f(ax)}" y1="${f(ay - .28)}" x2="${f(bx)}" y2="${f(by - .28)}"/>`; }
+    const rail = (o, w, c, op = 1) => `<line x1="${f(x1 + px + o)}" y1="${f(y1 + py + o * 1.5)}" x2="${f(x2 + px + o)}" y2="${f(y2 + py + o * 1.5)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/><line x1="${f(x1 - px + o)}" y1="${f(y1 - py + o * 1.5)}" x2="${f(x2 - px + o)}" y2="${f(y2 - py + o * 1.5)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/>`;
+    s += `<g class="ladder"><g filter="url(#slsh)" opacity=".45"><g stroke="#000" stroke-width="1.1" stroke-linecap="round">${rs}</g>${rail(.7, 1.8, "#000")}</g>
+      <g stroke="#6e4219" stroke-width="1.05" stroke-linecap="round">${rungs}</g><g stroke="#e0ad73" stroke-width=".32" stroke-linecap="round">${rh}</g>
+      ${rail(0, 1.6, "#7b4c1f")}${rail(-.05, 1.15, "#b37a40")}${rail(-.3, .4, "#ecc08a", .9)}</g>`;
   }
-  const SC = [["#2fae5f","#9be36a","#145c31"],["#e5383b","#ffb347","#7a1416"],["#7b5cff","#ff9de0","#3a2391"],["#f08c00","#ffe066","#7a4500"],["#0ea5a5","#9ff5e1","#06504f"]];
+  // snakes: tapered bodies with scales, back pattern, round shading, real heads
+  const PAL = [
+    {base:"#4f9d2f", dark:"#1f4f12", light:"#b8e07a", mark:"#2b6a18", eye:"#ffd43b"},   // green python
+    {base:"#c9432a", dark:"#5c160b", light:"#ffb070", mark:"#1a1a1a", eye:"#ffe066"},   // red coral
+    {base:"#9a7a3b", dark:"#3b2a0e", light:"#e6cf8f", mark:"#4a3412", eye:"#ffb703"},   // brown cobra
+    {base:"#2f74c0", dark:"#0f2f57", light:"#9fd0ff", mark:"#173f73", eye:"#ffe066"},   // blue racer
+    {base:"#c9a227", dark:"#5a4300", light:"#fff1a8", mark:"#6b4f0a", eye:"#ff6b6b"},   // yellow viper
+    {base:"#7a4bb5", dark:"#2c1550", light:"#d6b8ff", mark:"#3d2270", eye:"#ffe066"},   // purple
+  ];
   SL_SNAKES.forEach(([h, t], i) => {
-    const [x1, y1] = slXY(h), [x2, y2] = slXY(t), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy), nx = -dy / len, ny = dx / len, w = Math.min(7, len / 4);
-    const d = `M${x1} ${y1} C ${x1 + dx*.25 + nx*w} ${y1 + dy*.25 + ny*w}, ${x1 + dx*.5 - nx*w} ${y1 + dy*.5 - ny*w}, ${x1 + dx*.6} ${y1 + dy*.6} S ${x2 - nx*w*.6} ${y2 - ny*w*.6}, ${x2} ${y2}`;
-    const [c1, c2, c3] = SC[i % SC.length], ang = Math.atan2(dy, dx) * 180 / Math.PI, id = "slh" + i;
-    defs += `<radialGradient id="${id}" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="${c2}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${c3}"/></radialGradient>`;
-    s += `<g class="snake"><path d="${d}" stroke="#000" stroke-width="4.6" fill="none" stroke-linecap="round" opacity=".3" transform="translate(.8 1.1)"/>
-      <path d="${d}" stroke="${c3}" stroke-width="4.4" fill="none" stroke-linecap="round"/>
-      <path d="${d}" stroke="${c1}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path d="${d}" stroke="${c2}" stroke-width="1.6" fill="none" stroke-dasharray=".9 1.3" stroke-linecap="round" opacity=".9"/>
-      <path d="${d}" stroke="${c3}" stroke-width="3.5" fill="none" stroke-dasharray=".25 2" stroke-linecap="round" opacity=".55"/>
-      <path d="${d}" stroke="#fff" stroke-width=".55" fill="none" stroke-linecap="round" opacity=".45" transform="translate(-.45 -.55)"/>
-      <g transform="translate(${x1} ${y1}) rotate(${ang + 180})"><ellipse cx=".5" cy=".7" rx="3.4" ry="2.7" fill="#000" opacity=".3"/>
-        <ellipse rx="3.4" ry="2.7" fill="url(#${id})" stroke="${c3}" stroke-width=".5"/>
-        <ellipse cx="-.9" cy="-1.2" rx=".95" ry=".85" fill="#ffe066" stroke="${c3}" stroke-width=".2"/><ellipse cx="-.9" cy="1.2" rx=".95" ry=".85" fill="#ffe066" stroke="${c3}" stroke-width=".2"/>
-        <ellipse cx="-1" cy="-1.2" rx=".22" ry=".7" fill="#15122e"/><ellipse cx="-1" cy="1.2" rx=".22" ry=".7" fill="#15122e"/>
-        <circle cx="-2.7" cy="-.5" r=".18" fill="${c3}"/><circle cx="-2.7" cy=".5" r=".18" fill="${c3}"/><ellipse cx="0" cy="-.6" rx="1.3" ry=".5" fill="#fff" opacity=".4"/>
-        <path d="M-3.3 0 h-1.7 l-.8 -.7 M-5 0 l-.8 .7" stroke="#e5383b" stroke-width=".45" fill="none" stroke-linecap="round"/></g></g>`;
+    const P = PAL[i % PAL.length], [x1, y1] = slXY(h), [x2, y2] = slXY(t), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const nx = -dy / len, ny = dx / len, bend = Math.min(6.5, len / 3.6) * (i % 2 ? 1 : -1);
+    const c1 = [x1 + dx * .3 + nx * bend, y1 + dy * .3 + ny * bend], c2 = [x1 + dx * .7 - nx * bend, y1 + dy * .7 - ny * bend];
+    const N = 46, pts = [];
+    for (let k = 0; k <= N; k++) { const u = k / N, v = 1 - u;
+      pts.push([v*v*v*x1 + 3*v*v*u*c1[0] + 3*v*u*u*c2[0] + u*u*u*x2, v*v*v*y1 + 3*v*v*u*c1[1] + 3*v*u*u*c2[1] + u*u*u*y2]); }
+    const W = Math.min(4.3, 2.8 + len / 32), wid = u => W * (u < .06 ? .62 + u * 5 : Math.max(.05, Math.pow(1 - (u - .06) / .94, 1.15) * .95 + .05 * (1 - u)));
+    const nrm = k => { const a = pts[Math.max(0, k - 1)], b = pts[Math.min(N, k + 1)], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1; return [-(b[1] - a[1]) / L, (b[0] - a[0]) / L]; };
+    const side = (scale, shift = 0) => { const L = [], R = [];
+      pts.forEach((p, k) => { const [mx, my] = nrm(k), w = wid(k / N) * scale / 2; L.push([p[0] + mx * (w + shift), p[1] + my * (w + shift)]); R.push([p[0] - mx * (w - shift), p[1] - my * (w - shift)]); });
+      return "M" + L.map(q => f(q[0]) + " " + f(q[1])).join(" L") + " L" + R.reverse().map(q => f(q[0]) + " " + f(q[1])).join(" L") + " Z"; };
+    const body = side(1), id = "sl" + i;
+    defs += `<radialGradient id="${id}h" cx="38%" cy="35%" r="80%"><stop offset="0" stop-color="${P.light}"/><stop offset=".5" stop-color="${P.base}"/><stop offset="1" stop-color="${P.dark}"/></radialGradient>`;
+    // back pattern: diamonds along the spine, rotated with the body
+    let marks = "";
+    for (let k = 4; k < N - 3; k += 2) { const p = pts[k], [mx, my] = nrm(k), w = wid(k / N), ang = Math.atan2(-mx, my) * 180 / Math.PI;
+      marks += k % 4 === 0 ? `<rect x="${f(-w*.28)}" y="${f(-w*.28)}" width="${f(w*.56)}" height="${f(w*.56)}" transform="translate(${f(p[0])} ${f(p[1])}) rotate(${f(ang + 45)})" fill="${P.mark}" opacity=".75"/>`
+                           : `<circle cx="${f(p[0] + mx * w * .32)}" cy="${f(p[1] + my * w * .32)}" r="${f(w * .1)}" fill="${P.dark}" opacity=".5"/><circle cx="${f(p[0] - mx * w * .32)}" cy="${f(p[1] - my * w * .32)}" r="${f(w * .1)}" fill="${P.dark}" opacity=".5"/>`; }
+    const spine = "M" + pts.slice(2, N - 2).map((p, j) => { const k = j + 2, [mx, my] = nrm(k), w = wid(k / N); return f(p[0] + mx * w * .22) + " " + f(p[1] + my * w * .22); }).join(" L");
+    const [hx, hy] = pts[0], hb = pts[2], ang = Math.atan2(hy - hb[1], hx - hb[0]) * 180 / Math.PI, hs = W / 4.4;
+    s += `<g class="snake">
+      <path d="${body}" transform="translate(.9 1.3)" fill="#000" opacity=".38" filter="url(#slsh)"/>
+      <path d="${body}" fill="${P.base}" stroke="${P.dark}" stroke-width=".32" stroke-linejoin="round"/>
+      <path d="${side(.5, -0.15)}" fill="${P.light}" opacity=".28"/>
+      ${marks}
+      <path d="${body}" fill="url(#slsc)"/>
+      <path d="${spine}" fill="none" stroke="#fff" stroke-width=".3" opacity=".45" stroke-linecap="round"/>
+      <g transform="translate(${f(hx)} ${f(hy)}) rotate(${f(ang)}) scale(${f(hs)})">
+        <path d="M5.2 0 C5.1 -2.4 2.4 -3.6 0 -3.4 C-2.3 -3.2 -3.2 -2 -3.2 0 C-3.2 2 -2.3 3.2 0 3.4 C2.4 3.6 5.1 2.4 5.2 0Z" transform="translate(.6 .9)" fill="#000" opacity=".35" filter="url(#slsh)"/>
+        <g class="tongue"><path d="M5 0 H8.2 L9.4 -.9 M8.2 0 L9.4 .9" stroke="#e5383b" stroke-width=".42" fill="none" stroke-linecap="round"/></g>
+        <path d="M5.2 0 C5.1 -2.4 2.4 -3.6 0 -3.4 C-2.3 -3.2 -3.2 -2 -3.2 0 C-3.2 2 -2.3 3.2 0 3.4 C2.4 3.6 5.1 2.4 5.2 0Z" fill="url(#${id}h)" stroke="${P.dark}" stroke-width=".35"/>
+        <path d="M-2.4 0 L1.6 -1.6 M-2.4 0 L1.6 1.6" stroke="${P.mark}" stroke-width=".7" opacity=".7" stroke-linecap="round"/>
+        <path d="M5.2 0 C5.1 -2.4 2.4 -3.6 0 -3.4 C-2.3 -3.2 -3.2 -2 -3.2 0 C-3.2 2 -2.3 3.2 0 3.4 C2.4 3.6 5.1 2.4 5.2 0Z" fill="url(#slsc)" opacity=".6"/>
+        <ellipse cx="2.1" cy="-2.15" rx="1.05" ry=".9" fill="${P.eye}" stroke="${P.dark}" stroke-width=".25"/><ellipse cx="2.1" cy="2.15" rx="1.05" ry=".9" fill="${P.eye}" stroke="${P.dark}" stroke-width=".25"/>
+        <ellipse cx="2.2" cy="-2.15" rx=".22" ry=".75" fill="#111"/><ellipse cx="2.2" cy="2.15" rx=".22" ry=".75" fill="#111"/>
+        <circle cx="1.85" cy="-2.45" r=".2" fill="#fff"/><circle cx="1.85" cy="1.85" r=".2" fill="#fff"/>
+        <circle cx="4.4" cy="-.7" r=".2" fill="${P.dark}"/><circle cx="4.4" cy=".7" r=".2" fill="${P.dark}"/>
+        <ellipse cx=".6" cy="-1" rx="1.6" ry=".55" fill="#fff" opacity=".3"/></g></g>`;
   });
   return SL_ART = `<defs>${defs}</defs>` + s;
 }
@@ -3701,7 +3740,7 @@ function startHost(){
   const newCode = () => Array.from({length:5}, () => pick(ALPH)).join("");
   const S = {
     code:newCode(), ready:false, err:"", view:"home", botLevel:"smart", selfOn:false, booted:false, rules:null, recent:[], newest:null,
-    mode:"teams", teamCount:2, game:"quiz", source:"builtin",
+    mode:"solo", teamCount:2, game:"quiz", source:"builtin",
     phase:"lobby", round:0, total:0, list:[], startedAt:0, endsAt:0,
     players:{}, links:{}, answers:{}, last:null, groups:[], editId:null, editImg:null,
   };
@@ -3913,8 +3952,8 @@ function startHost(){
     if (S.game === "imposter" && n < 3) { toast("Guess the Imposter needs at least 3 players"); return; }
     if (S.game === "crash" && n < 2) { toast("Color Crash needs at least 2 players"); return; }
     if ((S.game === "ludo" || S.game === "tycoon" || S.game === "snakes") && n < 2) { toast(GAMES[S.game].name + " needs at least 2 players"); return; }
+    if (FIXED_MODE[S.game]) S.mode = FIXED_MODE[S.game];
     if (S.game === "lineup") {
-      if (S.mode !== "teams") { S.mode = "teams"; toast("Line Up 5 is a team game, so it plays in teams"); }
       if (teams().filter(t => online().some(([,p]) => p.team === t.id)).length < 2) { toast("Line Up 5 needs players on at least 2 teams"); render(); return; }
     }
     resetScores(); S.round = 0; S.view = "lobby";
@@ -4634,7 +4673,7 @@ function startHost(){
     const strip = S.booted || on.length ? `<div class="strip" aria-label="${on.length} players online"><span class="dot ${S.ready?'on':''}"></span><b>${on.length}</b><span class="hint">online</span>
       <div class="stack">${recent.map(pid => `<span class="sav ${pid===S.newest?'new':''}" title="${esc(S.players[pid].name)}">${Avatar.svg(S.players[pid].av, 34)}</span>`).join("")}</div>
       ${S.newest && S.players[S.newest] ? `<span class="joined" role="status">${esc(S.players[S.newest].name)} joined!</span>` : ""}</div>` : "";
-    return `<header class="top"><button class="logo-btn" data-act="home" aria-label="All games"><span class="brand"><span class="logo">PLAY<span>ZO</span></span><span class="byline">by Muntasir Mamun</span></span></button>
+    return `<header class="top"><button class="logo-btn" data-act="home" aria-label="All games"><span class="brand"><span class="logo">PLAY<span>ZO</span></span><span class="byline">Crafted by Muntasir Mamun</span></span></button>
       ${strip}
       <div class="row">
         <button class="ghost sm" data-act="music" aria-pressed="${Sound.prefs.music}" title="Background music">${Sound.prefs.music ? "♫ Music on" : "♫ Music off"}</button>
@@ -4682,7 +4721,7 @@ function startHost(){
     else if (S.phase === "sl") body = slView();
     else if (S.phase === "final") body = finalView();
     const keep = S.view === "editor" ? captureEditor() : null;
-    app.innerHTML = `<div class="wrap">${header()}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>${S.rules ? rulesView(S.rules) : ""}`;
+    app.innerHTML = `<div class="wrap">${header()}${body}<footer class="credit">Crafted by <b>Muntasir Mamun</b></footer></div>${S.rules ? rulesView(S.rules) : ""}`;
     if (keep) restoreEditor(keep);
     if (S.phase === "lobby" && S.view === "lobby" && S.ready) drawQR();
   }
@@ -4757,7 +4796,8 @@ function startHost(){
             <button class="sm" data-act="editor">✎ Make or edit quizzes</button></div>` : ""}
         </section>
         <section class="card"><div class="row spread"><div class="label">Who plays</div>
-          <div class="seg" role="group" aria-label="Play mode"><button data-mode="teams" aria-pressed="${S.mode==="teams"}">Teams</button><button data-mode="solo" aria-pressed="${S.mode==="solo"}">Everyone for themselves</button></div></div>
+          ${FIXED_MODE[S.game] ? `<span class="hint">${FIXED_MODE[S.game] === "teams" ? "Team game · pick how many teams" : "Everyone plays for themselves"}</span>`
+            : `<div class="seg" role="group" aria-label="Play mode"><button data-mode="solo" aria-pressed="${S.mode==="solo"}">Solo</button><button data-mode="teams" aria-pressed="${S.mode==="teams"}">Teams</button></div>`}</div>
           ${S.mode === "teams" ? `<div class="row" style="margin-top:10px"><div class="seg" role="group" aria-label="Number of teams">${[2,3,4].map(k => `<button data-teams="${k}" aria-pressed="${S.teamCount===k}">${k} teams</button>`).join("")}</div>
             <button class="ghost sm" data-act="shuffle" ${n<2?"disabled":""}>Shuffle teams</button></div>` : ""}
           <div style="margin-top:12px">${playersBlock}</div>
@@ -4938,7 +4978,7 @@ The Earth is flat. | True | *False</pre>
     if (b.dataset.cat) { const sec = document.getElementById("cat-" + b.dataset.cat); if (sec) sec.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"}); return; }
     if (b.dataset.addbots) { addBots(Number(b.dataset.addbots), S.botLevel || "smart"); return; }
     if (b.dataset.botlevel) { S.botLevel = b.dataset.botlevel; render(); return; }
-    if (b.dataset.host) { S.game = b.dataset.host; S.rules = null; S.view = "lobby"; if (!S.booted) boot(); else render(); return; }
+    if (b.dataset.host) { S.game = b.dataset.host; S.rules = null; S.view = "lobby"; S.mode = FIXED_MODE[S.game] || DEFAULT_MODE[S.game] || "solo"; if (!S.booted) boot(); else { broadcast(); render(); } return; }
     if (b.dataset.rules) { S.rules = b.dataset.rules; render(); setTimeout(() => { const c = document.querySelector("#rulesov .close"); if (c) c.focus(); }, 0); return; }
     if (b.dataset.mode) { S.mode = b.dataset.mode; broadcast(); render(); return; }
     if (b.dataset.teams) { S.teamCount = Number(b.dataset.teams);
@@ -5113,7 +5153,7 @@ function startPlayer(code){
     const face = P.joined ? Avatar.svg(P.av, 32) : "";
     const who = P.joined ? (t ? `<span class="badge" style="--c:${t.c}">${esc(P.name)} · ${esc(t.name)}</span>`
       : `<span class="badge" style="--c:var(--t2)">${esc(P.name)}${st && st.you && st.phase !== "lobby" ? " · " + ordinal(st.you.rank) : ""}</span>`) : `<span class="pill">Room <b>${esc(code)}</b></span>`;
-    return `<header class="ptop"><div class="brand sm"><span class="logo sm">PLAY<span>ZO</span></span><span class="byline">by Muntasir Mamun</span></div><div class="row"><button class="ghost xs" data-act="sfx" aria-label="Sound effects">${Sound.prefs.sfx ? "🔊" : "🔇"}</button>${face}${who}</div></header>`;
+    return `<header class="ptop"><div class="brand sm"><span class="logo sm">PLAY<span>ZO</span></span><span class="byline">Crafted by Muntasir Mamun</span></div><div class="row"><button class="ghost xs" data-act="sfx" aria-label="Sound effects">${Sound.prefs.sfx ? "🔊" : "🔇"}</button>${face}${who}</div></header>`;
   }
   function render(){
     let body = ""; const st = P.st;
@@ -5144,7 +5184,7 @@ function startPlayer(code){
     else if (st.phase === "ty") body = tyPhone(st);
     else if (st.phase === "sl") body = slPhone(st);
     else if (st.phase === "final") body = finalPhone(st);
-    const html = `<div class="phone">${topbar()}${P.status === "lost" ? `<div class="pill">Reconnecting…</div>` : ""}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>`;
+    const html = `<div class="phone">${topbar()}${P.status === "lost" ? `<div class="pill">Reconnecting…</div>` : ""}${body}<footer class="credit">Crafted by <b>Muntasir Mamun</b></footer></div>`;
     const key = html.replace(/data-left>\d+</g, "data-left><");
     if (key === lastKey) return;
     const nmEl = document.getElementById("nm"), typed = nmEl ? nmEl.value : null, gv = document.getElementById("gv"), guessTyped = gv ? gv.value : null;
