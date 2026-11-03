@@ -972,6 +972,95 @@ body.driving{overflow:hidden}
 .ltables:not(.one) .ltable,.ttables:not(.one) .ttable{padding:10px;gap:6px}
 .ltables:not(.one) .seat,.ttables:not(.one) .seat{font-size:.8rem;padding:4px 8px}
 @media (max-width:760px){.ltables.one .lbody,.ttables.one .tbody,.ltables:not(.one) .lbody,.ttables:not(.one) .tbody{grid-template-columns:1fr}.ltables.one .lside,.ttables.one .lside{padding-top:0}}
+
+/* v25: Mafia, Rock Paper Scissors, Doodle Dash */
+.stage.mafia{position:relative;overflow:hidden;transition:background .8s}
+.stage.mafia.night{background:linear-gradient(#0a0f2c,#1b1446 70%,#2a1650)}
+.stage.mafia.day{background:linear-gradient(#ffcf7a22,#3b2d6b)}
+.msky{position:absolute;inset:0;pointer-events:none;z-index:0}
+.stage.mafia > *:not(.msky){position:relative;z-index:1}
+.moon{position:absolute;left:5%;top:40px;width:70px;height:70px;border-radius:50%;background:#fdf6d8;box-shadow:0 0 40px 10px rgba(253,246,216,.35),inset -14px -6px 0 rgba(0,0,0,.12)}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:twinkle 2s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.2}}
+.sunb{position:absolute;left:5%;top:34px;width:80px;height:80px;border-radius:50%;background:radial-gradient(#fff6c4,#ffc23d);box-shadow:0 0 60px 20px rgba(255,194,61,.35);animation:spinglow 6s ease-in-out infinite}
+@keyframes spinglow{50%{transform:scale(1.08)}}
+.mtitle{font-family:var(--display);font-size:clamp(1.6rem,3.4vw,2.8rem);margin:4px 0 0;text-align:center}
+.msub{text-align:center;color:var(--muted);margin:0 auto;max-width:70ch}
+.mvills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px}
+.mvills.one{grid-template-columns:1fr}
+.mvill{background:rgba(255,255,255,.05);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.mvill.won{outline:3px solid var(--t2)}
+.mlog{background:rgba(0,0,0,.3);border-radius:12px;padding:12px 16px;font-weight:800;font-size:1.1rem;text-align:center;animation:kqzoom .5s cubic-bezier(.2,1.5,.4,1)}
+.mlog.big{font-size:1.15rem}
+.mwin{font-family:var(--display);font-size:clamp(1.4rem,3vw,2.4rem);text-align:center;padding:8px;border-radius:12px;animation:kqzoom .6s cubic-bezier(.2,1.5,.4,1)}
+.mwin.mafia{background:#8b1e2d}.mwin.village{background:#26890c}
+.mppl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.mp{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;width:86px;padding:8px 4px;border-radius:14px;background:rgba(255,255,255,.07);transition:filter .5s,opacity .5s}
+.mppl.big .mp{width:140px;padding:12px 6px}.mppl.big .mp b{font-size:.95rem}
+.mp b{font-size:.8rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mp.dead{filter:grayscale(1);opacity:.55}
+.mp.out{animation:shakeX .5s 2;outline:3px solid var(--bad)}
+@keyframes shakeX{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.skull{position:absolute;top:2px;right:6px;font-size:1.3rem}
+.mrole{font-size:.7rem;font-weight:800;background:var(--c);color:#fff;border-radius:99px;padding:1px 8px}
+.mvotes{font-size:.72rem;font-weight:900;color:var(--t2)}
+.mphone{display:flex;flex-direction:column;gap:12px;align-items:stretch;text-align:center;border-radius:20px;padding:14px;min-height:70vh}
+.mphone.night{background:linear-gradient(#0a0f2c,#1b1446)}
+.mphone.day{background:linear-gradient(#3b2d6b,#241c4f)}
+.mphone.ok{background:linear-gradient(#26890c,#14520a)}.mphone.no{background:linear-gradient(#8b1e2d,#4a0f18)}.mphone.ghost{background:#2a2a3a}
+.mphone h2{margin:0}
+.mbig{font-size:4rem;line-height:1;animation:kqzoom .5s cubic-bezier(.2,1.5,.4,1)}.mbig.sleep{animation:floaty 2.5s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-8px)}}
+.mcard{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.3);border-left:6px solid var(--c);border-radius:12px;padding:8px 12px;text-align:left}
+.mcard .me{font-size:1.8rem}.mcard small{display:block;color:var(--muted);font-size:.72rem}.mcard b{font-size:1.1rem;color:var(--c)}
+.mflip{margin:10px auto;width:min(100%,300px);aspect-ratio:3/4;border-radius:20px;background:linear-gradient(160deg,var(--c),#15122e 120%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;box-shadow:0 14px 30px rgba(0,0,0,.5);animation:cardflip .9s cubic-bezier(.2,1.2,.4,1)}
+@keyframes cardflip{from{transform:perspective(800px) rotateY(180deg) scale(.7)}}
+.mflip .me{font-size:5rem}.mflip b{font-family:var(--display);font-size:2.4rem}.mflip p{margin:0;font-size:.95rem}
+.mmates{background:rgba(229,56,59,.25);border-radius:10px;padding:8px}
+.mopts{display:flex;flex-direction:column;gap:8px}
+.mopt{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:2px solid transparent;border-radius:14px;padding:8px 12px;color:#fff;font:inherit;font-weight:800;text-align:left;cursor:pointer}
+.mopt span{flex:1}.mopt.on{border-color:var(--t2);background:rgba(255,194,61,.2)}.mopt.skip{justify-content:center}
+.mopt em{font-style:normal;font-size:.75rem;border-radius:99px;padding:1px 8px}.mopt em.mafia{background:var(--bad)}.mopt em.clean{background:var(--good);color:#06301d}
+.mcheck{border-radius:12px;padding:10px;font-weight:700}.mcheck.bad{background:rgba(229,56,59,.35)}.mcheck.good{background:rgba(47,191,113,.3)}
+.mlist{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.mlist span{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border-radius:99px;padding:2px 8px 2px 2px;font-size:.78rem}.mlist .dead{opacity:.5}
+.rpstitle{text-align:center;font-family:var(--display);font-size:clamp(1.5rem,3vw,2.4rem);margin:0}
+.rduels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:10px}
+.rduels.many{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px}
+.rduel{display:grid;grid-template-columns:1fr auto auto auto 1fr;align-items:center;gap:8px;background:var(--panel-2);border-radius:16px;padding:10px}
+.rduel.tie{outline:2px dashed var(--t2)}
+.rside{display:flex;flex-direction:column;align-items:center;gap:2px;transition:opacity .4s,filter .4s}
+.rside b{font-size:.85rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rside.win{filter:drop-shadow(0 0 10px var(--t2))}.rside.lose{opacity:.35;filter:grayscale(1)}
+.rhand{font-size:clamp(1.8rem,3.4vw,3rem);display:inline-block}
+.rduels.many .rhand{font-size:1.5rem}
+.rhand.shake{animation:rpsshake .5s ease-in-out infinite}.rhand.flip{transform:scaleX(-1)}.rhand.shake.flip{animation-name:rpsshake2}
+.rhand.show{animation:kqzoom .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes rpsshake{50%{transform:translateY(-10px) rotate(-12deg)}}
+@keyframes rpsshake2{0%,100%{transform:scaleX(-1)}50%{transform:scaleX(-1) translateY(-10px) rotate(-12deg)}}
+.rvs{font-weight:900;color:var(--muted);font-size:.8rem;text-align:center;min-width:56px}
+.rpsphone{display:flex;flex-direction:column;gap:14px;text-align:center}
+.rpsopp{display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.1rem}
+.rpsbtns{display:grid;grid-template-columns:1fr;gap:10px}
+.rpsbtn{display:flex;align-items:center;justify-content:center;gap:14px;font:inherit;font-weight:900;font-size:1.3rem;padding:16px;border-radius:20px;border:0;background:var(--panel-2);color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.35);cursor:pointer}
+.rpsbtn span{font-size:3rem}.rpsbtn.on{background:var(--t2);color:var(--ink)}.rpsbtn:disabled:not(.on){opacity:.4}
+.rpsbig{font-size:3.4rem}.rpsbig small{font-size:1rem;vertical-align:middle}
+.dlayout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px}
+@media (max-width:820px){.dlayout{grid-template-columns:1fr}}
+.dboard{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.dtop{display:flex;align-items:center;gap:8px;background:#f1edff;color:#15122e;padding:8px 12px;font-weight:700;flex-wrap:wrap}
+.dword{margin-left:auto;font-family:var(--display);letter-spacing:.12em;font-size:1.2rem}
+#dcv{display:block;width:100%;height:auto;max-height:calc(100vh - 260px);object-fit:contain;background:#fff}
+.dfeed{background:var(--panel-2);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.dfeed ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.dfeed li{background:rgba(255,255,255,.06);border-radius:8px;padding:4px 8px}.dfeed li.ok{background:rgba(47,191,113,.3)}.dfeed li.close em{color:var(--t2);font-style:normal;font-weight:800}
+.ddraw,.ddguess{display:flex;flex-direction:column;gap:10px}
+.ddtop{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:700}
+.ddtop b{font-family:var(--display);font-size:1.4rem;color:var(--t2);letter-spacing:.06em}.ddtop .hintw{letter-spacing:.18em;font-size:1.2rem}
+.pdcv{width:100%;aspect-ratio:10/7;height:auto;background:#fff;border-radius:16px;touch-action:none;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.ddtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+.ddc{width:34px;height:34px;border-radius:50%;background:var(--c);border:3px solid rgba(255,255,255,.3);cursor:pointer}.ddc.on{border-color:#fff;transform:scale(1.15)}
+.ddw{width:40px;height:34px;border-radius:10px;border:2px solid rgba(255,255,255,.3);background:var(--panel-2);color:#fff;font-size:.7rem;cursor:pointer}.ddw.big{font-size:1.2rem}.ddw.on{border-color:var(--t2)}
+.ddform{display:flex;gap:8px}.ddform input{flex:1;font:inherit;font-size:1.1rem;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--panel);color:var(--text)}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -3343,7 +3432,7 @@ const OPT_COLORS = ["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
 
 const FIXED_MODE = {lineup:"teams", crash:"solo", ludo:"solo", tycoon:"solo", snakes:"solo", react:"solo", imposter:"solo"};
 const DEFAULT_MODE = {tap:"teams"};
-FIXED_MODE.race = "solo";
+FIXED_MODE.race = "solo"; FIXED_MODE.mafia = "solo"; FIXED_MODE.rps = "solo"; FIXED_MODE.doodle = "solo";
 const GAMES = {
   quiz: {name:"Trivia Blitz", tag:"Quiz", color:"var(--t2)", players:"2–200+", mins:"5–8 min",
     desc:"Quick-fire multiple choice. Faster right answers score more.",
@@ -3370,6 +3459,16 @@ const GAMES = {
     about:"A bluffing and detective game. Big groups are split into small groups of about 7. Everyone in a group gets the same secret word on their phone, except one imposter, who only sees the category.",
     rules:["Look at your phone secretly and don't show anyone.","The big screen shows your group and who starts.","Take turns: each person says ONE word linked to the secret word.","Don't make your clue too obvious, or the imposter will work out the word.","The imposter listens and gives a believable clue to blend in.","When the talking timer ends, vote on your phone for who you think the imposter is."],
     scoring:"Vote for the real imposter: 100 points. Your group catches the imposter: +50 each. Imposter not caught: 300 points for the imposter."},
+  mafia: {name:"Mafia", tag:"Party", color:"#8b1e2d", players:"4–200+", mins:"10–20 min",
+    desc:"Secret roles! The Mafia hides among the villagers. Find them before it's too late.",
+    about:"The classic bluffing game (also called Werewolf). Everyone gets a secret role on their phone: Mafia, Doctor, Detective or Villager. At night the Mafia picks a victim; in the day everyone argues and votes someone out. Big groups are split into villages of up to 14 players.",
+    rules:["Look at your secret role on your phone. Don't show anyone!","🌙 Night: the Mafia 🔪 picks someone to eliminate. The Doctor 💉 picks someone to save. The Detective 🔍 checks if someone is Mafia.","☀️ Day: the big screen shows who was eliminated. Talk it out: who is lying?","🗳️ Vote on your phone to throw someone out. You can skip if you're not sure.","Villagers win when all the Mafia are out. The Mafia wins when they equal the villagers.","Out players become ghosts 👻: watch quietly and don't give away secrets."],
+    scoring:"Winning side: 400 points. Surviving to the end: +100. Doctor saves: +100 each. Detective: +50 for every Mafia found."},
+  doodle: {name:"Doodle Dash", tag:"Party", color:"#ff8fd0", players:"2–200+", mins:"6–10 min",
+    desc:"One player draws on their phone, everyone else races to guess the word.",
+    about:"A drawing and guessing game like Pictionary. The drawer gets a secret word and draws it on their phone with their finger. The drawing appears live on the big screen and on every phone, and everyone types guesses. Letter hints appear as time runs out.",
+    rules:["When it's your turn, you get a secret word. Draw it on your phone (no letters or numbers!).","Everyone else watches the drawing and types guesses on their phone.","If your guess is very close, you'll see \"So close!\"","Letter hints show up when half the time is gone.","Guess fast for more points. The drawer earns points for every correct guess."],
+    scoring:"Correct guess: 100 to 500 points (faster = more), +100 for the first to guess. Drawer: 60 points for each person who guesses."},
   crash: {name:"Color Crash", tag:"Cards", color:"#ff9f43", players:"2–200+", mins:"8–12 min",
     desc:"Match the color or number and be first to empty your hand. Big groups play at tables of up to 6.",
     about:"A fast card game for everyone. Each player gets 7 cards on their phone. Big groups are split into tables of up to 6, all playing at once, and the big screen shows every table.",
@@ -3400,6 +3499,11 @@ const GAMES = {
     about:"An arcade 3D racer in the style of Asphalt. Every phone shows your own car from behind on a twisting road with hills, traffic and nitro. The big screen is the live TV camera following the race leader, with the standings beside it.",
     rules:["Wait for the lights: 3, 2, 1, GO! Your car speeds up by itself.","Steer by holding ◀ ▶ on your phone, or tap 📱 Use tilt and turn your phone like a steering wheel.","Stay on the road. Driving on the grass slows you down.","Dodge the traffic cars. A crash slows you down a lot.","Grab the blue N₂O cans and pass cars closely (near miss) to fill your nitro. Tap NITRO for a big speed boost.","Race 2 laps. First across the finish line wins. There are 3 races."],
     scoring:"Every race: up to 800 points for finishing first, and fewer for each place after. Karts that don't finish get points for how far they got."},
+  rps: {name:"Rock Paper Scissors Showdown", tag:"Action", color:"#ffb20f", players:"2–200+", mins:"2–4 min",
+    desc:"Knockout tournament! Win your duel to stay in. Last one standing is the champion.",
+    about:"A giant Rock Paper Scissors tournament. Everyone is paired up, picks ✊ ✋ or ✌️ on their phone, and losers are out. Rounds keep going until one champion is left.",
+    rules:["You are matched with a random opponent each round.","Pick ✊ Rock, ✋ Paper or ✌️ Scissors on your phone before time runs out.","✊ beats ✌️, ✌️ beats ✋, ✋ beats ✊. The loser is out.","A tie means you both stay in and play again next round. If you don't pick, you lose.","Last player standing wins!"],
+    scoring:"Every round you survive: 100 points. Champion: +500."},
   tap: {name:"Tug of War", tag:"Action", color:"#c9a36a", players:"2–200+", mins:"2 min",
     desc:"Tap as fast as you can for 10 seconds. Teams pull the rope.",
     about:"Pure speed. With two teams, a rope marker on the big screen moves toward the team tapping harder.",
@@ -3510,7 +3614,7 @@ const CFG = {
   introSec:4, quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
-  raceN:3, ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
+  raceN:3, mafVillage:14, mafRoleSec:12, mafNightSec:30, mafDaySec:75, mafVoteSec:30, mafResSec:8, rpsSec:7, rpsResSec:4, drawN:5, drawSec:75, ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
 };
 
 /* ------------------------------------------------------------ helpers */
@@ -3610,6 +3714,9 @@ function gameIcon(key){
     herd: [[18,34],[46,34],[32,24]].map(([x,y]) => `<g><circle cx="${x-6}" cy="${y}" r="6" fill="${w}" ${st}/><circle cx="${x+6}" cy="${y}" r="6" fill="${w}" ${st}/><circle cx="${x}" cy="${y-5}" r="7" fill="${w}" ${st}/><circle cx="${x}" cy="${y+6}" r="7" fill="${w}" ${st}/><ellipse cx="${x}" cy="${y+2}" rx="5" ry="6.5" fill="${ink}"/><circle cx="${x-2}" cy="${y+1}" r="1.2" fill="${w}"/><circle cx="${x+2}" cy="${y+1}" r="1.2" fill="${w}"/></g>`).join(""),
     imposter: `<path d="M12 54 V34 a20 22 0 0 1 40 0 V54 z" fill="${ink}"/><path d="M20 54 V36 a12 14 0 0 1 24 0 V54" fill="#3d3780"/><path d="M24 36 l7 3 M40 36 l-7 3" stroke="#ff5a5f" stroke-width="4" stroke-linecap="round"/><path d="M47 12 a6 6 0 1 1 8 5 c-2 1 -2 2 -2 4" fill="none" stroke="${w}" stroke-width="3.5" stroke-linecap="round"/><circle cx="53" cy="26" r="2" fill="${w}"/>`,
     race: `<rect x="6" y="40" width="52" height="14" rx="3" fill="#3a3a48" ${st}/><path d="M10 47 h8 M24 47 h8 M38 47 h8" stroke="${w}" stroke-width="2"/><path d="M8 36 Q8 30 15 29 L26 28 L32 21 L44 21 Q48 21 50 26 L56 28 Q60 30 60 36 L59 39 L9 39 Z" fill="#ff6b3d" ${st}/><path d="M33 23 L43 23 L46 27 L33 27 Z" fill="#cfefff"/><circle cx="18" cy="40" r="5" fill="${ink}"/><circle cx="50" cy="40" r="5" fill="${ink}"/><path d="M2 26 h6 M0 31 h7 M3 36 h5" stroke="${w}" stroke-width="2.5" stroke-linecap="round"/>`,
+    mafia: `<circle cx="32" cy="34" r="20" fill="#15122e" ${st}/><path d="M12 26 Q32 4 52 26 Z" fill="#15122e" ${st}/><rect x="10" y="24" width="44" height="6" rx="3" fill="#8b1e2d"/><circle cx="25" cy="36" r="3.5" fill="${w}"/><circle cx="39" cy="36" r="3.5" fill="${w}"/><path d="M24 46 Q32 42 40 46" stroke="${w}" stroke-width="2.5" fill="none"/>`,
+    doodle: `<rect x="8" y="10" width="48" height="40" rx="5" fill="${w}" ${st}/><path d="M16 38 Q24 18 32 32 T48 22" stroke="#ff4d8a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M40 52 L54 38 L58 42 L44 56 Z" fill="#ffc23d" ${st}/>`,
+    rps: `<text x="6" y="44" font-size="26">✊</text><text x="34" y="30" font-size="22">✌️</text><text x="30" y="58" font-size="20">✋</text>`,
     tap: `<path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#8a6432" stroke-width="8" stroke-linecap="round"/><path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#e0b878" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 5"/><rect x="28" y="20" width="8" height="26" rx="3" fill="#ff5a5f" ${st}/><path d="M32 12 v8" ${st}/>`,
     react: `<circle cx="32" cy="36" r="20" fill="${w}" ${st}/><rect x="28" y="8" width="8" height="7" rx="2" fill="${ink}"/><path d="M32 36 L32 22" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M36 30 l-8 10 h7 l-4 10 l11 -13 h-7 l4 -7 z" fill="#ffc23d" ${st}/>`,
     guess: `<circle cx="30" cy="36" r="20" fill="${w}" ${st}/><circle cx="30" cy="36" r="13" fill="#ff5a5f" ${st}/><circle cx="30" cy="36" r="6" fill="${w}" ${st}/><path d="M30 36 L54 12" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M54 12 l-2 -6 M54 12 l6 2 M49 10 l-1 -5 M52 15 l5 1" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,
@@ -4267,6 +4374,12 @@ function Road3D(canvas, T){
   this.trafficAt = function(t){ return T.traffic.map(c => ({d: c.z0 + c.sp * t, x: c.x, col: RD_TRAFFIC_COL[c.v], type: c.type, sp: c.sp, brake: Math.sin(t * 0.7 + c.z0) > 0.85})); };
 }
 
+/* ------------------------------------------------------------ Doodle Dash words and stroke drawing */
+const DRAW_WORDS = ["cat","dog","house","sun","tree","car","fish","pizza","rocket","flower","star","apple","banana","guitar","phone","clock","rainbow","snowman","boat","bicycle","umbrella","cake","robot","dragon","castle","heart","moon","cloud","shoe","hat","glasses","camera","ice cream","spider","butterfly","elephant","giraffe","snake","turtle","airplane","train","ghost","crown","key","lamp","book","pencil","mountain","volcano","beach","burger","donut","bee","penguin","octopus","balloon","computer","football","tooth","ladder"];
+const DRAW_COLS = ["#15122e", "#e5383b", "#3d8bff", "#2fbf71", "#f5b622", "#a77bff", "#ff8fd0", "#8d5a3b"];
+function drawStroke(c, s, W, H){ if (!s || s.length < 4) return; c.strokeStyle = DRAW_COLS[s[0]] || "#15122e"; c.lineWidth = (s[1] || 1) * W / 160; c.lineCap = "round"; c.lineJoin = "round";
+  c.beginPath(); c.moveTo(s[2] * W, s[3] * H); for (let i = 4; i + 1 < s.length; i += 2) c.lineTo(s[i] * W, s[i + 1] * H); if (s.length === 4) c.lineTo(s[2] * W + 0.5, s[3] * H); c.stroke(); }
+
 /* ------------------------------------------------------------ Snakes & Ladders board (10 × 10, square 1 bottom-left) */
 const SL_LADDERS = [[4,25],[13,46],[33,49],[42,63],[50,69],[62,81],[74,92]];
 const SL_SNAKES = [[27,5],[40,3],[43,18],[54,31],[66,45],[76,58],[89,53],[99,41]];
@@ -4469,6 +4582,9 @@ const Sound = (() => {
     ludo:    {bpm:104, swing:0.18, chords:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:"tuba", bp:"x...o...x...o...", lead:"whistle", mel:"x..x..x.x.......", comp:"uke", cp:"..x...x...x...x.", kick:"x.......x.......", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:"...x.......x...."},
     snakes:  {bpm:112, swing:0.16, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"tuba", bp:"x...o...x...o...", lead:"marimba", mel:"x.x.xx..x.x.x...", comp:"uke", cp:"..x...x...x...x.", kick:"x.....x...x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x.......x......."},
     race:    {bpm:150, swing:0.04, chords:[[52,56,59],[54,57,61],[57,61,64],[56,59,63]], bass:"bouncy", bp:"x.x.x.xox.x.x.xo", lead:"toypiano", mel:"x.x.x.x.x.xx.x..", comp:"toy", cp:"..x...x...x...x.", kick:"x...x.x.x...x.x.", snap:"....x.......x...", shake:"xxxxxxxxxxxxxxxx", block:"x.......x...x..."},
+    mafia:   {bpm:84, swing:0.24, chords:[[57,60,64],[53,57,60],[52,56,59],[57,60,64]], bass:"pizzb", bp:"x.....x.x.......", lead:"pizz", mel:"x..x..x.....x...", comp:"", cp:"", kick:"x.........x.....", snap:"....x.......x...", shake:"", block:"..x.....x..x...."},
+    rps:     {bpm:138, swing:0.06, chords:[[60,64,67],[62,65,69],[64,67,71],[62,65,69]], bass:"bouncy", bp:"x.x.x.x.x.x.x.xo", lead:"marimba", mel:"x.x.x...x.x.xx..", comp:"toy", cp:"....x.......x...", kick:"x.....x.x.....x.", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:"x...x...x...x..."},
+    doodle:  {bpm:104, swing:0.2, chords:[[60,64,67,71],[65,69,72,76],[62,65,69,72],[67,71,74,77]], bass:"tuba", bp:"x.....o...x.....", lead:"whistle", mel:"x..x..x.x...x...", comp:"uke", cp:"..x...x...x...x.", kick:"x......x..x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:""},
     tycoon:  {bpm:96, swing:0.22, chords:[[50,53,57,60],[50,53,57,60],[46,50,53,57],[48,52,55,58]], bass:"pizzb", bp:"x..x......x.x...", lead:"toypiano", mel:"x...x.x...x.....", comp:"toy", cp:"..x...x...x...x.", kick:"x......x..x.....", snap:"....x.......x...", shake:"x.xxx.x.x.xxx.x.", block:"......x........."},
   };
   // a catchy melody per song: chord tones on strong steps, little steps up and down in between
@@ -4742,6 +4858,11 @@ function startHost(){
       S.answers[pid] = {choice, ms: Date.now() - S.startedAt};
       push(pid); soon();
       if (Object.keys(S.answers).length >= online().length) endMC();
+    } else if (m.t === "maf" && S.phase === "maf-night") { mafNightAct(pid, String(m.target || ""));
+    } else if (m.t === "maf" && S.phase === "maf-vote") { mafVoteAct(pid, String(m.target || ""));
+    } else if (m.t === "rps" && S.phase === "rps-pick") { rpsPick(pid, String(m.c || ""));
+    } else if (m.t === "dr" && S.phase === "draw") { doodleStroke(pid, m);
+    } else if (m.t === "dguess" && S.phase === "draw") { doodleGuess(pid, m.text);
     } else if (m.t === "drive" && S.phase === "race") { const R = S.race, now = Date.now();
       if (R && R.at[pid] && pid in R.seat) R.v[pid] = Math.max(0, (Number(m.d) - R.d[pid]) / Math.max(0.05, (now - R.at[pid]) / 1000));
       raceDrive(pid, m);
@@ -4773,7 +4894,9 @@ function startHost(){
     const now = Date.now(), data = m.data;
     if (p.lastVoice && now - p.lastVoice < 1200) return; p.lastVoice = now;
     if (!data || !(data instanceof ArrayBuffer || ArrayBuffer.isView(data)) || data.byteLength > 450000) return;
-    const grp = S.phase.startsWith("imp") ? (S.groups || []).find(g => g.members.includes(pid)) : null;
+    let grp = S.phase.startsWith("imp") ? (S.groups || []).find(g => g.members.includes(pid)) : null;
+    if (S.phase.startsWith("maf") && S.vill) { const v = mafVillOf(pid); if (!v || !v.alive[pid]) return;
+      grp = {members: S.phase === "maf-night" ? (v.role[pid] === "mafia" ? v.members.filter(x => v.role[x] === "mafia") : []) : v.members.filter(x => v.alive[x])}; }
     const to = grp ? "your group" : S.mode === "teams" ? (TEAMS[p.team] ? TEAMS[p.team].name : "team") : "everyone";
     const out = {t:"voice", from:p.name, av:p.av, to, mime: String(m.mime || "").slice(0, 40), data};
     for (const [qid, q] of plist()) {
@@ -4821,6 +4944,9 @@ function startHost(){
     if (S.phase === "guess" || S.phase === "guess-rev") { if (a !== undefined) st.mine = a; if (S.phase === "guess-rev") st.gained = S.last.gained[pid] || 0; }
     if (S.phase.startsWith("react")) { if (a) st.mine = a; if (S.phase === "react-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase === "tap-res" || S.phase === "race-res") st.gained = S.last.gained[pid] || 0;
+    if (S.phase.startsWith("maf") && S.vill) mafState(pid, st);
+    if (S.phase.startsWith("rps") && S.rps) rpsState(pid, st);
+    if ((S.phase === "draw" || S.phase === "draw-res") && S.doodle) { doodleState(pid, st); if (S.phase === "draw-res") st.gained = S.last.gained[pid] || 0; }
     if ((S.phase === "race" || S.phase === "race-ready") && S.race && pid in S.race.seat) { const R = S.race, ord = raceRank();
       if (!R.names) { R.names = {}; for (const q in R.seat) if (S.players[q]) R.names[R.seat[q]] = S.players[q].name; }
       st.race = {seed:R.seed, seat:R.seat[pid], d0: Math.round(R.d[pid]), names:R.names, place: ord.indexOf(pid) + 1, n: ord.length, fin: !!R.fin[pid]}; }
@@ -4916,6 +5042,9 @@ function startHost(){
     if (["quiz","emoji","tf","herd"].includes(S.game)) { S.list = mcList(); S.total = S.list.length; if (!S.total) { toast("That quiz has no questions yet"); return; } startMC(); }
     else if (S.game === "tap") { S.total = CFG.tapRounds; startTapReady(); }
     else if (S.game === "react") { S.total = CFG.reactRounds; startReactWait(); }
+    else if (S.game === "mafia") { if (n < 4) { toast("Mafia needs at least 4 players (add bots!)"); return; } S.total = 1; startMafia(); }
+    else if (S.game === "rps") { if (n < 2) { toast("Needs at least 2 players"); return; } startRps(); }
+    else if (S.game === "doodle") { if (n < 2) { toast("Doodle Dash needs at least 2 players"); return; } startDoodle(); }
     else if (S.game === "race") { if (n < 1) return; S.total = CFG.raceN; startRaceReady(); }
     else if (S.game === "guess") { S.list = shuffle(GUESS).slice(0, CFG.guessN); S.total = S.list.length; startGuess(); }
     else if (S.game === "imposter") { S.total = CFG.impRounds; startImposter(); }
@@ -5662,6 +5791,210 @@ function startHost(){
       <p class="hint">📱 Steer by tilting your phone or holding ◀ ▶. Grab blue <b>N₂O</b> cans and tap <b>NITRO</b> for a boost. Dodge the traffic!</p></section>`;
   }
 
+  /* ---- Mafia (night and day, secret roles) ---- */
+  const MAF_ROLE = {mafia:{n:"Mafia", e:"🔪", c:"#e5383b"}, doctor:{n:"Doctor", e:"💉", c:"#2fbf71"}, detective:{n:"Detective", e:"🔍", c:"#3d8bff"}, villager:{n:"Villager", e:"🧑‍🌾", c:"#f5b622"}};
+  function startMafia(){
+    const ids = shuffle(online().map(([pid]) => pid)), V = Math.max(1, Math.ceil(ids.length / CFG.mafVillage));
+    const vs = Array.from({length:V}, (_, i) => ({name: V > 1 ? "Village " + (i + 1) : "The Village", members:[]}));
+    ids.forEach((pid, i) => vs[i % V].members.push(pid));
+    for (const v of vs) { const n = v.members.length, m = n >= 11 ? 3 : n >= 7 ? 2 : 1, ord = shuffle(v.members.slice());
+      v.role = {}; v.alive = {}; ord.forEach((pid, i) => { v.role[pid] = i < m ? "mafia" : i === m && n >= 5 ? "doctor" : i === m + 1 && n >= 6 ? "detective" : "villager"; v.alive[pid] = true; });
+      Object.assign(v, {log:"", winner:null, checks:{}, lastKill:null, saved:false, out:null}); }
+    S.vill = vs; S.round = 0; S.mafNight = {}; S.mafVote = {};
+    go("maf-role", CFG.mafRoleSec);
+  }
+  const mafVillOf = pid => (S.vill || []).find(v => v.members.includes(pid));
+  const mafAlive = v => v.members.filter(x => v.alive[x]);
+  function mafWin(v){ const al = mafAlive(v), m = al.filter(x => v.role[x] === "mafia").length;
+    if (!m) return "village"; if (m >= al.length - m) return "mafia"; return null; }
+  function mafStartNight(){ S.mafNight = {}; S.round++; for (const v of S.vill) v.checkNow = null; go("maf-night", CFG.mafNightSec); Sound.sfx("whoosh"); }
+  function mafActors(v){ return mafAlive(v).filter(x => v.role[x] !== "villager"); }
+  function mafNightAct(pid, target){
+    const v = mafVillOf(pid); if (!v || v.winner || !v.alive[pid] || !v.alive[target] || v.role[pid] === "villager") return;
+    if (v.role[pid] === "mafia" && v.role[target] === "mafia") return;
+    if (v.role[pid] === "detective" && target === pid) return;
+    S.mafNight[pid] = target; push(pid); for (const x of v.members) if (v.role[x] === "mafia" && x !== pid) push(x);
+    if (S.vill.every(w => w.winner || mafActors(w).every(x => x in S.mafNight))) setTimeout(() => { if (S.phase === "maf-night") mafEndNight(); }, 1200);
+  }
+  function mafEndNight(){
+    if (S.phase !== "maf-night") return;
+    for (const v of S.vill) { if (v.winner) continue;
+      const tally = {}; for (const x of mafAlive(v)) if (v.role[x] === "mafia" && S.mafNight[x]) tally[S.mafNight[x]] = (tally[S.mafNight[x]] || 0) + 1;
+      let kill = null; const mx = Math.max(0, ...Object.values(tally)); if (mx) kill = pick(Object.keys(tally).filter(k => tally[k] === mx));
+      if (!kill) { const opts = mafAlive(v).filter(x => v.role[x] !== "mafia"); kill = opts.length ? pick(opts) : null; }
+      const doc = mafAlive(v).find(x => v.role[x] === "doctor"), save = doc ? S.mafNight[doc] : null, det = mafAlive(v).find(x => v.role[x] === "detective");
+      v.saved = !!(kill && save === kill); v.lastKill = kill && !v.saved ? kill : null;
+      if (v.lastKill) v.alive[v.lastKill] = false;
+      if (det && S.mafNight[det]) { v.checks[S.mafNight[det]] = v.role[S.mafNight[det]] === "mafia"; v.checkNow = S.mafNight[det]; }
+      if (v.saved && doc) { const p = S.players[doc]; if (p) p.pts += 100; }
+      v.log = v.lastKill ? `${nm(v.lastKill)} was found in the morning. They were a ${MAF_ROLE[v.role[v.lastKill]].n}.` : v.saved ? "The Mafia attacked, but the Doctor saved them! Nobody died." : "A quiet night. Nobody died.";
+      v.winner = mafWin(v); }
+    Sound.sfx(S.vill.some(v => v.lastKill) ? "capture" : "correct");
+    go("maf-day", CFG.mafDaySec);
+  }
+  function mafStartVote(){ S.mafVote = {}; go("maf-vote", CFG.mafVoteSec); }
+  function mafVoteAct(pid, target){
+    const v = mafVillOf(pid); if (!v || v.winner || !v.alive[pid]) return;
+    if (target !== "skip" && (!v.alive[target] || target === pid)) return;
+    S.mafVote[pid] = target; push(pid); soon();
+    if (S.vill.every(w => w.winner || mafAlive(w).every(x => x in S.mafVote))) setTimeout(() => { if (S.phase === "maf-vote") mafEndVote(); }, 1000);
+  }
+  function mafEndVote(){
+    if (S.phase !== "maf-vote") return;
+    for (const v of S.vill) { if (v.winner) { v.out = null; continue; }
+      const tally = {}; for (const x of mafAlive(v)) { const t = S.mafVote[x]; if (t) tally[t] = (tally[t] || 0) + 1; }
+      v.tally = tally; const ks = Object.keys(tally).filter(k => k !== "skip"), mx = Math.max(0, ...ks.map(k => tally[k])), top = ks.filter(k => tally[k] === mx);
+      v.out = mx > 0 && top.length === 1 && mx > (tally.skip || 0) ? top[0] : null;
+      if (v.out) v.alive[v.out] = false;
+      v.log = v.out ? `The village voted out ${nm(v.out)}. They were ${v.role[v.out] === "mafia" ? "the MAFIA! 🎉" : "a " + MAF_ROLE[v.role[v.out]].n + ". Oops! 😬"}` : "No one was voted out (a tie or too many skips).";
+      v.winner = mafWin(v); }
+    Sound.sfx("reveal");
+    go("maf-res", CFG.mafResSec);
+  }
+  function mafAfterRes(){
+    if (S.vill.every(v => v.winner)) { mafScore(); endCards(); return; }
+    mafStartNight();
+  }
+  function mafScore(){
+    for (const v of S.vill) for (const x of v.members) { const p = S.players[x]; if (!p) continue;
+      const won = v.winner === "mafia" ? v.role[x] === "mafia" : v.role[x] !== "mafia";
+      p.pts += (won ? 400 : 0) + (v.alive[x] ? 100 : 0) + (v.role[x] === "detective" ? 50 * Object.values(v.checks).filter(Boolean).length : 0); }
+    rankCache = null;
+  }
+  function mafState(pid, st){
+    const v = mafVillOf(pid); if (!v) { st.maf = {sitout:true}; return; }
+    const role = v.role[pid], al = mafAlive(v);
+    st.maf = {village:v.name, role, alive: !!v.alive[pid], log:v.log, winner:v.winner, day:S.round,
+      mates: role === "mafia" ? v.members.filter(x => x !== pid && v.role[x] === "mafia").map(x => ({name:nm(x), alive:!!v.alive[x], pick: S.mafNight[x] ? nm(S.mafNight[x]) : null})) : [],
+      people: v.members.filter(x => S.players[x]).map(x => ({pid:x, name:nm(x), av:avOf(x), alive:!!v.alive[x], role: !v.alive[x] || v.winner ? v.role[x] : role === "mafia" && v.role[x] === "mafia" ? "mafia" : null,
+        checked: role === "detective" && x in v.checks ? (v.checks[x] ? "mafia" : "clean") : null})),
+      mine: S.phase === "maf-night" ? S.mafNight[pid] || null : S.phase === "maf-vote" ? S.mafVote[pid] || null : null,
+      check: role === "detective" && v.checkNow && S.phase === "maf-day" ? {name:nm(v.checkNow), mafia: !!v.checks[v.checkNow]} : null,
+      out: S.phase === "maf-res" && v.out ? {name:nm(v.out), role:v.role[v.out]} : null, n: al.length};
+  }
+  function mafPeopleHTML(v, big){
+    return `<div class="mppl ${big ? "big" : ""}">${v.members.filter(x => S.players[x]).map(x => { const dead = !v.alive[x], r = dead || v.winner ? MAF_ROLE[v.role[x]] : null, votes = S.phase === "maf-res" && v.tally ? v.tally[x] || 0 : 0;
+      return `<div class="mp ${dead ? "dead" : ""} ${S.phase === "maf-res" && v.out === x ? "out" : ""}">${Avatar.svg(avOf(x), big ? 84 : 44)}${dead ? `<span class="skull">💀</span>` : ""}<b>${esc(nm(x))}</b>${r ? `<span class="mrole" style="--c:${r.c}">${r.e} ${r.n}</span>` : ""}${votes ? `<span class="mvotes">${votes} vote${votes > 1 ? "s" : ""}</span>` : ""}</div>`; }).join("")}</div>`;
+  }
+  function mafiaView(){
+    const ph = S.phase, one = S.vill.length === 1, night = ph === "maf-night" || ph === "maf-role";
+    const title = {"maf-role":"🎭 Check your secret role", "maf-night":"🌙 Night " + S.round + " · everyone close your eyes", "maf-day":"☀️ Day " + S.round + " · talk it out", "maf-vote":"🗳️ Vote · who is the Mafia?", "maf-res":"⚖️ The village decides"}[ph];
+    const sub = {"maf-role":"Look at your phone without showing anyone. Mafia, you can see your partners.", "maf-night":"Mafia picks a victim. The Doctor saves someone. The Detective investigates. Everyone else: stay quiet!",
+      "maf-day":"Discuss out loud (or hold to talk on your phone). Who is acting suspicious?", "maf-vote":"Vote on your phone. Most votes is out. You can also skip.", "maf-res":""}[ph];
+    const tm = S.endsAt ? `<span class="pill"><b data-left>${secsLeft()}</b> s</span>` : "";
+    const btn = ph === "maf-day" ? `<button class="ghost sm" data-act="mafvote">Start the vote now</button>` : ph === "maf-night" || ph === "maf-vote" ? `<button class="ghost sm" data-act="skip">Skip ahead</button>` : "";
+    return `<section class="stage card mafia ${night ? "night" : "day"}"><div class="msky">${night ? `<i class="moon"></i>${Array.from({length:30}, (_, i) => `<i class="star" style="left:${(i * 37) % 100}%;top:${(i * 53) % 60}%;animation-delay:${(i % 7) * 0.3}s"></i>`).join("")}` : `<i class="sunb"></i>`}</div>
+      <div class="qhead"><span class="label">Mafia · ${one ? "" : S.vill.length + " villages · "}${ph === "maf-role" ? "getting ready" : "day " + S.round}</span>${tm}${btn}</div>
+      <h2 class="mtitle">${title}</h2>${sub ? `<p class="msub">${sub}</p>` : ""}
+      <div class="mvills ${one ? "one" : ""}">${S.vill.map(v => `<div class="mvill ${v.winner ? "won" : ""}">
+        ${one ? "" : `<div class="cc-head"><b>${esc(v.name)}</b><span class="pill">${mafAlive(v).length} alive</span></div>`}
+        ${v.winner ? `<div class="mwin ${v.winner}">${v.winner === "mafia" ? "🔪 The Mafia wins!" : "🎉 The Village wins!"}</div>` : ""}
+        ${(ph === "maf-day" || ph === "maf-res") && v.log ? `<div class="mlog">${esc(v.log)}</div>` : ""}
+        ${mafPeopleHTML(v, one)}</div>`).join("")}</div></section>`;
+  }
+  /* ---- Rock Paper Scissors Showdown (knockout) ---- */
+  const RPS_E = {r:"✊", p:"✋", s:"✌️"}, RPS_BEATS = {r:"s", p:"r", s:"p"};
+  function startRps(){ S.rps = {alive: shuffle(online().map(([pid]) => pid)), out:{}, round:0, duels:[]}; rpsPair(); }
+  function rpsPair(){
+    const R = S.rps, a = shuffle(R.alive.slice()); R.duels = []; R.bye = null; R.round++;
+    for (let i = 0; i + 1 < a.length; i += 2) R.duels.push({a:a[i], b:a[i + 1]});
+    if (a.length % 2) R.bye = a[a.length - 1];
+    S.round = R.round - 1; S.total = 99; go("rps-pick", CFG.rpsSec); Sound.sfx("drum");
+  }
+  function rpsPick(pid, c){ if (!RPS_E[c] || !S.rps.duels.some(d => d.a === pid || d.b === pid) || S.answers[pid]) return;
+    S.answers[pid] = c; push(pid); soon();
+    if (S.rps.duels.every(d => S.answers[d.a] && S.answers[d.b])) setTimeout(() => { if (S.phase === "rps-pick") rpsEnd(); }, 600); }
+  function rpsEnd(){
+    if (S.phase !== "rps-pick") return;
+    const R = S.rps, keys = Object.keys(RPS_E);
+    for (const d of R.duels) { let x = S.answers[d.a], y = S.answers[d.b];
+      d.ca = x || null; d.cb = y || null;
+      if (!x && !y) { x = pick(keys); y = pick(keys.filter(k => k !== x)); d.ca = x; d.cb = y; d.auto = true; }
+      d.win = !x ? d.b : !y ? d.a : x === y ? null : RPS_BEATS[x] === y ? d.a : d.b; }
+    for (const d of R.duels) if (d.win) { const lose = d.win === d.a ? d.b : d.a; R.out[lose] = R.round; R.alive = R.alive.filter(x => x !== lose); }
+    for (const pid of R.alive) { const p = S.players[pid]; if (p) p.pts += 100; }
+    rankCache = null; S.last = {gained:{}}; Sound.sfx("reveal");
+    go("rps-res", CFG.rpsResSec);
+  }
+  function rpsNext(){ const R = S.rps;
+    if (R.alive.length <= 1) { const w = R.alive[0]; if (w && S.players[w]) S.players[w].pts += 500; rankCache = null; endCards(); return; }
+    rpsPair(); }
+  function rpsView(){
+    const R = S.rps, res = S.phase === "rps-res", many = R.duels.length > 8;
+    return `<section class="stage card rps"><div class="qhead"><span class="label">Rock Paper Scissors Showdown · round ${R.round} · ${R.alive.length} player${R.alive.length === 1 ? "" : "s"} left</span>${res ? "" : `<span class="pill"><b data-left>${secsLeft()}</b> s</span>`}</div>
+      <h2 class="rpstitle">${res ? "Results!" : "Pick ✊ ✋ ✌️ on your phone!"}</h2>
+      <div class="rduels ${many ? "many" : ""}">${R.duels.map(d => { const A = S.players[d.a], B = S.players[d.b];
+        const side = (pid, c, picked) => `<div class="rside ${res && d.win === pid ? "win" : res && d.win && d.win !== pid ? "lose" : ""}">${A && B ? Avatar.svg(avOf(pid), many ? 30 : 54) : ""}<b>${esc(nm(pid))}</b></div>`;
+        const hand = (c, picked, flip) => `<span class="rhand ${res ? "show" : "shake"} ${flip ? "flip" : ""}">${res ? RPS_E[c] || "😴" : picked ? "✊" : "✊"}</span>`;
+        return `<div class="rduel ${res && !d.win ? "tie" : ""}">${side(d.a)}${hand(d.ca, S.answers[d.a])}<span class="rvs">${res ? (d.win ? "" : "TIE") : (S.answers[d.a] ? "✔" : "…") + " vs " + (S.answers[d.b] ? "✔" : "…")}</span>${hand(d.cb, S.answers[d.b], 1)}${side(d.b)}</div>`; }).join("")}</div>
+      ${R.bye ? `<p class="hint">${esc(nm(R.bye))} gets a free pass this round.</p>` : ""}
+      ${res ? `<p class="hint">Losers are out. Ties play again next round.</p>` : ""}</section>`;
+  }
+  function rpsState(pid, st){ const R = S.rps, d = R.duels.find(d => d.a === pid || d.b === pid);
+    st.rps = {round:R.round, left:R.alive.length, out: !!R.out[pid] && !R.alive.includes(pid), bye: R.bye === pid, mine: S.answers[pid] || null, champ: R.alive.length === 1 && R.alive[0] === pid};
+    if (d) { const opp = d.a === pid ? d.b : d.a; st.rps.opp = {name:nm(opp), av:avOf(opp)};
+      if (S.phase === "rps-res") { st.rps.res = {me: d.a === pid ? d.ca : d.cb, them: d.a === pid ? d.cb : d.ca, win: d.win === pid ? 1 : d.win ? -1 : 0}; } }
+  }
+
+  /* ---- Doodle Dash (draw and guess) ---- */
+  function startDoodle(){
+    const ids = shuffle(online().map(([pid]) => pid));
+    S.doodle = {drawers: ids.slice(0, Math.min(ids.length, CFG.drawN)), words: shuffle(DRAW_WORDS.slice())};
+    S.total = S.doodle.drawers.length; S.round = 0; doodleRound();
+  }
+  function doodleRound(){
+    const D = S.doodle; D.drawer = D.drawers[S.round]; if (!S.players[D.drawer]) D.drawer = pick(online().map(([pid]) => pid));
+    D.word = D.words[S.round % D.words.length]; D.strokes = []; D.feed = []; D.got = {}; D.order = [];
+    go("draw", CFG.drawSec); Sound.sfx("go");
+    const p = S.players[D.drawer]; if (p && p.bot) doodleBotDraw();
+  }
+  function doodleMask(word, frac){ const idx = []; for (let i = 0; i < word.length; i++) if (word[i] !== " ") idx.push(i);
+    const r = rdRand(word.length * 31 + word.charCodeAt(0)), show = new Set(shuffle(idx.slice()).slice(0, Math.floor(idx.length * frac)));
+    return word.split("").map((c, i) => c === " " ? "  " : show.has(i) ? c.toUpperCase() : "_").join(" "); }
+  function doodleHint(){ if (S.phase !== "draw") return ""; const left = (S.endsAt - Date.now()) / (CFG.drawSec * 1000); return doodleMask(S.doodle.word, left < 0.25 ? 0.5 : left < 0.5 ? 0.25 : 0); }
+  function doodleStroke(pid, m){
+    const D = S.doodle; if (S.phase !== "draw" || pid !== D.drawer) return;
+    if (m.clear) { D.strokes = []; } else if (Array.isArray(m.s)) { for (const s of m.s.slice(0, 40)) if (Array.isArray(s) && s.length >= 4 && s.length < 600) D.strokes.push(s); if (D.strokes.length > 3000) D.strokes.splice(0, 500); }
+    const out = m.clear ? {t:"dr", clear:true} : {t:"dr", s:m.s};
+    for (const [q, p] of plist()) if (q !== pid && p.on && p.link && !p.bot) p.link.send(out);
+    doodlePaint(m.clear ? null : m.s, !!m.clear);
+  }
+  function doodlePaint(add, clear){ const cv = document.getElementById("dcv"); if (!cv) return; const c = cv.getContext("2d"), W = cv.width, H = cv.height;
+    if (clear || !add) { c.fillStyle = "#fff"; c.fillRect(0, 0, W, H); }
+    for (const s of add || S.doodle.strokes) drawStroke(c, s, W, H); }
+  const doodleNorm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, "");
+  function lev(a, b){ const m = a.length, n = b.length, d = Array.from({length:m + 1}, (_, i) => [i]); for (let j = 1; j <= n; j++) d[0][j] = j;
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[m][n]; }
+  function doodleGuess(pid, text){
+    const D = S.doodle; if (S.phase !== "draw" || pid === D.drawer || D.got[pid]) return;
+    const g = doodleNorm(text).slice(0, 30), w = doodleNorm(D.word); if (!g) return;
+    if (g === w) { const T = CFG.drawSec * 1000, left = Math.max(0, S.endsAt - Date.now()), pts = 100 + Math.round(400 * left / T) + (D.order.length === 0 ? 100 : 0);
+      D.got[pid] = pts; D.order.push(pid); const p = S.players[pid]; if (p) p.pts += pts; const dp = S.players[D.drawer]; if (dp) dp.pts += 60;
+      D.feed.push({n:nm(pid), ok:true}); Sound.sfx("correct"); rankCache = null; push(pid); push(D.drawer); soon();
+      const guessers = online().filter(([q]) => q !== D.drawer); if (guessers.every(([q]) => D.got[q])) setTimeout(() => { if (S.phase === "draw") doodleEnd(); }, 800); return; }
+    const close = w.length > 3 && lev(g, w) <= (w.length > 7 ? 2 : 1);
+    D.feed.push({n:nm(pid), t:String(text).slice(0, 24), close}); if (D.feed.length > 40) D.feed.shift();
+    const p = S.players[pid]; if (close && p && p.link && !p.bot) p.link.send({t:"close"}); soon();
+  }
+  function doodleEnd(){ if (S.phase !== "draw") return; const D = S.doodle; S.last = {gained: Object.assign({}, D.got, {[D.drawer]: 60 * D.order.length})}; Sound.sfx("reveal"); go("draw-res", 0); }
+  function doodleBotDraw(){
+    const id = S.round, D = S.doodle, shapes = [];
+    const cx = 0.3 + Math.random() * 0.4, cy = 0.3 + Math.random() * 0.4;
+    const circle = (x, y, r) => { const s = [0, 4]; for (let a = 0; a <= 6.4; a += 0.3) s.push(+(x + Math.cos(a) * r).toFixed(3), +(y + Math.sin(a) * r * 1.3).toFixed(3)); return s; };
+    shapes.push(circle(cx, cy, 0.18), [1, 4, cx - 0.25, cy + 0.3, cx + 0.25, cy + 0.3], circle(cx - 0.06, cy - 0.04, 0.03), circle(cx + 0.06, cy - 0.04, 0.03), [3, 3, cx - 0.08, cy + 0.08, cx, cy + 0.12, cx + 0.08, cy + 0.08]);
+    shapes.forEach((s, i) => setTimeout(() => { if (S.phase === "draw" && S.round === id) doodleStroke(D.drawer, {s:[s]}); }, 1500 + i * 1800));
+  }
+  function doodleView(){
+    const D = S.doodle, res = S.phase === "draw-res";
+    return `<section class="stage card doodle"><div class="qhead"><span class="label">Doodle Dash · drawing ${S.round + 1} of ${S.total}</span>${res ? "" : `<span class="pill"><b data-left>${secsLeft()}</b> s</span><button class="ghost sm" data-act="skip">Skip</button>`}</div>
+      <div class="dlayout"><div class="dboard"><div class="dtop">${Avatar.svg(avOf(D.drawer), 34)}<b>${esc(nm(D.drawer))}</b> is drawing… <span class="dword">${res ? "The word was <b>" + esc(D.word.toUpperCase()) + "</b>" : esc(doodleHint())}</span></div>
+        <canvas id="dcv" width="1000" height="700"></canvas></div>
+        <div class="dfeed"><div class="label">Guesses · ${D.order.length} got it</div><ol>${D.feed.slice(-14).map(f => `<li class="${f.ok ? "ok" : f.close ? "close" : ""}">${f.ok ? `✅ <b>${esc(f.n)}</b> guessed it!` : `<b>${esc(f.n)}:</b> ${esc(f.t)}${f.close ? " <em>close!</em>" : ""}`}</li>`).join("")}</ol></div></div>
+      ${res ? `${leaderboard()}<div class="row"><button class="big" data-act="next">${S.round + 1 >= S.total ? "Show winners" : "Next drawing ▶"}</button></div>` : ""}</section>`;
+  }
+  function doodleState(pid, st){ const D = S.doodle; st.dd = {drawer: D.drawer === pid, drawerName: nm(D.drawer), word: D.drawer === pid || S.phase === "draw-res" ? D.word : null, hint: doodleHint(), got: D.got[pid] || 0, n: D.order.length};
+  }
+
   function hype(){
     if (S.phase === "cc") return (S.tables || []).some(T => !T.done && T.players.some(x => T.hands[x].length === 1)) ? 2 : 1;
     if (S.phase === "lu") return S.lu && S.lu.need > 1 && S.lu.teams.some(t => S.lu.seqs[t] >= S.lu.need - 1) ? 2 : 1;
@@ -5675,7 +6008,7 @@ function startHost(){
     if (S.phase === "mc-rev" && S.round + 1 < S.total) { S.phase = "mc-board"; S.endsAt = 0; Sound.sfx("reveal"); broadcast(); render(); return; }
     if (S.round + 1 >= S.total) { S.phase = "final"; S.endsAt = 0; Sound.mood("lobby"); Sound.sfx("win"); broadcast(); render(); Confetti.burst(6500); return; }
     S.round++;
-    if (S.phase === "mc-rev" || S.phase === "mc-board") startMC(); else if (S.phase === "tap-res") startTapReady();
+    if (S.phase === "draw-res") doodleRound(); else if (S.phase === "mc-rev" || S.phase === "mc-board") startMC(); else if (S.phase === "tap-res") startTapReady();
     else if (S.phase === "react-res") startReactWait(); else if (S.phase === "race-res") startRaceReady(); else if (S.phase === "guess-rev") startGuess();
     else if (S.phase === "imp-res") startImposter();
   }
@@ -5695,7 +6028,9 @@ function startHost(){
     if (!S.endsAt) return;
     const left = S.endsAt - Date.now();
     if (left <= 0) {
-      if (S.phase === "mc") endMC(); else if (S.phase === "mc-intro") beginMC(); else if (S.phase === "race-ready") startRace(); else if (S.phase === "race") endRace(); else if (S.phase === "tap-ready") startTap(); else if (S.phase === "tap") endTap();
+      if (S.phase === "maf-role") mafStartNight(); else if (S.phase === "maf-night") mafEndNight(); else if (S.phase === "maf-day") mafStartVote(); else if (S.phase === "maf-vote") mafEndVote(); else if (S.phase === "maf-res") mafAfterRes();
+      else if (S.phase === "rps-pick") rpsEnd(); else if (S.phase === "rps-res") rpsNext(); else if (S.phase === "draw") doodleEnd();
+      else if (S.phase === "mc") endMC(); else if (S.phase === "mc-intro") beginMC(); else if (S.phase === "race-ready") startRace(); else if (S.phase === "race") endRace(); else if (S.phase === "tap-ready") startTap(); else if (S.phase === "tap") endTap();
       else if (S.phase === "react-go") endReact(); else if (S.phase === "guess") endGuess();
       else if (S.phase === "imp-talk") startVote(); else if (S.phase === "imp-vote") endVote();
       return;
@@ -5742,6 +6077,20 @@ function startHost(){
       later(early ? 50 : 200, early ? {t:"react", r:st.round, early:true} : {t:"react", r:st.round, ms: smart ? 220 + Math.random() * 110 : 330 + Math.random() * 320}); }
     if (st.phase === "guess") { const a = S.list[S.round][1], spread = smart ? 0.3 : 1;
       later(1500 + Math.random() * 8000, {t:"guess", r:st.round, value: Math.round(a * (1 - spread / 2 + Math.random() * spread))}); }
+    const bpid = S.links[L.id];
+    if (st.phase === "maf-night" && st.maf && st.maf.alive && st.maf.role !== "villager" && !st.maf.winner) { const opts = st.maf.people.filter(p => p.alive && (st.maf.role === "mafia" ? p.role !== "mafia" : st.maf.role === "detective" ? p.pid !== bpid && !p.checked : true));
+      if (opts.length) later(2000 + Math.random() * 9000, {t:"maf", target: (st.maf.role === "doctor" && Math.random() < 0.3 ? bpid : pick(opts).pid)}); }
+    if (st.phase === "maf-vote" && st.maf && st.maf.alive && !st.maf.winner) { const v = mafVillOf(bpid), opts = st.maf.people.filter(p => p.alive && p.pid !== bpid);
+      let t = opts.length ? pick(opts).pid : "skip";
+      if (v && v.role[bpid] === "mafia") { const inn = opts.filter(p => v.role[p.pid] !== "mafia"); if (inn.length) t = pick(inn).pid; }
+      else if (v && smart && Math.random() < 0.35) { const m = opts.find(p => v.role[p.pid] === "mafia"); if (m) t = m.pid; }
+      const known = st.maf.people.find(p => p.checked === "mafia" && p.alive); if (known) t = known.pid;
+      later(3000 + Math.random() * 15000, {t:"maf", target: Math.random() < 0.08 ? "skip" : t}); }
+    if (st.phase === "rps-pick" && st.rps && st.rps.opp && !st.rps.mine) later(800 + Math.random() * 4000, {t:"rps", c: pick(["r", "p", "s"])});
+    if (st.phase === "draw" && st.dd && !st.dd.drawer) { const D = S.doodle, word = D.word, id = S.round;
+      const wrong = () => pick(DRAW_WORDS.filter(w => w !== word));
+      for (let k = 0; k < 2; k++) later(5000 + Math.random() * 25000, {t:"dguess", text: wrong()});
+      if (Math.random() < (smart ? 0.75 : 0.4)) setTimeout(() => { if (S.phase === "draw" && S.round === id) handle(L, {t:"dguess", text: word}); }, 9000 + Math.random() * 45000); }
     if (st.phase === "imp-vote" && st.imp && st.imp.others && st.imp.others.length) {
       const g = S.groups.find(g => g.members.includes(L.id));
       const sus = g && g.imposter !== L.id && Math.random() < (smart ? 0.7 : 0.35) ? g.imposter : pick(st.imp.others).pid;
@@ -5796,6 +6145,9 @@ function startHost(){
     else if (S.phase === "lobby") body = lobbyView();
     else if (S.phase.startsWith("mc")) body = kqView();
     else if (S.phase.startsWith("race")) body = raceView();
+    else if (S.phase.startsWith("maf")) body = mafiaView();
+    else if (S.phase.startsWith("rps")) body = rpsView();
+    else if (S.phase === "draw" || S.phase === "draw-res") body = doodleView();
     else if (S.phase.startsWith("tap")) body = tapView();
     else if (S.phase.startsWith("react")) body = reactView();
     else if (S.phase.startsWith("guess")) body = guessView();
@@ -5811,6 +6163,7 @@ function startHost(){
     if (keep) restoreEditor(keep);
     if (S.phase === "lobby" && S.view === "lobby" && S.ready) drawQR();
     if ((S.phase === "race" || S.phase === "race-ready") && document.getElementById("tvcanvas")) { TV.key = S.phase + S.round; tvStart(); }
+    if (document.getElementById("dcv")) doodlePaint(null);
   }
   function drawQR(){
     const box = document.getElementById("qr"); if (!box) return;
@@ -6158,7 +6511,9 @@ The Earth is flat. | True | *False</pre>
         const r = document.createRange(); r.selectNodeContents(document.getElementById("joinurl")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Link selected. Copy it."); }); }
     if (a === "shuffle") { shuffle(Object.keys(S.players)).forEach((pid,i) => S.players[pid].team = i % S.teamCount); broadcast(); render(); }
     if (a === "start" || a === "again") startGame();
-    if (a === "skip") { if (S.phase === "race") { endRace(); return; } if (S.phase === "mc") endMC(); else if (S.phase === "guess") endGuess(); else if (S.phase === "imp-vote") endVote(); }
+    if (a === "mafvote" && S.phase === "maf-day") { mafStartVote(); return; }
+    if (a === "skip") { if (S.phase === "maf-night") { mafEndNight(); return; } if (S.phase === "maf-vote") { mafEndVote(); return; } if (S.phase === "rps-pick") { rpsEnd(); return; } if (S.phase === "draw") { doodleEnd(); return; }
+      if (S.phase === "race") { endRace(); return; } if (S.phase === "mc") endMC(); else if (S.phase === "guess") endGuess(); else if (S.phase === "imp-vote") endVote(); }
     if (a === "vote") startVote();
     if (a === "ccfinish") ccFinishAll();
     if (a === "rmbots") removeBots();
@@ -6278,6 +6633,9 @@ function startPlayer(code){
       if (!m) return;
       if (m.t === "tick") { if (P.st) { P.st.endsIn = m.endsIn; P.recvAt = Date.now(); } return; }
       if (m.t === "rs") { Drive.rs(m); return; }
+      if (m.t === "dr") { if (m.clear) P.dstrokes = []; else if (Array.isArray(m.s)) (P.dstrokes = P.dstrokes || []).push(...m.s);
+        const cv = document.getElementById("pdcv"); if (cv) { if (m.clear) doodleRepaint(); else for (const s of m.s || []) drawStroke(cv.getContext("2d"), s, cv.width, cv.height); } return; }
+      if (m.t === "close") { P.ddClose = Date.now(); const el = document.getElementById("ddclose"); if (el) el.textContent = "🔥 So close! Try again."; Sound.sfx("boing"); return; }
       if (m.t === "voice") { Voice.hear(m); return; }
       if (m.t !== "state") return;
       const prev = P.st; P.st = m; P.recvAt = Date.now();
@@ -6322,6 +6680,7 @@ function startPlayer(code){
     const st0 = P.st, driving = !!(st0 && P.joined && (st0.phase === "race" || st0.phase === "race-ready") && st0.race && st0.race.seed);
     document.body.classList.toggle("driving", driving);
     if (driving && document.getElementById("drive") && Drive.key === st0.round + ":" + st0.race.seed) { Drive.update(st0); return; }
+    if (st0 && st0.phase === "draw" && st0.dd && st0.dd.drawer && P.ddRound === st0.round && document.querySelector("#pdcv.draw")) { const i = document.getElementById("ddinfo"); if (i) i.innerHTML = `${st0.dd.n} got it · <b data-left>${Math.ceil(left() / 1000)}</b>s`; return; }
     let body = ""; const st = P.st;
     if (P.status === "error") body = `<div class="msg"><h2>Can't join</h2><p class="muted">${esc(P.err)}</p><button data-act="reload">Try again</button></div>`;
     else if (!st && P.status === "slow") body = `<div class="msg"><h2>Still connecting…</h2>
@@ -6343,6 +6702,9 @@ function startPlayer(code){
     else if (st.phase === "react-wait" || st.phase === "react-go") body = reactPad(st);
     else if (st.phase === "guess") body = guessQ(st);
     else if (st.phase.startsWith("imp")) body = impPhone(st);
+    else if (st.phase.startsWith("maf")) body = mafiaPhone(st);
+    else if (st.phase.startsWith("rps")) body = rpsPhone(st);
+    else if (st.phase === "draw" || st.phase === "draw-res") body = doodlePhone(st);
     else if (st.phase.endsWith("-res") || st.phase === "guess-rev") body = resultCard(st);
     else if (st.phase === "cc") body = ccPhone(st);
     else if (st.phase === "lu") body = luPhone(st);
@@ -6357,6 +6719,7 @@ function startPlayer(code){
     const zEl = app.querySelector(".tyzoom"), zs = zEl ? [zEl.scrollLeft, zEl.scrollTop] : null;
     lastKey = key; app.innerHTML = html;
     if (driving && document.getElementById("drive")) Drive.mount(st0);
+    if (document.getElementById("pdcv")) { doodleRepaint(); doodleBind(); }
     if (zs) { const z2 = app.querySelector(".tyzoom"); if (z2) { z2.scrollLeft = zs[0]; z2.scrollTop = zs[1]; } }
     if (typed !== null && document.getElementById("nm")) document.getElementById("nm").value = typed;
     if (guessTyped !== null && document.getElementById("gv")) document.getElementById("gv").value = guessTyped;
@@ -6482,6 +6845,77 @@ function startPlayer(code){
     },
   };
   function racePhone(st){ return Drive.html(st); }
+  const MAF_R = {mafia:{n:"Mafia", e:"🔪", c:"#e5383b", d:"Each night, agree with your partners and pick someone to eliminate. In the day, pretend to be innocent!"},
+    doctor:{n:"Doctor", e:"💉", c:"#2fbf71", d:"Each night, pick one person to protect. If the Mafia attacks them, they survive. You can save yourself."},
+    detective:{n:"Detective", e:"🔍", c:"#3d8bff", d:"Each night, investigate one person to learn if they are Mafia. Use it wisely in the day!"},
+    villager:{n:"Villager", e:"🧑‍🌾", c:"#f5b622", d:"You have no night power. Listen carefully in the day and vote out the Mafia."}};
+  function mafiaPhone(st){
+    const M = st.maf; if (!M || M.sitout) return `<div class="msg"><h2>Watch this one</h2><p class="muted">You joined after the roles were handed out.</p></div>`;
+    const R = MAF_R[M.role], ph = st.phase;
+    const card = `<div class="mcard" style="--c:${R.c}"><span class="me">${R.e}</span><div><small>${esc(M.village)} · your secret role</small><b>${R.n}</b></div></div>`;
+    if (M.winner) { const won = M.winner === "mafia" ? M.role === "mafia" : M.role !== "mafia";
+      return `<div class="mphone ${won ? "ok" : "no"}"><div class="mbig">${M.winner === "mafia" ? "🔪" : "🎉"}</div><h2>${M.winner === "mafia" ? "The Mafia wins!" : "The Village wins!"}</h2><p>${won ? "Your side won! 🏆" : "Your side lost this time."}</p>${card}${mafList(M, null)}</div>`; }
+    if (!M.alive && ph !== "maf-role") return `<div class="mphone ghost"><div class="mbig">👻</div><h2>You are out</h2><p class="muted">Watch quietly and don't give away any secrets!</p>${card}${M.log && ph !== "maf-night" ? `<div class="mlog">${esc(M.log)}</div>` : ""}</div>`;
+    if (ph === "maf-role") return `<div class="mphone night"><p class="muted">Keep your screen hidden 🤫</p><div class="mflip" style="--c:${R.c}"><span class="me">${R.e}</span><b>${R.n}</b><p>${R.d}</p></div>
+      ${M.mates.length ? `<div class="mmates">Your Mafia partner${M.mates.length > 1 ? "s" : ""}: <b>${M.mates.map(m => esc(m.name)).join(", ")}</b></div>` : ""}</div>`;
+    if (ph === "maf-night") {
+      if (M.role === "villager") return `<div class="mphone night"><div class="mbig sleep">😴</div><h2>Night time…</h2><p class="muted">Close your eyes and stay quiet. The Mafia is choosing.</p>${card}</div>`;
+      const ask = {mafia:"Who will the Mafia eliminate?", doctor:"Who do you want to protect?", detective:"Who do you want to investigate?"}[M.role];
+      const opts = M.people.filter(p => p.alive && (M.role === "mafia" ? p.role !== "mafia" : M.role === "detective" ? p.pid !== pid : true));
+      return `<div class="mphone night">${card}<h2>${ask}</h2>
+        ${M.role === "mafia" && M.mates.length ? `<div class="mmates">${M.mates.map(m => `${esc(m.name)}: ${m.pick ? "picked <b>" + esc(m.pick) + "</b>" : "thinking…"}`).join("<br>")}</div>` : ""}
+        <div class="mopts">${opts.map(p => `<button class="mopt ${M.mine === p.pid ? "on" : ""}" data-mafn="${p.pid}">${Avatar.svg(p.av, 34)}<span>${esc(p.name)}${p.pid === pid ? " (you)" : ""}</span>${p.checked ? `<em class="${p.checked}">${p.checked === "mafia" ? "Mafia!" : "innocent"}</em>` : ""}</button>`).join("")}</div>
+        <p class="hint">${M.mine ? "Locked in. You can still change it." : "Tap a name."}</p></div>`;
+    }
+    if (ph === "maf-day") return `<div class="mphone day"><div class="mlog big">${esc(M.log)}</div>
+      ${M.check ? `<div class="mcheck ${M.check.mafia ? "bad" : "good"}">🔍 Your investigation: <b>${esc(M.check.name)}</b> is ${M.check.mafia ? "<b>MAFIA!</b>" : "innocent."}</div>` : ""}
+      <h2>Discuss! 🗣️</h2><p class="muted">Who is acting suspicious? Voting starts soon.</p>${card}${mafList(M, null)}</div>`;
+    if (ph === "maf-vote") { const opts = M.people.filter(p => p.alive && p.pid !== pid);
+      return `<div class="mphone day"><h2>🗳️ Vote someone out</h2><div class="mopts">${opts.map(p => `<button class="mopt ${M.mine === p.pid ? "on" : ""}" data-mafv="${p.pid}">${Avatar.svg(p.av, 34)}<span>${esc(p.name)}</span>${p.checked ? `<em class="${p.checked}">${p.checked === "mafia" ? "Mafia!" : "innocent"}</em>` : ""}</button>`).join("")}
+        <button class="mopt skip ${M.mine === "skip" ? "on" : ""}" data-mafv="skip">🤷 Skip vote</button></div>${card}</div>`; }
+    return `<div class="mphone day"><div class="mlog big">${esc(M.log)}</div>${card}${mafList(M, null)}</div>`;
+  }
+  function mafList(M){ return `<div class="mlist">${M.people.map(p => `<span class="${p.alive ? "" : "dead"}">${Avatar.svg(p.av, 22)}${esc(p.name)}${p.alive ? "" : " 💀"}${p.role ? " · " + MAF_R[p.role].e : ""}</span>`).join("")}</div>`; }
+  function rpsPhone(st){
+    const R = st.rps; if (!R) return "";
+    if (R.out) return `<div class="msg"><div class="mbig">😵</div><h2>You're out!</h2><p class="muted">${R.left} player${R.left === 1 ? "" : "s"} left. Watch the big screen!</p></div>`;
+    if (R.bye && st.phase === "rps-pick") return `<div class="msg"><div class="mbig">😎</div><h2>Free pass!</h2><p class="muted">No opponent this round. You go through.</p></div>`;
+    if (st.phase === "rps-res" && R.res) { const r = R.res;
+      return `<div class="result ${r.win > 0 ? "ok" : r.win < 0 ? "no" : ""}"><div class="rpsbig">${RPS_EM[r.me] || "😴"} <small>vs</small> ${RPS_EM[r.them] || "😴"}</div><h2>${r.win > 0 ? "You win! 🎉" : r.win < 0 ? "You lose 😵" : "Tie! Play again"}</h2><p>${R.opp ? "against " + esc(R.opp.name) : ""}</p></div>`; }
+    if (st.phase === "rps-res") return `<div class="msg"><h2>Next round coming…</h2></div>`;
+    return `<div class="rpsphone"><div class="label">Round ${R.round} · ${R.left} left · <b data-left>${Math.ceil(left() / 1000)}</b> s</div>
+      ${R.opp ? `<div class="rpsopp">${Avatar.svg(R.opp.av, 40)}<span>vs <b>${esc(R.opp.name)}</b></span></div>` : ""}
+      <div class="rpsbtns">${["r", "p", "s"].map(c => `<button class="rpsbtn ${R.mine === c ? "on" : ""}" data-rps="${c}" ${R.mine ? "disabled" : ""}><span>${RPS_EM[c]}</span>${{r:"Rock", p:"Paper", s:"Scissors"}[c]}</button>`).join("")}</div>
+      <p class="hint">${R.mine ? "Locked in! Waiting for " + esc(R.opp ? R.opp.name : "your opponent") + "…" : "✊ beats ✌️ · ✌️ beats ✋ · ✋ beats ✊"}</p></div>`;
+  }
+  const RPS_EM = {r:"✊", p:"✋", s:"✌️"};
+  function doodlePhone(st){
+    const D = st.dd; if (!D) return "";
+    if (P.ddRound !== st.round) { P.ddRound = st.round; P.dstrokes = []; P.dcol = 0; P.dw = 1; }
+    if (st.phase === "draw-res") return `<div class="result ${D.got || D.drawer ? "ok" : "no"}"><h2>The word was ${esc((D.word || "").toUpperCase())}</h2><p>${D.drawer ? `${D.n} player${D.n === 1 ? "" : "s"} guessed your drawing!` : D.got ? `+${D.got} points` : "You didn't guess it this time."}</p></div>${standing(st)}`;
+    if (D.drawer) return `<div class="ddraw"><div class="ddtop"><span>Draw this:</span><b>${esc(D.word.toUpperCase())}</b><span id="ddinfo">${D.n} got it · <b data-left>${Math.ceil(left() / 1000)}</b>s</span></div>
+      <canvas id="pdcv" class="pdcv draw" width="1000" height="700"></canvas>
+      <div class="ddtools">${DRAW_COLS.map((c, i) => `<button class="ddc ${P.dcol === i ? "on" : ""}" style="--c:${c}" data-dcol="${i}" aria-label="Color"></button>`).join("")}
+        <button class="ddw ${P.dw === 1 ? "on" : ""}" data-dw="1">●</button><button class="ddw big ${P.dw === 3 ? "on" : ""}" data-dw="3">⬤</button><button class="ghost sm" data-act="dclear">🗑️ Clear</button></div>
+      <p class="hint">No letters or numbers! Just draw. 🎨</p></div>`;
+    if (D.got) return `<div class="ddguess"><div class="result ok"><h2>✅ You got it!</h2><p>+${D.got} points · it was <b>${esc(st.dd.word || "")}</b></p></div><canvas id="pdcv" class="pdcv" width="1000" height="700"></canvas></div>`;
+    return `<div class="ddguess"><div class="ddtop"><span>${esc(D.drawerName)} is drawing</span><b class="hintw">${esc(D.hint)}</b><span><b data-left>${Math.ceil(left() / 1000)}</b>s</span></div>
+      <canvas id="pdcv" class="pdcv" width="1000" height="700"></canvas>
+      <form class="ddform" id="ddform"><input id="gv" type="text" autocomplete="off" autocapitalize="off" maxlength="30" placeholder="Type your guess…" aria-label="Your guess"><button class="big" type="submit">Guess</button></form>
+      <p class="hint" id="ddclose">${P.ddClose && Date.now() - P.ddClose < 2500 ? "🔥 So close! Try again." : D.n ? D.n + " player" + (D.n === 1 ? "" : "s") + " got it already!" : "Be the first to guess!"}</p></div>`;
+  }
+  function doodleRepaint(){ const cv = document.getElementById("pdcv"); if (!cv) return; const c = cv.getContext("2d"); c.fillStyle = "#fff"; c.fillRect(0, 0, cv.width, cv.height); for (const s of P.dstrokes || []) drawStroke(c, s, cv.width, cv.height); }
+  function doodleBind(){
+    const cv = document.getElementById("pdcv"); if (!cv || !cv.classList.contains("draw") || cv._bound) return; cv._bound = true;
+    let cur = null, timer = 0;
+    const pt = e => { const b = cv.getBoundingClientRect(); return [+((e.clientX - b.left) / b.width).toFixed(3), +((e.clientY - b.top) / b.height).toFixed(3)]; };
+    const flush = () => { if (cur && cur.length > 4) { send({t:"dr", s:[cur]}); P.dstrokes.push(cur); const lx = cur[cur.length - 2], ly = cur[cur.length - 1]; cur = cur.end ? null : [cur[0], cur[1], lx, ly]; } };
+    cv.addEventListener("pointerdown", e => { e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch(_){} const [x, y] = pt(e); cur = [P.dcol, P.dw, x, y, x + 0.001, y]; clearInterval(timer); timer = setInterval(flush, 90); });
+    cv.addEventListener("pointermove", e => { if (!cur) return; e.preventDefault(); const [x, y] = pt(e), lx = cur[cur.length - 2], ly = cur[cur.length - 1];
+      if (Math.abs(x - lx) + Math.abs(y - ly) < 0.004) return; cur.push(x, y); drawStroke(cv.getContext("2d"), [cur[0], cur[1], lx, ly, x, y], cv.width, cv.height); });
+    const up = () => { if (!cur) return; flush(); cur = null; clearInterval(timer); };
+    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  }
   function kqFoot(st){ return `<div class="kp-foot">${Avatar.svg(P.av, 30)}<span>${esc(P.name)}</span><b>${fmt(st.you ? st.you.pts : 0)}</b></div>`; }
   function kqPhone(st){
     const q = st.q, ph = st.phase, head = `<div class="kp-head"><span>${st.round + 1} of ${st.total}</span>${ph === "mc" && st.mine === undefined ? `<b data-left>${Math.ceil(left()/1000)}</b>` : ""}</div>`;
@@ -6685,6 +7119,12 @@ function startPlayer(code){
     if (b.dataset.cell !== undefined) { Sound.sfx("pop"); send({t:"lu", a:"play", i:P.luSel, cell:+b.dataset.cell}); P.luSel = null; return; }
     if (b.dataset.act === "ludoroll") { Sound.sfx("dice"); send({t:"ludo", a:"roll"}); return; }
     if (b.dataset.lmove !== undefined) { Sound.sfx("pop"); send({t:"ludo", a:"move", k:+b.dataset.lmove}); return; }
+    if (b.dataset.mafn) { Sound.sfx("click"); send({t:"maf", target:b.dataset.mafn}); return; }
+    if (b.dataset.mafv) { Sound.sfx("click"); send({t:"maf", target:b.dataset.mafv}); return; }
+    if (b.dataset.rps) { Sound.sfx("pop"); send({t:"rps", c:b.dataset.rps}); if (P.st && P.st.rps) P.st.rps.mine = b.dataset.rps; lastKey = ""; render(); return; }
+    if (b.dataset.dcol) { P.dcol = Number(b.dataset.dcol); document.querySelectorAll(".ddc").forEach(x => x.classList.toggle("on", x === b)); return; }
+    if (b.dataset.dw) { P.dw = Number(b.dataset.dw); document.querySelectorAll(".ddw").forEach(x => x.classList.toggle("on", x === b)); return; }
+    if (b.dataset.act === "dclear") { P.dstrokes = []; send({t:"dr", clear:true}); doodleRepaint(); return; }
     if (b.dataset.act === "tyzoom") { P.tyZoom = !P.tyZoom; render(); return; }
     if (b.dataset.act === "slroll") { Sound.sfx("dice"); send({t:"sl", a:"roll"}); return; }
     if (b.dataset.act === "tyroll") { Sound.sfx("dice"); send({t:"ty", a:"roll"}); return; }
@@ -6715,6 +7155,7 @@ function startPlayer(code){
     e.preventDefault();
     if (e.target.id === "joinform") { P.name = document.getElementById("nm").value.replace(/\s+/g," ").trim().slice(0,18) || "Player"; store.set("sp-name", P.name);
       store.set("sp-av", P.av); Sound.sfx("join"); send({t:"join", pid, name:P.name, av:P.av, team:P.team}); }
+    if (e.target.id === "ddform") { const el = document.getElementById("gv"), v = el.value.trim(); if (v) { send({t:"dguess", text:v}); el.value = ""; Sound.sfx("pop"); } return; }
     if (e.target.id === "guessform") { const v = Number(document.getElementById("gv").value); if (isFinite(v)) { Sound.sfx("pop"); send({t:"guess", r:P.st.round, value:v}); } }
   });
   render();
