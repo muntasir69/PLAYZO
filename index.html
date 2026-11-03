@@ -835,9 +835,9 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .rwrap{position:relative}
 .rtrack{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.45);background:#6cc551}
 .rsky{position:relative;height:clamp(70px,13vh,130px);background:linear-gradient(#7ecbff,#bfe8ff);overflow:hidden}
-.cloud{position:absolute;width:90px;height:26px;background:#fff;border-radius:99px;opacity:.9;animation:cloud 30s linear infinite}
-.cloud::before{content:"";position:absolute;width:44px;height:36px;background:#fff;border-radius:50%;left:16px;top:-16px}
-.cloud.c1{top:14%;animation-duration:38s}.cloud.c2{top:40%;animation-duration:26s;animation-delay:-9s;transform:scale(.7)}.cloud.c3{top:8%;animation-duration:44s;animation-delay:-22s;transform:scale(1.2)}
+.rsky .rcloud{position:absolute;width:90px;height:26px;background:#fff;border-radius:99px;opacity:.9;animation:cloud 30s linear infinite}
+.rsky .rcloud::before{content:"";position:absolute;width:44px;height:36px;background:#fff;border-radius:50%;left:16px;top:-16px}
+.rsky .rcloud.c1{top:14%;animation-duration:38s}.rsky .rcloud.c2{top:40%;animation-duration:26s;animation-delay:-9s;transform:scale(.7)}.rsky .rcloud.c3{top:8%;animation-duration:44s;animation-delay:-22s;transform:scale(1.2)}
 @keyframes cloud{from{left:110%}to{left:-20%}}
 .rhills{position:absolute;left:0;right:0;bottom:0;height:60%;background:radial-gradient(ellipse 120px 60px at 60px 100%,#4caf50 98%,transparent) 0 100%/240px 100% repeat-x,radial-gradient(ellipse 90px 46px at 45px 100%,#3d9a42 98%,transparent) 60px 100%/180px 100% repeat-x;animation:hills 6s linear infinite}
 @keyframes hills{to{background-position:-240px 100%,-120px 100%}}
@@ -4370,9 +4370,9 @@ function Road3D(canvas, T){
     }
     if (th.snow) { if (snow.length < 120) for (let i = 0; i < 4; i++) snow.push({x: Math.random() * W, y: -10, v: 40 + Math.random() * 60, r: 1 + Math.random() * 2.5});
       ctx.fillStyle = "rgba(255,255,255,.85)"; for (const f of snow) { f.y += (f.v + sp * 260) * dt; f.x += (Math.sin(f.y / 40) * 20 - (cam.steer || 0) * 120) * dt; if (f.y > H) { f.y = -10; f.x = Math.random() * W; } ctx.beginPath(); ctx.arc(f.x, f.y, f.r * (W / 800 + 0.6), 0, 7); ctx.fill(); } }
-    if (sp > 0.85) { const a = Math.min(0.5, (sp - 0.85) * 1.2 + (cam.nitro ? 0.25 : 0)); ctx.strokeStyle = `rgba(255,255,255,${a})`; ctx.lineWidth = Math.max(1, W / 400);
-      for (let k = 0; k < (cam.nitro ? 30 : 14); k++) { const ang = Math.random() * Math.PI * 2, r1 = W * (0.32 + Math.random() * 0.25), r2 = r1 + W * (0.15 + Math.random() * 0.2), cx = W / 2, cy = HY;
-        ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * r1, cy + Math.sin(ang) * r1 * 0.7); ctx.lineTo(cx + Math.cos(ang) * r2, cy + Math.sin(ang) * r2 * 0.7); ctx.stroke(); } }
+    if (cam.nitro) { ctx.strokeStyle = "rgba(255,255,255,.22)"; ctx.lineWidth = Math.max(1, W / 500);
+      for (let k = 0; k < 10; k++) { const side = k % 2 ? 1 : -1, y = H * (0.15 + Math.random() * 0.7), x0 = W / 2 + side * W * (0.42 + Math.random() * 0.05);
+        ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + side * W * 0.12, y + (y - HY) * 0.25); ctx.stroke(); } }
     ctx.restore();
     if (cam.nitro) { const g = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75); g.addColorStop(0, "rgba(60,180,255,0)"); g.addColorStop(1, "rgba(60,180,255,.35)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
   };
