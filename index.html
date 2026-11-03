@@ -341,7 +341,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;letter-spacing:.02e
 .pcard.red{color:#d6336c}
 .pcard small{font-size:.55rem;color:var(--muted);font-weight:700}
 .pcard.sel{border-color:#ffc23d;transform:translateY(-6px)}
-.pcard.dead{opacity:.55}
+.pcard.dead{opacity:.55;background:transparent;border-color:transparent;transform:none}
 .pcard:disabled{opacity:.85;cursor:default}
 .lu-seqs{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.9rem}
 .lu-seqs span{color:var(--c);font-weight:700}
@@ -750,6 +750,114 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 @keyframes kqclimb{0%,35%{box-shadow:none;scale:1}60%{box-shadow:0 0 0 3px #fff,0 10px 30px rgba(0,0,0,.45);scale:1.04}100%{box-shadow:none;scale:1}}
 .kq-down{background:#e21b3c;color:#fff;font-size:.7em;padding:3px 8px;border-radius:99px}
 .kq-row b{min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
+
+/* v20: animated how-it-works demo */
+.hero{grid-template-columns:1fr}
+.demo{--loop:16s;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:center;padding:20px;margin-bottom:18px;overflow:hidden}
+@media (max-width:820px){.demo{grid-template-columns:1fr}}
+.demo-stage{position:relative;aspect-ratio:16/10.5;width:100%}
+.tv{position:absolute;left:0;top:4%;width:76%}
+.tv-screen{position:relative;aspect-ratio:16/10;background:linear-gradient(160deg,#241c4f,#15122e);border:10px solid #0b0920;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.08);overflow:hidden}
+.tv-stand{width:24%;height:14px;margin:0 auto;background:linear-gradient(#2a2550,#0b0920);border-radius:0 0 10px 10px}
+.phone-d{position:absolute;right:2%;bottom:2%;width:25%;aspect-ratio:9/18.5;background:#0b0920;border-radius:22px;padding:6px;box-shadow:0 18px 40px rgba(0,0,0,.5),inset 0 0 0 2px #2a2550;animation:phmove var(--loop) ease-in-out infinite;z-index:2}
+@keyframes phmove{0%,22%{transform:none}27%,38%{transform:translate(-62%,-22%) rotate(-9deg)}43%,100%{transform:none}}
+.ph-notch{position:absolute;top:9px;left:50%;width:34%;height:9px;transform:translateX(-50%);background:#0b0920;border-radius:99px;z-index:3}
+.ph-screen{position:relative;width:100%;height:100%;border-radius:17px;overflow:hidden;background:#1d1840}
+.dscene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6%;padding:6%;opacity:0;visibility:hidden}
+.dtitle{font-family:var(--display);font-size:clamp(.9rem,2vw,1.5rem);letter-spacing:.06em;color:#fff}.dtitle b{color:var(--t2);font-weight:inherit}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:72%}
+.dcard{aspect-ratio:1.25;background:rgba(255,255,255,.08);border-radius:10px;display:grid;place-items:center}
+.dcard svg{width:52%;height:auto}
+.dcard.pick{animation:dpick var(--loop) linear infinite}
+@keyframes dpick{0%,13%{box-shadow:none;transform:none}15%,21%{box-shadow:0 0 0 3px var(--t2),0 0 18px var(--t2);transform:scale(1.08)}}
+.dcursor{position:absolute;font-size:clamp(1.2rem,2.6vw,2rem);animation:dcur var(--loop) ease-in-out infinite;left:80%;top:80%}
+@keyframes dcur{0%,3%{left:80%;top:85%}12%{left:22%;top:42%;transform:none}14%{transform:scale(.8)}16%,100%{left:22%;top:42%;transform:none}}
+.dqrbox{display:flex;align-items:center;gap:7%;width:86%}
+.dqrbox .dqr{width:44%;border-radius:8px;animation:dqrin var(--loop) ease-out infinite}
+@keyframes dqrin{0%,22%{transform:scale(.6) rotate(-6deg)}26%,100%{transform:none}}
+.dlabel{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:clamp(.55rem,1vw,.8rem)}
+.dcode{font-family:var(--display);color:var(--t2);font-size:clamp(1.2rem,3.2vw,2.6rem);letter-spacing:.14em}
+.davs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.davs span{display:grid;place-items:center;background:rgba(255,255,255,.1);border-radius:50%;padding:4px;animation:dpop var(--loop) cubic-bezier(.2,1.6,.4,1) infinite;animation-delay:calc(var(--i) * .5s)}
+.davs svg{width:clamp(26px,4vw,46px);height:auto}
+@keyframes dpop{0%,40%{transform:scale(0)}45%,100%{transform:scale(1)}}
+.dready{background:var(--good);color:#06301d;font-weight:800;border-radius:99px;padding:4px 14px;font-size:clamp(.6rem,1.1vw,.9rem)}
+.tvD,.tvE{background:#46178f;justify-content:flex-start;padding-top:6%}
+.dq{background:#fff;color:#222;font-weight:900;border-radius:6px;padding:5px 16px;font-size:clamp(.7rem,1.5vw,1.2rem)}
+.dtiles{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:90%;margin-top:auto}
+.dtiles div{background:var(--c);color:#fff;font-weight:800;border-radius:5px;padding:9% 6%;display:flex;align-items:center;gap:6px;font-size:clamp(.55rem,1.1vw,.95rem)}
+.dtiles div:not(:last-child){animation:dfade var(--loop) linear infinite}
+@keyframes dfade{0%,74%{opacity:1}77%,100%{opacity:.35}}
+.dsh svg{width:clamp(10px,1.4vw,18px);height:auto;fill:#fff;display:block}
+.drow{display:flex;align-items:center;gap:8px;width:80%;background:rgba(255,255,255,.14);color:#fff;border-radius:6px;padding:3px 10px;font-weight:800;font-size:clamp(.6rem,1.2vw,1rem);animation:dslide var(--loop) ease-out infinite}
+.drow.lead{background:#fff;color:#222}
+.drow span{flex:1}.drow svg{width:clamp(18px,2.4vw,28px);height:auto}
+@keyframes dslide{0%,82%{transform:translateX(-40px);opacity:0}86%,100%{transform:none;opacity:1}}
+.ph-time{font-family:var(--display);font-size:clamp(1.2rem,2.6vw,2rem);color:#fff}
+.ph-cam{font-size:clamp(1.2rem,2.8vw,2.2rem);background:rgba(255,255,255,.12);border-radius:16px;padding:8px;animation:dcam var(--loop) ease-in-out infinite}
+@keyframes dcam{0%,14%{transform:none}17%{transform:scale(.85)}20%,100%{transform:none}}
+.ph-hint{color:var(--muted);font-size:clamp(.5rem,.9vw,.75rem);font-weight:700}
+.phB{background:#000}
+.ph-view{position:relative;width:78%;aspect-ratio:1}
+.ph-view .dqr{width:100%;filter:brightness(.9)}
+.scanline{position:absolute;left:-6%;right:-6%;height:3px;background:var(--good);box-shadow:0 0 10px var(--good);animation:scan 1s ease-in-out infinite alternate}
+@keyframes scan{from{top:0}to{top:100%}}
+.ph-pop{background:#fff;color:#222;font-weight:800;border-radius:10px;padding:5px 9px;font-size:clamp(.5rem,.9vw,.75rem);animation:dpopn var(--loop) ease-out infinite}
+@keyframes dpopn{0%,31%{opacity:0;transform:translateY(-10px)}33%,100%{opacity:1;transform:none}}
+.ph-av svg{width:clamp(38px,6vw,64px);height:auto}
+.ph-in{width:86%;background:#fff;border-radius:8px;padding:5px 8px;color:#222;font-weight:800;font-size:clamp(.6rem,1.1vw,.9rem);text-align:left}
+.typing{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;border-right:2px solid #46178f;animation:dtype var(--loop) steps(3) infinite}
+@keyframes dtype{0%,43%{width:0}50%,100%{width:3.1ch}}
+.ph-btn{width:86%;text-align:center;background:var(--t2);color:var(--ink);font-weight:900;border-radius:8px;padding:6px;font-size:clamp(.6rem,1.1vw,.9rem);animation:dbtn var(--loop) linear infinite}
+@keyframes dbtn{0%,54%{transform:none}55%,56%{transform:scale(.9)}58%,100%{transform:none}}
+.phD{background:#46178f;padding:7%}
+.ph-grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:6px;width:100%;height:80%}
+.ph-grid div{background:var(--c);border-radius:6px;display:grid;place-items:center}
+.ph-grid svg{width:42%;fill:#fff}
+.ph-grid .tap{animation:dtap var(--loop) linear infinite}
+@keyframes dtap{0%,69%{transform:none;box-shadow:none}70%,72%{transform:scale(.88);box-shadow:0 0 0 3px #fff}75%,100%{transform:none}}
+.dfinger{position:absolute;font-size:clamp(1rem,2.4vw,1.8rem);animation:dfing var(--loop) ease-in-out infinite}
+@keyframes dfing{0%,61%{left:20%;top:90%}69%,72%{left:66%;top:66%}76%,100%{left:80%;top:95%;opacity:0}}
+.phE{background:#26890c}
+.ph-ok{font-weight:900;color:#fff;font-size:clamp(.8rem,1.6vw,1.3rem)}
+.ph-check{width:clamp(34px,5vw,56px);aspect-ratio:1;border-radius:50%;background:#fff;color:#26890c;display:grid;place-items:center;font-weight:900;font-size:clamp(1.2rem,2.6vw,2rem)}
+.ph-pts{background:rgba(0,0,0,.28);color:#fff;font-weight:900;border-radius:6px;padding:3px 12px;font-size:clamp(.7rem,1.3vw,1.1rem)}
+.ph-place{color:#fff;font-weight:800;text-align:center;font-size:clamp(.5rem,.9vw,.75rem)}
+.demo-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.demo-steps li{display:flex;gap:12px;align-items:flex-start;border:2px solid transparent;border-radius:14px;padding:10px 12px;transition:transform .3s}
+.demo-steps b{font-family:var(--display);width:34px;height:34px;border-radius:50%;background:var(--t2);color:var(--ink);display:grid;place-items:center;flex:none}
+.demo-steps strong{display:block;font-size:1.05rem}
+.demo-steps span{color:var(--muted);font-size:.92rem}
+.demo-tip{grid-column:1/-1;margin:0;color:var(--muted);font-size:.9rem;text-align:center}
+@media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
+@keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
+@keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
+@keyframes w_tvC{0%,39%{opacity:0;visibility:hidden}40%,59%{opacity:1;visibility:visible}60%,100%{opacity:0;visibility:hidden}}
+@keyframes w_tvD{0%,59%{opacity:0;visibility:hidden}60%,81%{opacity:1;visibility:visible}82%,100%{opacity:0;visibility:hidden}}
+@keyframes w_tvE{0%,81%{opacity:0;visibility:hidden}82%,99%{opacity:1;visibility:visible}100%{opacity:0}}
+@keyframes w_phA{0%,23%{opacity:1;visibility:visible}24%,100%{opacity:0;visibility:hidden}}
+@keyframes w_phB{0%,23%{opacity:0;visibility:hidden}24%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
+@keyframes w_phC{0%,39%{opacity:0;visibility:hidden}40%,59%{opacity:1;visibility:visible}60%,100%{opacity:0;visibility:hidden}}
+@keyframes w_phD{0%,59%{opacity:0;visibility:hidden}60%,77%{opacity:1;visibility:visible}78%,100%{opacity:0;visibility:hidden}}
+@keyframes w_phE{0%,77%{opacity:0;visibility:hidden}78%,99%{opacity:1;visibility:visible}100%{opacity:0}}
+.tvA{animation:w_tvA var(--loop) linear infinite}
+.tvB{animation:w_tvB var(--loop) linear infinite}
+.tvC{animation:w_tvC var(--loop) linear infinite}
+.tvD{animation:w_tvD var(--loop) linear infinite}
+.tvE{animation:w_tvE var(--loop) linear infinite}
+.phA{animation:w_phA var(--loop) linear infinite}
+.phB{animation:w_phB var(--loop) linear infinite}
+.phC{animation:w_phC var(--loop) linear infinite}
+.phD{animation:w_phD var(--loop) linear infinite}
+.phE{animation:w_phE var(--loop) linear infinite}
+@keyframes st1{0%,21%{background:var(--panel-2);border-color:var(--t2);transform:translateX(6px);opacity:1}22%,100%{opacity:.55;background:transparent;border-color:transparent;transform:none}}
+@keyframes st2{0%,21%{opacity:.55;background:transparent;border-color:transparent;transform:none}22%,39%{background:var(--panel-2);border-color:var(--t2);transform:translateX(6px);opacity:1}40%,100%{opacity:.55;background:transparent;border-color:transparent;transform:none}}
+@keyframes st3{0%,39%{opacity:.55;background:transparent;border-color:transparent;transform:none}40%,59%{background:var(--panel-2);border-color:var(--t2);transform:translateX(6px);opacity:1}60%,100%{opacity:.55;background:transparent;border-color:transparent;transform:none}}
+@keyframes st4{0%,59%{opacity:.55;background:transparent;border-color:transparent;transform:none}60%,99%{background:var(--panel-2);border-color:var(--t2);transform:translateX(6px);opacity:1}100%{opacity:.55;background:transparent;border-color:transparent;transform:none}}
+.demo-steps .s1{animation:st1 var(--loop) linear infinite}
+.demo-steps .s2{animation:st2 var(--loop) linear infinite}
+.demo-steps .s3{animation:st3 var(--loop) linear infinite}
+.demo-steps .s4{animation:st4 var(--loop) linear infinite}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -5112,11 +5220,50 @@ function startHost(){
       else { el.remove(); S.selfOn = false; document.body.classList.remove("selfon"); render(); } });
     document.body.appendChild(el); document.body.classList.add("selfon");
   }
+  /* ---- animated "how it works" demo on the home screen (pure CSS loop) ---- */
+  let DEMO_QR = "";
+  function demoQR(){
+    if (DEMO_QR) return DEMO_QR;
+    let seed = 99, r = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff, s = "";
+    const fin = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" fill="#15122e"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#15122e"/>`;
+    for (let y = 0; y < 21; y++) for (let x = 0; x < 21; x++) { if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue; if (r() < 0.48) s += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }
+    return DEMO_QR = `<svg viewBox="-1 -1 23 23" class="dqr" aria-hidden="true"><rect x="-1" y="-1" width="23" height="23" fill="#fff"/><g fill="#15122e">${s}</g>${fin(0,0)}${fin(14,0)}${fin(0,14)}</svg>`;
+  }
+  function howDemo(){
+    const av = ["0-1-2-1-0", "1-3-0-2-1", "2-5-1-0-2", "3-2-3-1-0", "4-6-2-2-1"].map(c => Avatar.svg(c, 30));
+    const sh = i => `<span class="dsh" style="--c:${KQ_COL[i]}">${kqShape(i)}</span>`;
+    return `<section class="demo card" aria-label="How Playzo works">
+      <div class="demo-stage" aria-hidden="true">
+        <div class="tv"><div class="tv-screen">
+          <div class="dscene tvA"><div class="dtitle">PLAY<b>ZO</b></div><div class="dgrid">${["quiz","ludo","snakes","imposter","crash","tycoon"].map((k, i) => `<div class="dcard ${i === 0 ? "pick" : ""}">${gameIcon(k)}</div>`).join("")}</div><div class="dcursor">👆</div></div>
+          <div class="dscene tvB"><div class="dqrbox">${demoQR()}<div><div class="dlabel">Scan to join</div><div class="dcode">K7PQ2</div></div></div></div>
+          <div class="dscene tvC"><div class="dlabel">Who plays</div><div class="davs">${av.map((a, i) => `<span style="--i:${i}">${a}</span>`).join("")}</div><div class="dready">5 players ready · ▶ Start</div></div>
+          <div class="dscene tvD"><div class="dq">Largest planet?</div><div class="dtiles">${["Mars","Earth","Venus","Jupiter"].map((o, i) => `<div style="--c:${KQ_COL[i]}">${sh(i)}${o}</div>`).join("")}</div></div>
+          <div class="dscene tvE"><div class="dq">Scoreboard</div>${["Sam","Ava","Leo"].map((n, i) => `<div class="drow ${i === 0 ? "lead" : ""}">${av[(i + 4) % 5]}<span>${n}</span><b>${[950, 870, 610][i]}</b></div>`).join("")}</div>
+        </div><div class="tv-stand"></div></div>
+        <div class="phone-d"><div class="ph-notch"></div><div class="ph-screen">
+          <div class="dscene phA"><div class="ph-time">7:30</div><div class="ph-cam">📷</div><div class="ph-hint">Open camera</div></div>
+          <div class="dscene phB"><div class="ph-view">${demoQR()}<i class="scanline"></i><span class="cnr"></span></div><div class="ph-pop">🔗 Open Playzo</div></div>
+          <div class="dscene phC"><div class="ph-av">${av[4].replace('width="30" height="30"', 'width="64" height="64"')}</div><div class="ph-in"><span class="typing">Sam</span></div><div class="ph-btn">Join game</div></div>
+          <div class="dscene phD"><div class="ph-grid">${[0,1,2,3].map(i => `<div class="${i === 3 ? "tap" : ""}" style="--c:${KQ_COL[i]}">${kqShape(i)}</div>`).join("")}</div><div class="dfinger">👆</div></div>
+          <div class="dscene phE"><div class="ph-ok">Correct</div><div class="ph-check">✓</div><div class="ph-pts">+ 950</div><div class="ph-place">🔥 You're in 1st place!</div></div>
+        </div></div>
+      </div>
+      <ol class="demo-steps">
+        <li class="s1"><b>1</b><div><strong>Host on a big screen</strong><span>Open Playzo on a TV, laptop or projector, pick a game and press <em>Host this game</em>.</span></div></li>
+        <li class="s2"><b>2</b><div><strong>Scan the QR code</strong><span>Everyone opens their phone camera and points it at the code. No app to install.</span></div></li>
+        <li class="s3"><b>3</b><div><strong>Join with a name</strong><span>Type a name, get a cartoon face, and pop up on the big screen.</span></div></li>
+        <li class="s4"><b>4</b><div><strong>Play on your phone</strong><span>Tap answers, roll dice or play cards on your phone. Scores and boards show on the big screen.</span></div></li>
+      </ol>
+      <p class="demo-tip">💡 Friends far away? Share the join link and show the big screen on a video call.</p>
+    </section>`;
+  }
   function homeView(){
     return `<section class="hero"><div class="hero-copy"><div class="label">Party games for any group · no app needed</div>
         <h1>Pick a game. Scan. Play.</h1>
         <p class="muted">Choose a game, read the rules, then press <b>Host this game</b>. This screen shows a QR code, and everyone joins from their phone with a name and a cartoon face.</p></div>
-        <ol class="how"><li><b>1</b><span>Pick a game</span></li><li><b>2</b><span>Show the QR code</span></li><li><b>3</b><span>Everyone scans and plays</span></li></ol></section>
+</section>
+      ${howDemo()}
       ${S.booted ? `<div class="card resume"><span>Room <b>${S.code}</b> is open with <b>${online().length}</b> players.</span><button class="sm" data-act="back">Back to the room</button></div>` : ""}
       <nav class="catnav" aria-label="Game categories">${GAME_CATS.map(c => { const n = Object.values(GAMES).filter(g => c.tags.includes(g.tag)).length;
         return `<button class="catchip" data-cat="${c.id}" style="--c:${c.color}">${c.icon} ${esc(c.title)} <b>${n}</b></button>`; }).join("")}</nav>
