@@ -1304,6 +1304,60 @@ body.boardmode .lu-board.real{width:min(100%,calc(100vh - 150px))}
 .t-ct{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:42%;background:#1f2b47;border-radius:6px;padding:4px}
 .t-ct.ph{grid-template-columns:repeat(2,1fr);width:90%}
 .t-ct span{display:block;position:relative}
+
+/* v30: Treasure Tides */
+.ttlayout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
+@media (max-width:900px){.ttlayout{grid-template-columns:1fr}}
+.ttboard{width:min(100%,calc(100vh - 215px));margin:0 auto 1%;perspective:1500px}
+body.boardmode .stage.tides{padding:8px 12px;gap:6px}body.boardmode .stage.tides > .hint{display:none}
+.ttboard.d3 .ttsea{transform:rotateX(24deg);transform-origin:50% 60%}
+.ttsea{position:relative;aspect-ratio:1;border-radius:22px;padding:2%;background:radial-gradient(circle at 30% 20%,#53c7f0,#1d7fb8 55%,#0d4f7a);
+  box-shadow:0 2px 0 #0b3d5e,0 4px 0 #0b3d5e,0 6px 0 #093553,0 8px 0 #082f4a,0 10px 0 #072a42,0 40px 60px rgba(0,0,0,.55),inset 0 0 50px rgba(0,30,60,.5)}
+.ttsea::before{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-radial-gradient(circle at 50% 50%,rgba(255,255,255,.08) 0 2px,transparent 3px 26px) 0 0/120% 120%;animation:waves 8s linear infinite;pointer-events:none}
+@keyframes waves{to{background-position:26px 26px}}
+.ttgrid{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2px;width:100%;height:100%}
+.ttc{border-radius:6px;background:rgba(255,255,255,.05);position:relative;display:grid;place-items:center}
+.ttc.isl{background:radial-gradient(circle at 40% 35%,#ffe7a8,#e8c26e 55%,#c99a44);border-radius:44% 56% 50% 50%;box-shadow:0 4px 0 #a07a33,0 6px 10px rgba(0,0,0,.35),0 0 0 3px rgba(255,255,255,.25)}
+.ttc.isl.open{filter:saturate(.7) brightness(.92)}
+.ttc .tti{font-size:clamp(.8rem,2vw,1.6rem);z-index:1}.ttc .palm{position:absolute;right:-4%;top:-26%;font-style:normal;font-size:clamp(.7rem,1.6vw,1.3rem)}
+.ttc.krow{background:rgba(229,56,59,.35);animation:jamflick .3s steps(2) 6}
+.ttshipw{position:absolute;width:10%;transform:translate(-50%,-72%);z-index:5;text-align:center;transition:none;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{margin-top:-4px}}
+.ttshipw .ttship{width:100%;display:block;filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+.ttshipw b{display:inline-block;white-space:nowrap;font-size:clamp(.5rem,.9vw,.75rem);background:var(--tc);color:#fff;border-radius:99px;padding:1px 6px;box-shadow:0 2px 0 rgba(0,0,0,.3);transform:translateY(-20%)}
+.ttshipw.mine b{outline:2px solid #fff}
+.ttfx{position:absolute;transform:translate(-50%,-80%);font-size:clamp(1.4rem,3.4vw,2.8rem);z-index:8;animation:ttfx 1.6s cubic-bezier(.2,1.5,.4,1) both;pointer-events:none}
+@keyframes ttfx{0%{transform:translate(-50%,-30%) scale(.2);opacity:0}30%{transform:translate(-50%,-120%) scale(1.3);opacity:1}100%{transform:translate(-50%,-160%) scale(1);opacity:0}}
+.ttkraken{position:absolute;left:-15%;font-size:clamp(2.5rem,7vw,6rem);transform:translateY(-55%);z-index:9;animation:kraken 3s ease-in-out both;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5))}
+@keyframes kraken{0%{left:-15%;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:105%;opacity:0}}
+.ttside{display:flex;flex-direction:column;gap:10px}
+.ttwind{background:var(--panel-2);border-radius:12px;padding:8px 12px;font-weight:800;text-align:center}.ttwind b{font-family:var(--display);font-size:1.4rem;color:var(--t2)}
+.krwarn{color:#ff6b6b;font-weight:900}
+.ttteams{display:flex;flex-direction:column;gap:6px}
+.ttteam{display:grid;grid-template-columns:1fr auto;gap:2px 8px;background:var(--panel-2);border-left:6px solid var(--tc);border-radius:10px;padding:6px 10px}
+.ttteam small{grid-column:1/-1;color:var(--muted)}.ttgold{font-family:var(--display);color:var(--t2)}
+.ttlog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:.85rem}
+.ttlog li{background:rgba(255,255,255,.06);border-radius:8px;padding:5px 8px;animation:kqslide .5s cubic-bezier(.2,1.3,.4,1) backwards}
+.ttlog li:nth-child(2){animation-delay:.2s}.ttlog li:nth-child(3){animation-delay:.4s}.ttlog li:nth-child(4){animation-delay:.6s}.ttlog li:nth-child(5){animation-delay:.8s}
+.ttphone{display:flex;flex-direction:column;gap:10px;text-align:center}
+.tthead{display:flex;justify-content:space-between;align-items:center;background:var(--tc);border-radius:12px;padding:8px 12px;font-weight:900;color:#fff}.tthead span{font-family:var(--display);font-size:1.3rem}
+.ttmini{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2px;width:min(100%,300px);margin:0 auto;padding:6px;border-radius:12px;background:#1d7fb8}
+.ttmini i{aspect-ratio:1;border-radius:3px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-style:normal;font-size:.62rem;position:relative}
+.ttmini i.isl{background:#e8c26e}
+.ttmini i b{width:70%;aspect-ratio:1;border-radius:50%;box-shadow:0 0 0 1px #fff}.ttmini i b.me{box-shadow:0 0 0 2px #fff,0 0 6px #fff;animation:pickpulse2 1s ease-in-out infinite}
+@keyframes pickpulse2{50%{transform:scale(1.25)}}
+.ttopts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ttopt{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;border-radius:16px;border:0;font:inherit;color:#fff;background:linear-gradient(#2a6fa8,#1b4f7d);box-shadow:0 5px 0 #0f3352;cursor:pointer;position:relative}
+.ttopt span{font-size:1.8rem}.ttopt b{font-size:.85rem}
+.ttopt em{position:absolute;top:-6px;right:-4px;font-style:normal;font-weight:900;font-size:.7rem;background:var(--t2);color:var(--ink);border-radius:99px;padding:2px 7px}
+.ttopt.dig{background:linear-gradient(#e0a84a,#a8701f);box-shadow:0 5px 0 #6b4510}.ttopt.fire{background:linear-gradient(#ff6b4a,#c7341f);box-shadow:0 5px 0 #7a1c0f}
+.ttopt.on{outline:3px solid #fff;transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.4)}
+.t-sea{position:relative;width:70%;aspect-ratio:1.4;border-radius:10px;background:radial-gradient(circle at 30% 20%,#53c7f0,#1d7fb8 60%,#0d4f7a)}
+.t-sea i{position:absolute;font-style:normal;font-size:1.4rem}
+.t-sea .isl{left:62%;top:20%}.t-sea .isl.b{left:30%;top:58%}.t-sea .shp{left:8%;top:30%}
+.tstep.on .t-sea .shp.go{animation:tsail 2s ease-in-out .4s forwards}@keyframes tsail{to{left:58%;top:22%}}
+.t-sea .shp.at{left:56%;top:16%}.t-sea .boom{left:20%;top:30%;animation:kqzoom .5s 1s backwards}
+.t-sea .kr{font-size:2.4rem;top:20%;left:-10%}.tstep.on .t-sea .kr{animation:kraken 2.6s ease-in-out forwards}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -3675,7 +3729,7 @@ const OPT_COLORS = ["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
 
 const FIXED_MODE = {lineup:"teams", crash:"solo", ludo:"solo", tycoon:"solo", snakes:"solo", react:"solo", imposter:"solo"};
 const DEFAULT_MODE = {tap:"teams"};
-FIXED_MODE.race = "solo"; FIXED_MODE.arch = "teams"; FIXED_MODE.circuit = "teams"; FIXED_MODE.mind = "solo"; FIXED_MODE.mafia = "solo"; FIXED_MODE.rps = "solo"; FIXED_MODE.doodle = "solo";
+FIXED_MODE.race = "solo"; FIXED_MODE.tides = "teams"; FIXED_MODE.arch = "teams"; FIXED_MODE.circuit = "teams"; FIXED_MODE.mind = "solo"; FIXED_MODE.mafia = "solo"; FIXED_MODE.rps = "solo"; FIXED_MODE.doodle = "solo";
 const GAMES = {
   quiz: {name:"Trivia Blitz", tag:"Quiz", color:"var(--t2)", players:"2–200+", mins:"5–8 min",
     desc:"Quick-fire multiple choice. Faster right answers score more.",
@@ -3727,6 +3781,11 @@ const GAMES = {
     about:"A team puzzle race. Every team gets the same kind of scrambled circuit board on their phones. Tap tiles to rotate the wires and connect the power source to the bulb. Each player can only turn one tile every couple of seconds, so plan together! You can short-circuit a rival's board.",
     rules:["Your team's board is on every teammate's phone.","Tap a tile to rotate it a quarter turn. Connect ⚡ on the left to 🔌 on the right.","Each player can only turn one tile every 2 seconds, so talk and split the work.","🔒 Locked tiles can't move (they're already right).","⚡ Short circuit (2 per team): scrambles a tile on the leading rival's board and freezes it for 8 seconds.","First team to light the bulb wins. There are 3 boards."],
     scoring:"1st: 500 points each, 2nd: 350, 3rd: 250, 4th: 150. Teams that don't finish get points for how much of the board is lit."},
+  tides: {name:"Treasure Tides", tag:"Team", color:"#1fa2d6", players:"4–200+ (teams)", mins:"8–12 min",
+    desc:"Pirate crews vote together to sail, dig for treasure and fire cannons. Beware the Kraken! 🦑",
+    about:"A team pirate board game. Each team is a ship's crew on a 3D ocean full of mystery islands. Every round the whole crew votes on their phones: sail, dig or fire. Islands hide gold, booby traps, a magic compass and the Golden Idol. Every third round the Kraken attacks!",
+    rules:["Each round the wind blows 1, 2 or 3 spaces. Your ship sails that far.","Your crew votes on their phones: ⬆️⬇️⬅️➡️ sail, ⛏️ dig (when you land on an island ❌) or 💥 fire (when a ship is within 2 spaces). Most votes wins.","⛏️ Dig to find 💰 gold, 🪤 traps (lose gold), 🧭 a compass (shows the Golden Idol ⭐) or the 🗿 Golden Idol itself (+600)!","💥 Firing steals 30% of the nearest rich ship's gold.","🦑 Every 3rd round the Kraken grabs a whole row of the sea. Ships in that row lose 100 gold.","Most gold after 10 rounds wins!"],
+    scoring:"Every player on a team gets points equal to their ship's gold at the end."},
   crash: {name:"Color Crash", tag:"Cards", color:"#ff9f43", players:"2–200+", mins:"8–12 min",
     desc:"Match the color or number and be first to empty your hand. Big groups play at tables of up to 6.",
     about:"A fast card game for everyone. Each player gets 7 cards on their phone. Big groups are split into tables of up to 6, all playing at once, and the big screen shows every table.",
@@ -3873,7 +3932,7 @@ const CFG = {
   introSec:4, quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
-  raceN:3, mafVillage:14, mafRoleSec:12, mafNightSec:30, mafDaySec:75, mafVoteSec:30, mafResSec:8, rpsSec:7, rpsResSec:4, drawN:5, drawSec:75, iaRounds:3, iaSec:90, iaPeek:30, mtRounds:3, mtClueSec:50, mtDrawSec:55, mtBuildSec:45, ctRounds:3, ctSec:120, ctCool:2000, ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
+  raceN:3, mafVillage:14, mafRoleSec:12, mafNightSec:30, mafDaySec:75, mafVoteSec:30, mafResSec:8, rpsSec:7, rpsResSec:4, drawN:5, drawSec:75, iaRounds:3, iaSec:90, iaPeek:30, mtRounds:3, mtClueSec:50, mtDrawSec:55, mtBuildSec:45, ctRounds:3, ctSec:120, ctCool:2000, ttRounds:10, ttVoteSec:20, ttShowSec:6, ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
 };
 
 /* ------------------------------------------------------------ helpers */
@@ -3979,6 +4038,7 @@ function gameIcon(key){
     arch: `<path d="M32 10 L54 22 L32 34 L10 22 Z" fill="#ffc23d" ${st}/><path d="M10 22 L32 34 V54 L10 42 Z" fill="#e08a00" ${st}/><path d="M54 22 L32 34 V54 L54 42 Z" fill="#b86e00" ${st}/><circle cx="48" cy="12" r="7" fill="${w}" ${st}/><path d="M45 12 h6" stroke="${ink}" stroke-width="2"/>`,
     mind: `<circle cx="22" cy="28" r="14" fill="#a77bff" ${st}/><circle cx="44" cy="36" r="12" fill="#3dd6ff" ${st}/><path d="M28 50 q6 6 12 0" stroke="${ink}" stroke-width="3" fill="none"/><path d="M30 26 h8 l-3 -3 M38 26 l-3 3" stroke="${w}" stroke-width="2.5" fill="none"/>`,
     circuit: `<rect x="8" y="8" width="48" height="48" rx="8" fill="#1d2a44" ${st}/><path d="M8 32 H24 V20 H40 V44 H56" stroke="#ffd23d" stroke-width="5" fill="none" stroke-linejoin="round"/><circle cx="52" cy="44" r="6" fill="#fff6c4"/>`,
+    tides: `<rect x="6" y="38" width="52" height="18" rx="4" fill="#1fa2d6" ${st}/><path d="M14 40 H50 L44 50 H20 Z" fill="#8a5a2b" ${st}/><path d="M32 12 V40" stroke="${ink}" stroke-width="3"/><path d="M34 14 Q48 24 34 36 Z" fill="${w}" ${st}/><path d="M32 12 L22 9 L32 6 Z" fill="#e5383b"/>`,
     tap: `<path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#8a6432" stroke-width="8" stroke-linecap="round"/><path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#e0b878" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 5"/><rect x="28" y="20" width="8" height="26" rx="3" fill="#ff5a5f" ${st}/><path d="M32 12 v8" ${st}/>`,
     react: `<circle cx="32" cy="36" r="20" fill="${w}" ${st}/><rect x="28" y="8" width="8" height="7" rx="2" fill="${ink}"/><path d="M32 36 L32 22" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M36 30 l-8 10 h7 l-4 10 l11 -13 h-7 l4 -7 z" fill="#ffc23d" ${st}/>`,
     guess: `<circle cx="30" cy="36" r="20" fill="${w}" ${st}/><circle cx="30" cy="36" r="13" fill="#ff5a5f" ${st}/><circle cx="30" cy="36" r="6" fill="${w}" ${st}/><path d="M30 36 L54 12" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M54 12 l-2 -6 M54 12 l6 2 M49 10 l-1 -5 M52 15 l5 1" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,
@@ -4724,6 +4784,10 @@ function tutSteps(k){
     circuit: [S(`<div class="t-ct">${[2, 3, 5, 6, 10, 9, 12, 3, 5].map((m, i) => ctTileSVG(m, i < 3, false, i === 0 ? "" : "")).join("")}</div>`, `<div class="t-ct ph">${[10, 3, 5, 6].map((m, i) => `<span class="${i === 1 ? "ttap" : ""}">${ctTileSVG(m, false, false)}</span>`).join("")}</div>`, "Your team's circuit board is scrambled. Tap a tile to rotate it."),
               S(`<div class="t-ct">${[10, 12, 5, 6, 10, 9, 12, 3, 5].map((m, i) => ctTileSVG(m, [0, 1, 4, 5].includes(i), false)).join("")}</div>`, T_.txt("Each player: 1 turn every 2 s") + T_.btn("⚡ Short-circuit"), "Connect the power ⚡ to the bulb. Split the work, and short-circuit rivals!"),
               S(T_.big("💡 Red Foxes lit the bulb!"), T_.ok("1st place!", "+ 500"), "First team to light the bulb wins the board.")],
+    tides: [S(`<div class="t-sea"><i class="shp a">⛵</i><i class="isl">🏝️</i><i class="isl b">🏝️</i></div>`, T_.btns(["⬆️", "➡️", "⛏️"], 1), "Your team is a pirate crew. Everyone votes on their phone: sail, dig or fire."),
+            S(`<div class="t-sea"><i class="shp go">⛵</i><i class="isl">🏝️</i><i class="isl b">🏝️</i></div>`, T_.txt("🌬️ Wind 3") + T_.ok("Landed!"), "The most-voted move wins. Sail as far as the wind blows."),
+            S(`<div class="t-sea"><i class="shp at">⛵</i><i class="isl">💰</i><i class="isl b">🏝️</i><i class="boom">💥</i></div>`, T_.btn("⛏️ Dig here!"), "Dig islands for 💰 gold, 🧭 compasses and the 🗿 Golden Idol. Fire 💥 to steal gold!"),
+            S(`<div class="t-sea"><i class="kr">🦑</i><i class="shp a">⛵</i></div>`, T_.no("Kraken! -100"), "Every 3rd round the Kraken attacks a row. Most gold after 10 rounds wins! 🏆")],
     react: [S(T_.big("Wait for green…", "wait"), `<div class="t-pad red">Wait…</div>`, "Your phone turns red. DON'T tap yet!"),
             S(T_.big("TAP NOW!", "go"), `<div class="t-pad green ttap">TAP!</div>`, "The moment it turns green, TAP as fast as you can!"),
             S(T_.board([["You", "212 ms"], ["Ava", "260 ms"], ["Leo", "301 ms"]]), T_.ok("212 ms!"), "Fastest reaction wins. Tapping too early gets 0 points.")],
@@ -4992,6 +5056,7 @@ const Sound = (() => {
     snakes:  {bpm:112, swing:0.16, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"tuba", bp:"x...o...x...o...", lead:"marimba", mel:"x.x.xx..x.x.x...", comp:"uke", cp:"..x...x...x...x.", kick:"x.....x...x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x.......x......."},
     race:    {bpm:150, swing:0.04, chords:[[52,56,59],[54,57,61],[57,61,64],[56,59,63]], bass:"bouncy", bp:"x.x.x.xox.x.x.xo", lead:"toypiano", mel:"x.x.x.x.x.xx.x..", comp:"toy", cp:"..x...x...x...x.", kick:"x...x.x.x...x.x.", snap:"....x.......x...", shake:"xxxxxxxxxxxxxxxx", block:"x.......x...x..."},
     mafia:   {bpm:84, swing:0.24, chords:[[57,60,64],[53,57,60],[52,56,59],[57,60,64]], bass:"pizzb", bp:"x.....x.x.......", lead:"pizz", mel:"x..x..x.....x...", comp:"", cp:"", kick:"x.........x.....", snap:"....x.......x...", shake:"", block:"..x.....x..x...."},
+    tides:   {bpm:112, swing:0.2, chords:[[57,60,64],[53,57,60],[55,59,62],[52,56,59]], bass:"tuba", bp:"x..x..x.x..x..x.", lead:"whistle", mel:"x.xx..x.x.xx..x.", comp:"uke", cp:"..x...x...x...x.", kick:"x.....x...x.....", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:"x.......x..x...."},
     arch:    {bpm:100, swing:0.18, chords:[[60,64,67,71],[57,60,64,67],[65,69,72,76],[67,71,74,77]], bass:"pizzb", bp:"x.....x...x.....", lead:"marimba", mel:"x..x..x...x.x...", comp:"toy", cp:"..x...x...x...x.", kick:"x......x..x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x.........x....."},
     mind:    {bpm:92, swing:0.22, chords:[[57,60,64,67],[62,65,69,72],[55,59,62,65],[60,64,67,71]], bass:"tuba", bp:"x.....x...x.....", lead:"glock", mel:"x...x.x...x.....", comp:"uke", cp:"....x.......x...", kick:"x.........x.....", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:""},
     circuit: {bpm:126, swing:0.06, chords:[[52,55,59],[57,60,64],[55,59,62],[50,54,57]], bass:"bouncy", bp:"x.x.x.xox.x.x.xo", lead:"toypiano", mel:"x.xx..x.x.xx..x.", comp:"toy", cp:"..x...x...x...x.", kick:"x.....x.x.....x.", snap:"....x.......x...", shake:"xxxxxxxxxxxxxxxx", block:"x...x...x...x..."},
@@ -5270,6 +5335,7 @@ function startHost(){
       S.answers[pid] = {choice, ms: Date.now() - S.startedAt};
       push(pid); soon();
       if (Object.keys(S.answers).length >= online().length) endMC();
+    } else if (m.t === "tt") { ttCast(pid, String(m.o || ""));
     } else if (m.t === "iab") { archPlace(pid, m.i, m.v);
     } else if (m.t === "mtc" || m.t === "mtd" || m.t === "mtb") { mtMsg(pid, m);
     } else if (m.t === "ct") { ctTap(pid, m.i);
@@ -5361,6 +5427,7 @@ function startHost(){
     if (S.phase.startsWith("react")) { if (a) st.mine = a; if (S.phase === "react-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase === "tap-res" || S.phase === "race-res") st.gained = S.last.gained[pid] || 0;
     if (S.phase.startsWith("maf") && S.vill) mafState(pid, st);
+    if (S.phase.startsWith("tt-") && S.tt) tidesState(pid, st);
     if (S.phase.startsWith("ia-") && S.ia) { archState(pid, st); if (S.phase === "ia-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase.startsWith("mt-") && S.mt) { mtState(pid, st); if (S.phase === "mt-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase.startsWith("ct-") && S.ct) { ctState(pid, st); if (S.phase === "ct-res") st.gained = S.last.gained[pid] || 0; }
@@ -5461,6 +5528,7 @@ function startHost(){
     if (["quiz","emoji","tf","herd"].includes(S.game)) { S.list = mcList(); S.total = S.list.length; if (!S.total) { toast("That quiz has no questions yet"); return; } startMC(); }
     else if (S.game === "tap") { S.total = CFG.tapRounds; startTapReady(); }
     else if (S.game === "react") { S.total = CFG.reactRounds; startReactWait(); }
+    else if (S.game === "tides") { if (tlist().length < 2) { toast("Treasure Tides needs at least 2 teams with players (add bots!)"); render(); return; } startTides(); }
     else if (S.game === "arch" || S.game === "circuit") { if (teams().some(t => members(t.id).filter(([, p]) => p.on).length === 1)) { toast("Every team needs at least 2 players (add bots!)"); render(); return; }
       if (S.game === "arch") startArch(); else startCircuit(); }
     else if (S.game === "mind") { if (n < 2) { toast("Mind Transfer needs at least 2 players"); return; } startMind(); }
@@ -6551,6 +6619,97 @@ function startHost(){
   function ctState(pid, st){ const p = S.players[pid]; if (!p || !S.ct) return; const B = S.ct.boards[p.team]; if (!B) { st.ct = {sitout:true}; return; }
     st.ct = {team:p.team, tiles: B.tiles.map(t => ({m: ctRot(t.base, t.rot), locked:t.locked, kind:t.kind, jam: t.jam > Date.now()})), lit:B.lit, done: !!B.done, place: S.ct.order.indexOf(p.team), jams: S.ct.jams[p.team], cool: Math.max(0, (S.ct.cool[pid] || 0) - Date.now())}; }
 
+  /* ---- Treasure Tides (team pirate board game: vote together, sail, dig, fire!) ---- */
+  const TT_N = 9, TT_DIRS = {up:[-1, 0, "⬆️"], down:[1, 0, "⬇️"], left:[0, -1, "⬅️"], right:[0, 1, "➡️"]};
+  function startTides(){
+    const ts = tlist(), n = TT_N, corners = [[0, 0], [n - 1, n - 1], [0, n - 1], [n - 1, 0]], isl = {};
+    const near = (r, c) => corners.some(([a, b]) => Math.abs(a - r) + Math.abs(b - c) < 3);
+    const kinds = shuffle(["gold", "gold", "gold", "gold", "gold", "gold", "trap", "trap", "idol", "compass", "compass"]);
+    while (Object.keys(isl).length < kinds.length) { const r = Math.floor(Math.random() * n), c = Math.floor(Math.random() * n), k = r * n + c;
+      if (isl[k] || near(r, c) || Object.keys(isl).some(j => Math.abs(Math.floor(j / n) - r) + Math.abs(j % n - c) < 2)) continue;
+      const kind = kinds[Object.keys(isl).length]; isl[k] = {kind, amt: kind === "gold" ? 100 + Math.floor(Math.random() * 5) * 50 : kind === "idol" ? 600 : kind === "trap" ? 80 : 0, open:false}; }
+    const ships = {}; ts.forEach((t, i) => { const [r, c] = corners[i % 4]; ships[t.id] = {pos: r * n + c, prev: r * n + c, gold: 100, knows:false, act:"", mv:0}; });
+    S.tt = {isl, ships, round:0, wind:1, votes:{}, log:["⚓ Set sail! Find the treasure islands 🏝️"], fx:[], kraken:null};
+    S.total = CFG.ttRounds; S.round = 0; ttVote();
+  }
+  function ttOptions(tid){ const T = S.tt, s = T.ships[tid], n = TT_N, r = Math.floor(s.pos / n), c = s.pos % n, out = [];
+    for (const [k, [dr, dc]] of Object.entries(TT_DIRS)) { const a = r + dr, b = c + dc; if (a >= 0 && b >= 0 && a < n && b < n) out.push(k); }
+    const I = T.isl[s.pos]; if (I && !I.open) out.push("dig");
+    if (Object.entries(T.ships).some(([o, x]) => Number(o) !== Number(tid) && Math.max(Math.abs(Math.floor(x.pos / n) - r), Math.abs(x.pos % n - c)) <= 2)) out.push("fire");
+    return out; }
+  function ttVote(){ const T = S.tt; T.votes = {}; T.wind = 1 + Math.floor(Math.random() * 3); T.fx = []; T.kraken = null; go("tt-vote", CFG.ttVoteSec); Sound.sfx("dice"); }
+  function ttCast(pid, opt){ const p = S.players[pid]; if (S.phase !== "tt-vote" || !p || !(p.team in S.tt.ships) || !ttOptions(p.team).includes(opt)) return;
+    S.tt.votes[pid] = opt; for (const [q] of members(p.team)) push(q); soon();
+    if (online().every(([q, pp]) => S.tt.votes[q] || !(pp.team in S.tt.ships))) setTimeout(() => { if (S.phase === "tt-vote") ttResolve(); }, 700); }
+  function ttSmart(tid){ const T = S.tt, s = T.ships[tid], n = TT_N, opts = ttOptions(tid);
+    if (opts.includes("dig")) return "dig";
+    if (opts.includes("fire") && Object.entries(T.ships).some(([o, x]) => Number(o) !== Number(tid) && x.gold > 150 && Math.max(Math.abs(Math.floor(x.pos / n) - Math.floor(s.pos / n)), Math.abs(x.pos % n - s.pos % n)) <= 2) && Math.random() < 0.6) return "fire";
+    const targets = Object.entries(T.isl).filter(([, I]) => !I.open).map(([k]) => Number(k)); if (!targets.length) return pick(opts.filter(o => TT_DIRS[o]));
+    const idol = s.knows ? targets.find(k => T.isl[k].kind === "idol") : null, r = Math.floor(s.pos / n), c = s.pos % n;
+    const tgt = idol !== undefined && idol !== null ? idol : targets.sort((a, b) => (Math.abs(Math.floor(a / n) - r) + Math.abs(a % n - c)) - (Math.abs(Math.floor(b / n) - r) + Math.abs(b % n - c)))[0];
+    const tr = Math.floor(tgt / n), tc = tgt % n, ds = [];
+    if (tr < r) ds.push("up"); if (tr > r) ds.push("down"); if (tc < c) ds.push("left"); if (tc > c) ds.push("right");
+    return ds.length ? pick(ds) : pick(opts); }
+  function ttResolve(){
+    if (S.phase !== "tt-vote") return; const T = S.tt, n = TT_N, log = [], ts = tlist().filter(t => T.ships[t.id]);
+    const choice = {};
+    for (const t of ts) { const tally = {}; for (const [pid] of members(t.id)) { const v = T.votes[pid]; if (v) tally[v] = (tally[v] || 0) + 1; }
+      const mx = Math.max(0, ...Object.values(tally)); choice[t.id] = mx ? pick(Object.keys(tally).filter(k => tally[k] === mx)) : ttSmart(t.id); }
+    // 1) sail
+    for (const t of ts) { const s = T.ships[t.id]; s.prev = s.pos; s.act = choice[t.id]; s.mv = 0;
+      const d = TT_DIRS[choice[t.id]]; if (!d) continue; let r = Math.floor(s.pos / n), c = s.pos % n;
+      for (let k = 0; k < T.wind; k++) { const a = r + d[0], b = c + d[1]; if (a < 0 || b < 0 || a >= n || b >= n) break; r = a; c = b; s.mv++; if (T.isl[r * n + c] && !T.isl[r * n + c].open) break; }
+      s.pos = r * n + c; s.mvId = (s.mvId || 0) + 1; log.push(`${t.name} sailed ${d[2]} ${s.mv} space${s.mv === 1 ? "" : "s"}${T.isl[s.pos] && !T.isl[s.pos].open ? " and landed on an island 🏝️" : ""}`); }
+    // 2) fire
+    for (const t of ts) { if (choice[t.id] !== "fire") continue; const s = T.ships[t.id], r = Math.floor(s.pos / n), c = s.pos % n;
+      const foes = Object.entries(T.ships).filter(([o, x]) => Number(o) !== t.id && Math.max(Math.abs(Math.floor(x.pos / n) - r), Math.abs(x.pos % n - c)) <= 2).sort((a, b) => b[1].gold - a[1].gold);
+      if (!foes.length) { log.push(`${t.name} fired 💥 at… nothing! Splash 🌊`); continue; }
+      const [oid, f] = foes[0], loot = Math.round(f.gold * 0.3); f.gold -= loot; s.gold += loot; T.fx.push({k:"boom", pos:f.pos});
+      log.push(`💥 ${t.name} fired the cannons at ${TEAMS[oid].name} and stole ${loot} gold!`); Sound.sfx("capture"); }
+    // 3) dig
+    for (const t of ts) { if (choice[t.id] !== "dig") continue; const s = T.ships[t.id], I = T.isl[s.pos]; if (!I || I.open) continue; I.open = true; I.by = t.id; T.fx.push({k:I.kind, pos:s.pos});
+      if (I.kind === "gold") { s.gold += I.amt; log.push(`⛏️ ${t.name} dug up a chest with ${I.amt} gold! 💰`); Sound.sfx("buy"); }
+      else if (I.kind === "trap") { s.gold = Math.max(0, s.gold - I.amt); log.push(`🪤 ${t.name} hit a booby trap and lost ${I.amt} gold!`); Sound.sfx("wrong"); }
+      else if (I.kind === "idol") { s.gold += I.amt; log.push(`🗿 ${t.name} found the GOLDEN IDOL! +${I.amt} gold!`); Sound.sfx("win"); }
+      else { s.knows = true; log.push(`🧭 ${t.name} found a magic compass. It points to the Golden Idol!`); Sound.sfx("correct"); } }
+    // 4) kraken every 3rd round
+    if ((S.round + 1) % 3 === 0) { const row = Math.floor(Math.random() * n); T.kraken = row;
+      for (const t of ts) { const s = T.ships[t.id]; if (Math.floor(s.pos / n) === row) { const lost = Math.min(s.gold, 100); s.gold -= lost; log.push(`🦑 The KRAKEN grabbed ${t.name}! -${lost} gold`); } }
+      if (!ts.some(t => Math.floor(T.ships[t.id].pos / n) === row)) log.push("🦑 The Kraken rose from the deep… but missed everyone!"); setTimeout(() => Sound.sfx("snake"), 600); }
+    T.log = log; go("tt-show", CFG.ttShowSec);
+  }
+  function ttNext(){ if (S.round + 1 >= S.total) { const gained = {};
+      for (const t of tlist()) { const s = S.tt.ships[t.id]; if (!s) continue; for (const [pid, p] of members(t.id)) { p.pts += s.gold; gained[pid] = s.gold; } }
+      rankCache = null; endCards(); return; }
+    S.round++; ttVote(); }
+  function ttShipSVG(col){ return `<svg viewBox="0 0 64 64" class="ttship"><ellipse cx="32" cy="56" rx="24" ry="5" fill="#000" opacity=".3"/>
+    <path d="M8 40 H56 L48 52 H16 Z" fill="#7a4a24" stroke="#3b220f" stroke-width="2"/><path d="M12 40 H52" stroke="#a8763f" stroke-width="3"/>
+    <rect x="30" y="8" width="3" height="32" fill="#3b220f"/><path d="M33 10 Q50 18 33 34 Z" fill="#fff" stroke="#ccc"/><path d="M30 12 Q16 20 30 32 Z" fill="#f3f3f3" stroke="#ccc"/>
+    <path d="M33 8 L44 5 L33 2 Z" fill="${col}"/><circle cx="20" cy="45" r="2" fill="#15122e"/><circle cx="32" cy="45" r="2" fill="#15122e"/><circle cx="44" cy="45" r="2" fill="#15122e"/></svg>`; }
+  function ttBoardHTML(view){ const T = S.tt, n = TT_N, pct = i => [((i % n) + 0.5) / n * 100, (Math.floor(i / n) + 0.5) / n * 100];
+    let cells = ""; for (let i = 0; i < n * n; i++) { const I = T.isl[i];
+      cells += `<div class="ttc ${I ? "isl " + (I.open ? "open " + I.kind : "") : ""} ${T.kraken !== null && Math.floor(i / n) === T.kraken && S.phase === "tt-show" ? "krow" : ""}">${I ? `<span class="tti">${I.open ? {gold:"💰", trap:"🪤", idol:"🗿", compass:"🧭"}[I.kind] : (view.knows && I.kind === "idol" ? "⭐" : "❌")}</span><i class="palm">🌴</i>` : ""}</div>`; }
+    const ships = Object.entries(T.ships).map(([tid, s], k) => { const [x, y] = pct(s.pos), off = Object.entries(T.ships).filter(([o, x2], j) => j < k && x2.pos === s.pos).length * 3;
+      const wk = "TT:" + (view.key || "h") + ":" + tid; if (S.phase === "tt-show" && s.prev !== s.pos) walkSet(wk, s.mvId, [pct(s.prev), [x + off, y - off]], 1100, true);
+      const w = walkOn(wk); return `<div class="ttshipw ${view.mine === Number(tid) ? "mine" : ""}"${w ? ` data-walk="${wk}"` : ""} style="left:${x + off}%;top:${y - off}%;--tc:${TEAMS[tid].c}">${ttShipSVG(TEAMS[tid].c)}<b>${esc(TEAMS[tid].name.split(" ").pop())} · ${s.gold}💰</b></div>`; }).join("");
+    const fx = S.phase === "tt-show" ? T.fx.map(f => { const [x, y] = pct(f.pos); return `<span class="ttfx ${f.k}" style="left:${x}%;top:${y}%">${{boom:"💥", gold:"💰", trap:"🪤", idol:"🗿", compass:"🧭"}[f.k]}</span>`; }).join("") : "";
+    const kr = S.phase === "tt-show" && T.kraken !== null ? `<div class="ttkraken" style="top:${(T.kraken + 0.5) / n * 100}%">🦑</div>` : "";
+    return `<div class="ttboard ${view.d3 ? "d3" : ""}"><div class="ttsea"><div class="ttgrid" style="--n:${n}">${cells}</div>${ships}${fx}${kr}</div></div>`; }
+  function tidesView(){ const T = S.tt, ph = S.phase;
+    return `<section class="stage card tides"><div class="qhead"><span class="label">Treasure Tides · round ${S.round + 1} of ${S.total}</span>${ph === "tt-vote" ? `<span class="pill"><b data-left>${secsLeft()}</b> s</span><button class="ghost sm" data-act="skip">Sail now ⛵</button>` : ""}</div>
+      <div class="ttlayout"><div class="ttmain">${ttBoardHTML({d3:true})}</div>
+        <aside class="ttside"><div class="ttwind">🌬️ Wind: <b>${T.wind}</b> space${T.wind > 1 ? "s" : ""}${(S.round + 1) % 3 === 0 ? `<br><span class="krwarn">🦑 Kraken round!</span>` : ""}</div>
+          <div class="ttteams">${tlist().filter(t => T.ships[t.id]).sort((a, b) => T.ships[b.id].gold - T.ships[a.id].gold).map(t => { const s = T.ships[t.id], voted = members(t.id).filter(([q]) => T.votes[q]).length;
+            return `<div class="ttteam" style="--tc:${t.c}"><b>${esc(t.name)}</b><span class="ttgold">${s.gold} 💰</span><small>${ph === "tt-vote" ? `${voted}/${members(t.id).length} voted` : s.act ? ({up:"⬆️", down:"⬇️", left:"⬅️", right:"➡️", dig:"⛏️ dig", fire:"💥 fire"})[s.act] : ""}${s.knows ? " · 🧭" : ""}</small></div>`; }).join("")}</div>
+          <ol class="ttlog">${T.log.map(l => `<li>${esc(l)}</li>`).join("")}</ol></aside></div>
+      <p class="hint">Each team votes on their phones: sail ⬆️⬇️⬅️➡️ (as far as the wind), ⛏️ dig on an island, or 💥 fire at a ship within 2 spaces. Most gold after ${S.total} rounds wins!</p></section>`; }
+  function tidesState(pid, st){ const p = S.players[pid], T = S.tt; if (!p || !T || !T.ships[p.team]) { st.tt = {sitout:true}; return; }
+    const s = T.ships[p.team], tally = {}; for (const [q] of members(p.team)) { const v = T.votes[q]; if (v) tally[v] = (tally[v] || 0) + 1; }
+    st.tt = {team:p.team, gold:s.gold, wind:T.wind, opts: ttOptions(p.team), mine: T.votes[pid] || null, tally, knows:s.knows, log:T.log,
+      map: Array.from({length:TT_N * TT_N}, (_, i) => T.isl[i] ? (T.isl[i].open ? T.isl[i].kind : (s.knows && T.isl[i].kind === "idol" ? "star" : "x")) : ""),
+      ships: Object.entries(T.ships).map(([tid, x]) => [Number(tid), x.pos]), kraken: (S.round + 1) % 3 === 0};
+  }
+
   function hype(){
     if (S.phase === "cc") return (S.tables || []).some(T => !T.done && T.players.some(x => T.hands[x].length === 1)) ? 2 : 1;
     if (S.phase === "lu") return S.lu && S.lu.need > 1 && S.lu.teams.some(t => S.lu.seqs[t] >= S.lu.need - 1) ? 2 : 1;
@@ -6585,6 +6744,7 @@ function startHost(){
     const left = S.endsAt - Date.now();
     if (left <= 0) {
       if (S.phase === "maf-role") mafStartNight(); else if (S.phase === "maf-night") mafEndNight(); else if (S.phase === "maf-day") mafStartVote(); else if (S.phase === "maf-vote") mafEndVote(); else if (S.phase === "maf-res") mafAfterRes();
+      else if (S.phase === "tt-vote") ttResolve(); else if (S.phase === "tt-show") ttNext();
       else if (S.phase === "ia-build") archEnd(); else if (S.phase.startsWith("mt-") && S.phase !== "mt-res") mtNext(); else if (S.phase === "ct-play") ctEnd();
       else if (S.phase === "rps-pick") rpsEnd(); else if (S.phase === "rps-res") rpsNext(); else if (S.phase === "draw") doodleEnd();
       else if (S.phase === "mc") endMC(); else if (S.phase === "mc-intro") beginMC(); else if (S.phase === "race-ready") startRace(); else if (S.phase === "race") endRace(); else if (S.phase === "tap-ready") startTap(); else if (S.phase === "tap") endTap();
@@ -6643,6 +6803,7 @@ function startHost(){
       else if (v && smart && Math.random() < 0.35) { const m = opts.find(p => v.role[p.pid] === "mafia"); if (m) t = m.pid; }
       const known = st.maf.people.find(p => p.checked === "mafia" && p.alive); if (known) t = known.pid;
       later(3000 + Math.random() * 15000, {t:"maf", target: Math.random() < 0.08 ? "skip" : t}); }
+    if (st.phase === "tt-vote" && st.tt && !st.tt.sitout) { const p = S.players[bpid]; if (p) later(2000 + Math.random() * 9000, {t:"tt", o: smart || Math.random() < 0.5 ? ttSmart(p.team) : pick(ttOptions(p.team))}); }
     if (st.phase === "ia-build" && st.ia && !st.ia.arch) { const r0 = S.round; const loop = () => { if (S.phase !== "ia-build" || S.round !== r0) return; const I = S.ia, p = S.players[bpid]; if (!p) return;
         const b = I.builds[p.team], todo = I.pat.map((v, i) => [v, i]).filter(([v, i]) => (v >= 0 && b[i] !== v) || (v < 0 && b[i] >= 0));
         if (todo.length) { const [v, i] = pick(todo); handle(L, {t:"iab", i, v: Math.random() < (smart ? 0.85 : 0.55) ? v : (v >= 0 ? (v + 1) % 4 : -1)}); }
@@ -6717,6 +6878,7 @@ function startHost(){
     else if (S.phase.startsWith("mc")) body = kqView();
     else if (S.phase.startsWith("race")) body = raceView();
     else if (S.phase.startsWith("maf")) body = mafiaView();
+    else if (S.phase.startsWith("tt-")) body = tidesView();
     else if (S.phase.startsWith("ia-")) body = archView();
     else if (S.phase.startsWith("mt-")) body = mtView();
     else if (S.phase.startsWith("ct-")) body = ctView();
@@ -6739,7 +6901,7 @@ function startHost(){
     if ((S.phase === "race" || S.phase === "race-ready") && document.getElementById("tvcanvas")) { TV.key = S.phase + S.round; tvStart(); }
     if (document.getElementById("dcv")) doodlePaint(null);
     if (document.querySelector(".mtcv")) mtPaint();
-    document.body.classList.toggle("boardmode", S.view === "lobby" && ["ludo", "sl", "ty", "lu", "cc"].includes(S.phase));
+    document.body.classList.toggle("boardmode", S.view === "lobby" && ["ludo", "sl", "ty", "lu", "cc", "tt-vote", "tt-show", "ct-play"].includes(S.phase));
   }
   function drawQR(){
     const box = document.getElementById("qr"); if (!box) return;
@@ -7109,6 +7271,7 @@ The Earth is flat. | True | *False</pre>
     if (a === "shuffle") { shuffle(Object.keys(S.players)).forEach((pid,i) => S.players[pid].team = i % S.teamCount); broadcast(); render(); }
     if (a === "start" || a === "again") startGame();
     if (a === "mafvote" && S.phase === "maf-day") { mafStartVote(); return; }
+    if (a === "skip" && S.phase === "tt-vote") { ttResolve(); return; }
     if (a === "skip" && S.phase === "ia-build") { archEnd(); return; } if (a === "skip" && S.phase.startsWith("mt-") && S.phase !== "mt-res") { mtNext(); return; } if (a === "skip" && S.phase === "ct-play") { ctEnd(); return; }
     if (a === "fullscreen") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch(e){} return; }
     if (a === "skip") { if (S.phase === "maf-night") { mafEndNight(); return; } if (S.phase === "maf-vote") { mafEndVote(); return; } if (S.phase === "rps-pick") { rpsEnd(); return; } if (S.phase === "draw") { doodleEnd(); return; }
@@ -7302,6 +7465,7 @@ function startPlayer(code){
     else if (st.phase === "guess") body = guessQ(st);
     else if (st.phase.startsWith("imp")) body = impPhone(st);
     else if (st.phase.startsWith("maf")) body = mafiaPhone(st);
+    else if (st.phase.startsWith("tt-")) body = tidesPhone(st);
     else if (st.phase.startsWith("ia-")) body = archPhone(st);
     else if (st.phase.startsWith("mt-")) body = mtPhone(st);
     else if (st.phase.startsWith("ct-")) body = circuitPhone(st);
@@ -7571,6 +7735,19 @@ function startPlayer(code){
       <p class="hint">Tap a tile to turn it. Each player can turn one tile every ${CFG.ctCool / 1000} s, so work together!</p>
       <button class="big jambtn" data-act="ctjam" ${C.jams > 0 ? "" : "disabled"}>⚡ Short-circuit a rival (${C.jams} left)</button></div>`;
   }
+  function tidesPhone(st){
+    const T = st.tt; if (!T || T.sitout) return `<div class="msg"><h2>Watch the seas 🌊</h2></div>`;
+    const tm = st.teams.find(t => t.id === T.team) || {}, n = 9;
+    const map = `<div class="ttmini" style="--n:${n}">${T.map.map((k, i) => { const sh = T.ships.filter(([, pos]) => pos === i);
+      return `<i class="${k ? "isl " + k : ""}">${sh.length ? sh.map(([tid]) => `<b style="background:${st.teams.find(t => t.id === tid) ? st.teams.find(t => t.id === tid).c : "#fff"}" class="${tid === T.team ? "me" : ""}"></b>`).join("") : k === "x" ? "❌" : k === "star" ? "⭐" : k ? {gold:"💰", trap:"🪤", idol:"🗿", compass:"🧭"}[k] : ""}</i>`; }).join("")}</div>`;
+    const head = `<div class="tthead" style="--tc:${tm.c}"><b>🏴‍☠️ ${esc(tm.name || "")}</b><span>${T.gold} 💰</span></div>`;
+    if (st.phase === "tt-show") return `<div class="ttphone">${head}<ol class="ttlog">${T.log.map(l => `<li>${esc(l)}</li>`).join("")}</ol>${map}<p class="hint">Next vote coming up…</p></div>`;
+    const L = {up:["⬆️", "Sail up"], down:["⬇️", "Sail down"], left:["⬅️", "Sail left"], right:["➡️", "Sail right"], dig:["⛏️", "Dig here!"], fire:["💥", "Fire cannons!"]};
+    return `<div class="ttphone">${head}<div class="ttwind">🌬️ Wind ${T.wind} · <b data-left>${Math.ceil(left() / 1000)}</b>s${T.kraken ? ` · <span class="krwarn">🦑 Kraken round!</span>` : ""}</div>${map}
+      <h2>Vote with your crew!</h2>
+      <div class="ttopts">${T.opts.map(o => `<button class="ttopt ${o} ${T.mine === o ? "on" : ""}" data-tt="${o}"><span>${L[o][0]}</span><b>${L[o][1]}</b>${T.tally[o] ? `<em>${T.tally[o]} vote${T.tally[o] > 1 ? "s" : ""}</em>` : ""}</button>`).join("")}</div>
+      <p class="hint">${T.knows ? "🧭 Your compass shows the Golden Idol ⭐ on the map!" : "Most votes in your team wins. Talk it over with Hold to talk!"}</p></div>`;
+  }
   function kqFoot(st){ return `<div class="kp-foot">${Avatar.svg(P.av, 30)}<span>${esc(P.name)}</span><b>${fmt(st.you ? st.you.pts : 0)}</b></div>`; }
   function kqPhone(st){
     const q = st.q, ph = st.phase, head = `<div class="kp-head"><span>${st.round + 1} of ${st.total}</span>${ph === "mc" && st.mine === undefined ? `<b data-left>${Math.ceil(left()/1000)}</b>` : ""}</div>`;
@@ -7782,6 +7959,7 @@ function startPlayer(code){
     if (b.dataset.act === "dclear") { P.dstrokes = []; if (P.st && P.st.phase === "mt-draw") send({t:"mtd", s:[]}); else send({t:"dr", clear:true}); doodleRepaint(); return; }
     if (b.dataset.act === "mtdone") { send({t:"mtd", s:P.dstrokes || [], done:true}); Sound.sfx("pop"); b.textContent = "✅ Sent"; return; }
     if (b.dataset.act === "mtbdone") { send({t:"mtb", i:-1, done:true}); Sound.sfx("pop"); b.textContent = "✅ Done"; return; }
+    if (b.dataset.tt) { send({t:"tt", o:b.dataset.tt}); Sound.sfx("click"); if (P.st && P.st.tt) { P.st.tt.mine = b.dataset.tt; lastKey = ""; render(); } return; }
     if (b.dataset.act === "ctjam") { send({t:"ctjam"}); Sound.sfx("snake"); return; }
     if (b.dataset.iacol !== undefined) { P.iaCol = Number(b.dataset.iacol); document.querySelectorAll(".gcol").forEach(x => x.classList.toggle("on", x === b)); return; }
     if (b.dataset.iab !== undefined) { const i = Number(b.dataset.iab), cur = P.st.ia.build[i], v = cur === P.iaCol ? -1 : P.iaCol; P.st.ia.build[i] = v; send({t:"iab", i, v}); Sound.sfx("chip"); lastKey = ""; render(); return; }
