@@ -269,6 +269,82 @@ h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;letter-spacing:.02e
 .brand.sm .logo{font-size:1.25rem}
 .byline{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .brand.sm .byline{font-size:.62rem}
+
+/* v4: Color Crash + Line Up 5 */
+.ucard{--uc:#888;display:inline-grid;grid-template:100% / 100%;place-items:center;width:58px;height:84px;border-radius:12px;background:var(--uc);border:3px solid #fff;box-shadow:0 4px 0 rgba(0,0,0,.35);color:#fff;font-family:var(--display);font-size:1.5rem;position:relative;padding:0;flex:none}
+.ucard b{display:grid;place-items:center;width:78%;height:62%;border-radius:50%;background:#fff;color:var(--uc);font-weight:400;transform:rotate(-14deg);font-size:1.25rem}
+.ucard.r{--uc:#ff5a5f}.ucard.g{--uc:#2fbf71}.ucard.b{--uc:#4d9fff}.ucard.y{--uc:#f5b622}
+.ucard.w{--uc:#15122e;background:conic-gradient(#ff5a5f 0 25%,#4d9fff 0 50%,#f5b622 0 75%,#2fbf71 0)}
+.ucard.w b{color:#15122e}
+.ucard.top{width:96px;height:138px;font-size:2.2rem}
+.ucard.top b{font-size:2rem}
+.curcol{display:inline-flex;align-items:center;gap:8px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--panel-2)}
+.curcol::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--cc)}
+.cctables{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.cctables.one{grid-template-columns:1fr}
+.cctable{background:var(--panel-2);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.cctable.done{outline:3px solid var(--good)}
+.cc-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.cc-mid{display:flex;align-items:center;gap:16px}
+.cctable.big .ucard.top{width:130px;height:186px;font-size:3rem}
+.cctable.big .ucard.top b{font-size:2.8rem}
+.cc-info{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cc-log{margin:0;font-weight:700}
+.cc-log.sm{font-size:.85rem;color:var(--muted);font-weight:400}
+.cc-seats{display:flex;flex-wrap:wrap;gap:8px}
+.seat{display:flex;align-items:center;gap:6px;background:var(--panel);border:2px solid transparent;border-radius:999px;padding:3px 10px 3px 3px;min-width:0}
+.seat.turn{border-color:var(--t2);box-shadow:0 0 0 4px rgba(255,194,61,.18)}
+.seat.win{border-color:var(--good)}
+.seat .sn{font-weight:700;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seat .cnt{font-size:.82rem;color:var(--muted)}
+.seat .cnt.last{color:var(--bad);font-weight:700}
+.turnbar{text-align:center;font-weight:700;padding:10px;border-radius:14px;background:var(--panel)}
+.turnbar.mine{background:var(--t2);color:var(--ink);animation:pop .4s ease}
+.cc-phone,.lu-phone{display:flex;flex-direction:column;gap:12px}
+.cc-pile{display:flex;align-items:center;gap:14px}
+.cc-pile .hint{margin:6px 0 0}
+.mini-seats{display:flex;flex-wrap:wrap;gap:6px}
+.ms{display:inline-flex;align-items:center;gap:4px;background:var(--panel);border-radius:999px;padding:2px 8px 2px 2px;border:2px solid transparent}
+.ms.turn{border-color:var(--t2)}
+.hand{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hand .ucard{cursor:pointer;transition:transform .12s}
+.hand .ucard.ok{transform:translateY(-8px);box-shadow:0 0 0 3px var(--t2),0 8px 0 rgba(0,0,0,.35)}
+.hand .ucard.no{opacity:.5}
+.hand .ucard:disabled{cursor:default}
+.colpick{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.colpick button{min-height:70px;color:#fff;font-size:1.1rem;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.sheet.center{align-items:center;text-align:center}
+.center{text-align:center}
+.lu-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media (max-width:900px){.lu-wrap{grid-template-columns:1fr}}
+.lu-board{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;background:#0f6b3a;border-radius:16px;padding:8px;width:min(100%,78vh);margin:0 auto;border:4px solid #c9a36a}
+.lc{position:relative;aspect-ratio:1;background:#fdfbf4;color:#15122e;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:clamp(.55rem,1.25vw,1rem);padding:0;border:0;min-width:0;overflow:hidden}
+.lc.red{color:#d6336c}
+.lc.free{background:#ffc23d;color:#15122e}
+.lc .lab{position:relative;z-index:0;line-height:1}
+.lc .chip{position:absolute;inset:12%;border-radius:50%;background:var(--c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 0 0 2px #15122e;z-index:1}
+.lc .chip.lock{box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 0 0 3px #ffc23d}
+.lc.last{outline:3px solid #ff5a5f;outline-offset:-3px;animation:pop .5s ease}
+.lu-board.sm{gap:2px;padding:4px;border-width:3px;width:100%}
+.lu-board.sm .lc{font-size:.58rem;border-radius:4px}
+.lu-board.sm .lc:disabled{opacity:1}
+.lu-board.sm .lc.ok{background:#fff3b0;box-shadow:0 0 0 3px #ffc23d inset;animation:glow 1s ease-in-out infinite alternate;cursor:pointer}
+@keyframes glow{from{filter:brightness(1)}to{filter:brightness(1.15)}}
+.lu-side{display:flex;flex-direction:column;gap:10px}
+.lu-turn{display:flex;align-items:center;gap:12px;border-left:6px solid var(--c);padding-left:10px}
+.lu-turn .big-num.sm{font-size:2.2rem;margin-left:auto}
+.lu-seq{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--c)}
+.pip{display:inline-block;width:18px;height:18px;border-radius:50%;border:3px solid var(--c);margin-left:4px}
+.pip.on{background:var(--c)}
+.phand{display:flex;flex-wrap:wrap;gap:6px}
+.pcard{background:#fdfbf4;color:#15122e;border-radius:10px;width:52px;height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.05rem;padding:0;border:3px solid transparent;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.pcard.red{color:#d6336c}
+.pcard small{font-size:.55rem;color:var(--muted);font-weight:700}
+.pcard.sel{border-color:#ffc23d;transform:translateY(-6px)}
+.pcard.dead{opacity:.55}
+.pcard:disabled{opacity:.85;cursor:default}
+.lu-seqs{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.9rem}
+.lu-seqs span{color:var(--c);font-weight:700}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -2633,6 +2709,16 @@ const GAMES = {
     about:"A bluffing and detective game. Big groups are split into small groups of about 7. Everyone in a group gets the same secret word on their phone, except one imposter, who only sees the category.",
     rules:["Look at your phone secretly and don't show anyone.","The big screen shows your group and who starts.","Take turns: each person says ONE word linked to the secret word.","Don't make your clue too obvious, or the imposter will work out the word.","The imposter listens and gives a believable clue to blend in.","When the talking timer ends, vote on your phone for who you think the imposter is."],
     scoring:"Vote for the real imposter: 100 points. Your group catches the imposter: +50 each. Imposter not caught: 300 points for the imposter."},
+  crash: {name:"Color Crash", tag:"Cards", color:"#ff9f43", players:"2–200+", mins:"8–12 min",
+    desc:"Match the color or number and be first to empty your hand. Big groups play at tables of up to 6.",
+    about:"A fast card game for everyone. Each player gets 7 cards on their phone. Big groups are split into tables of up to 6, all playing at once, and the big screen shows every table.",
+    rules:["The big screen shows the top card and its color.","On your turn, play a card that matches the color OR the number or symbol.","⊘ Skip: the next player misses a turn. ⇄ Reverse: play changes direction.","+2: the next player draws 2 and misses a turn. Wild ★: pick the new color. Wild +4: pick a color, and the next player draws 4.","No match? Tap Draw a card. If it matches, you can play it. Otherwise, pass.","You have 25 seconds per turn. Run out of time and you draw a card.","The first player to empty their hand wins the table."],
+    scoring:"Table winner: 300 points. Everyone else: 150 points minus 10 for each card still in hand."},
+  lineup: {name:"Line Up 5", tag:"Cards", color:"#2b8a3e", players:"4–200+", mins:"10–20 min",
+    desc:"A team board game. Play cards to place chips and make rows of five.",
+    about:"A strategy game for teams. The big screen shows a 10 × 10 board of playing cards. Each team shares one hand of cards, and teammates take turns playing for the team.",
+    rules:["When it's your team's turn, one teammate plays (it rotates every turn). Everyone on the team can see the cards and help decide.","Tap a card in your team's hand, then tap a matching space on the board to place your team's chip.","J♦ and J♣ (two-eyed jacks) are wild: place a chip on any empty space.","J♠ and J♥ (one-eyed jacks) remove another team's chip, except chips in a finished row.","The ★ corners count as your chip for every team.","Make a row of five in any direction: across, down or diagonal.","With 2 teams you need 2 rows to win. With 3 or 4 teams you need 1 row. Each turn has 45 seconds."],
+    scoring:"Winning team: 500 points each. Other teams: 100 points each for every row of five they made."},
   tap: {name:"Tug of War", tag:"Action", color:"#c9a36a", players:"2–200+", mins:"2 min",
     desc:"Tap as fast as you can for 10 seconds. Teams pull the rope.",
     about:"Pure speed. With two teams, a rope marker on the big screen moves toward the team tapping harder.",
@@ -2735,6 +2821,7 @@ const CFG = {
   quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
+  ccTable:6, ccTurn:25, luTurn:45,
 };
 
 /* ------------------------------------------------------------ helpers */
@@ -2819,6 +2906,8 @@ function gameIcon(key){
     tap: `<path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#8a6432" stroke-width="8" stroke-linecap="round"/><path d="M4 38 q7 -6 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#e0b878" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 5"/><rect x="28" y="20" width="8" height="26" rx="3" fill="#ff5a5f" ${st}/><path d="M32 12 v8" ${st}/>`,
     react: `<circle cx="32" cy="36" r="20" fill="${w}" ${st}/><rect x="28" y="8" width="8" height="7" rx="2" fill="${ink}"/><path d="M32 36 L32 22" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M36 30 l-8 10 h7 l-4 10 l11 -13 h-7 l4 -7 z" fill="#ffc23d" ${st}/>`,
     guess: `<circle cx="30" cy="36" r="20" fill="${w}" ${st}/><circle cx="30" cy="36" r="13" fill="#ff5a5f" ${st}/><circle cx="30" cy="36" r="6" fill="${w}" ${st}/><path d="M30 36 L54 12" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M54 12 l-2 -6 M54 12 l6 2 M49 10 l-1 -5 M52 15 l5 1" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,
+    crash: `<rect x="10" y="16" width="24" height="34" rx="5" fill="#4d9fff" ${st} transform="rotate(-16 22 33)"/><rect x="20" y="12" width="24" height="34" rx="5" fill="#3ddc84" ${st} transform="rotate(-2 32 29)"/><rect x="30" y="14" width="24" height="34" rx="5" fill="#ff5a5f" ${st} transform="rotate(14 42 31)"/><ellipse cx="42" cy="31" rx="7" ry="10" fill="${w}" transform="rotate(14 42 31)"/><text x="42" y="36" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="13" fill="${ink}" transform="rotate(14 42 31)">+2</text>`,
+    lineup: `<rect x="8" y="8" width="48" height="48" rx="6" fill="${w}" ${st}/>${[0,1,2,3].map(r => [0,1,2,3].map(c => `<rect x="${12+c*11}" y="${12+r*11}" width="8" height="8" rx="2" fill="#e9e5ff"/>`).join("")).join("")}${[0,1,2,3].map(k => `<circle cx="${16+k*11}" cy="${16+k*11}" r="5" fill="#ff5a5f" stroke="${ink}" stroke-width="2"/>`).join("")}<circle cx="49" cy="16" r="5" fill="#19c3b4" stroke="${ink}" stroke-width="2"/>`,
   };
   return `<svg viewBox="0 0 64 64" aria-hidden="true">${art[key] || ""}</svg>`;
 }
@@ -2849,6 +2938,34 @@ const Confetti = (() => {
   };
 })();
 
+
+/* ------------------------------------------------------------ card helpers (both screens) */
+// Color Crash cards: color letter + value. "r7" red 7, "gS" green skip, "bR" blue reverse, "y+" yellow draw-two, "wW" wild, "w4" wild draw-four.
+const CC_COLORS = {r:"#ff5a5f", g:"#3ddc84", b:"#4d9fff", y:"#ffc23d"};
+const CC_NAMES = {r:"Red", g:"Green", b:"Blue", y:"Yellow"};
+function ccLabel(c){ const v = c.slice(1); if (c[0] === "w") return v === "4" ? "+4" : "★"; return v === "S" ? "⊘" : v === "R" ? "⇄" : v === "+" ? "+2" : v; }
+function ccName(c){ const v = c.slice(1); if (c[0] === "w") return v === "4" ? "Wild +4" : "Wild";
+  return CC_NAMES[c[0]] + " " + (v === "S" ? "Skip" : v === "R" ? "Reverse" : v === "+" ? "+2" : v); }
+function ccPlayable(c, top, color){ return c[0] === "w" || c[0] === color || (top[0] !== "w" && c.slice(1) === top.slice(1)); }
+function ccCard(c, cls = ""){ return `<span class="ucard ${c[0]} ${cls}" aria-label="${esc(ccName(c))}"><b>${ccLabel(c)}</b></span>`; }
+
+// Line Up 5 cards: rank + suit, e.g. "10H", "QS". Corners are free spaces "*".
+const LU_SUIT = {S:"♠", H:"♥", D:"♦", C:"♣"};
+const LU_TWO = ["JD","JC"], LU_ONE = ["JS","JH"];   // two-eyed jacks are wild, one-eyed jacks remove a chip
+function luLabel(c){ return c === "*" ? "★" : c.slice(0, -1) + LU_SUIT[c.slice(-1)]; }
+const luRed = c => /[HD]$/.test(c);
+function luOk(b, team, card){
+  if (!b) return false;
+  if (LU_TWO.includes(card)) return b.c !== "*" && b.t === -1;
+  if (LU_ONE.includes(card)) return b.c !== "*" && b.t !== -1 && b.t !== team && !b.lock;
+  return b.c === card && b.t === -1;
+}
+function luDead(board, card){ return !card.startsWith("J") && !board.some(b => b.c === card && b.t === -1); }
+function luCell(b, i, extra = ""){
+  const chip = b.t >= 0 ? `<i class="chip ${b.lock ? "lock" : ""}" style="--c:${TEAMS[b.t].c}"></i>` : "";
+  return `<span class="lab">${b.c === "*" ? "★" : luLabel(b.c)}</span>${chip}${extra}`;
+}
+
 /* ------------------------------------------------------------ sound: music + effects (Web Audio, no files) */
 const Sound = (() => {
   let ctx = null, master = null, musicGain = null, sfxGain = null, timer = 0, mood = "off", step = 0, nextT = 0;
@@ -2877,21 +2994,42 @@ const Sound = (() => {
     f.type = "highpass"; f.frequency.value = 6000; s.buffer = buf; g.gain.value = vol;
     s.connect(f); f.connect(g); g.connect(dest); s.start(t);
   }
-  // Two moods: a bouncy lobby groove and a tense, faster game loop.
+  // One theme per game. Chords are MIDI notes, one chord per bar; bass is one note per bar.
   const SONGS = {
-    lobby: { bpm: 104, chords: [[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:[45,41,36,43], lead:"arp" },
-    game:  { bpm: 132, chords: [[57,60,64],[57,60,64],[53,57,60],[52,56,59]], bass:[45,45,41,40], lead:"pulse" },
+    lobby:   {bpm:104, chords:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:[45,41,36,43], lead:"arp",    drums:1},
+    quiz:    {bpm:132, chords:[[57,60,64],[57,60,64],[53,57,60],[52,56,59]], bass:[45,45,41,40], lead:"pulse",  drums:2},
+    emoji:   {bpm:118, chords:[[60,64,67],[57,60,64],[53,57,60],[55,59,62]], bass:[48,45,41,43], lead:"bounce", drums:1},
+    tf:      {bpm:150, chords:[[62,65,69],[60,64,67],[58,62,65],[57,61,64]], bass:[50,48,46,45], lead:"pulse",  drums:2},
+    herd:    {bpm:108, chords:[[55,59,62],[60,64,67],[62,66,69],[55,59,62]], bass:[43,48,50,43], lead:"bounce", drums:1},
+    imposter:{bpm:84,  chords:[[57,60,64],[56,60,63],[55,58,62],[56,59,62]], bass:[45,44,43,44], lead:"sparse", drums:0},
+    tap:     {bpm:164, chords:[[52,55,59],[52,55,59],[50,53,57],[48,52,55]], bass:[40,40,38,36], lead:"pulse",  drums:3},
+    react:   {bpm:140, chords:[[57,60,64],[58,61,65],[57,60,64],[56,59,63]], bass:[45,46,45,44], lead:"sparse", drums:2},
+    guess:   {bpm:96,  chords:[[60,64,67,71],[57,60,64,67],[62,65,69,72],[55,59,62,65]], bass:[48,45,50,43], lead:"bells", drums:1},
+    crash:   {bpm:122, chords:[[55,59,62],[53,57,60],[52,55,59],[53,57,60]], bass:[43,41,40,41], lead:"funk",   drums:2},
+    lineup:  {bpm:92,  chords:[[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,60,64,67]], bass:[38,43,36,45], lead:"bells", drums:1},
   };
+  function kick(t){ const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.12);
+    g.gain.setValueAtTime(0.7, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+    o.connect(g); g.connect(musicGain); o.start(t); o.stop(t + 0.22); }
   function schedule(){
     if (!ctx || mood === "off") return;
-    const song = SONGS[mood], spb = 60 / song.bpm / 2;   // eighth notes
+    const song = SONGS[mood] || SONGS.quiz, spb = 60 / song.bpm / 2;   // eighth notes
     while (nextT < ctx.currentTime + 0.15) {
-      const bar = Math.floor(step / 8) % 4, beat = step % 8, ch = song.chords[bar];
-      if (beat % 4 === 0) note(song.bass[bar], nextT, spb*3.6, "triangle", 0.5, musicGain);
-      if (beat === 2 || beat === 6) note(song.bass[bar] + 12, nextT, spb*0.9, "triangle", 0.25, musicGain);
-      if (song.lead === "arp") note(ch[[0,1,2,1,0,2,1,2][beat]] + 12, nextT, spb*0.9, "square", 0.07, musicGain);
-      else if (beat % 2 === 0) note(ch[(beat/2)%3] + 12, nextT, spb*0.7, "sawtooth", 0.05, musicGain);
-      if (beat % 2 === 1) noise(nextT, 0.04, 0.12, musicGain);
+      const bar = Math.floor(step / 8) % 4, beat = step % 8, ch = song.chords[bar], t = nextT, M = musicGain;
+      if (beat % 4 === 0) note(song.bass[bar], t, spb*3.6, "triangle", 0.5, M);
+      if ((beat === 2 || beat === 6) && song.drums > 0) note(song.bass[bar] + 12, t, spb*0.9, "triangle", 0.22, M);
+      if (song.lead === "arp") note(ch[[0,1,2,1,0,2,1,2][beat] % ch.length] + 12, t, spb*0.9, "square", 0.07, M);
+      else if (song.lead === "pulse") { if (beat % 2 === 0) note(ch[(beat/2) % ch.length] + 12, t, spb*0.7, "sawtooth", 0.05, M); }
+      else if (song.lead === "bounce") { const pat = [0,2,1,2,0,2,1,3]; note(ch[pat[beat] % ch.length] + (beat % 4 === 3 ? 24 : 12), t, spb*0.6, "square", 0.06, M); }
+      else if (song.lead === "sparse") { if (beat === 0 || beat === 3) note(ch[beat === 0 ? 0 : 2] + 12, t, spb*5, "sine", 0.12, M); if (beat === 6) note(ch[1] + 24, t, spb*2, "sine", 0.05, M); }
+      else if (song.lead === "bells") { if (beat === 0 || beat === 3 || beat === 6) note(ch[[0,2,3][beat/3] % ch.length] + 24, t, spb*3, "triangle", 0.08, M); if (beat === 0) ch.forEach(n => note(n, t, spb*7, "sine", 0.03, M)); }
+      else if (song.lead === "funk") { if ([0,3,5,6].includes(beat)) note(ch[[0,3,5,6].indexOf(beat) % ch.length] + 12, t, spb*0.35, "square", 0.08, M); }
+      if (song.drums >= 1 && beat % 2 === 1) noise(t, 0.04, 0.1, M);
+      if (song.drums >= 2 && (beat === 0 || beat === 4)) kick(t);
+      if (song.drums >= 2 && (beat === 2 || beat === 6)) noise(t, 0.12, 0.25, M);
+      if (song.drums >= 3 && (beat === 2 || beat === 6)) kick(t);
+      if (song.drums === 0 && beat === 0 && bar % 2 === 0) kick(t);
       nextT += spb; step++;
     }
   }
@@ -3086,6 +3224,8 @@ function startHost(){
       const v = Number(m.value); if (!isFinite(v)) return;
       S.answers[pid] = v; push(pid); soon();
       if (Object.keys(S.answers).length >= online().length) endGuess();
+    } else if (m.t === "cc" && S.phase === "cc") { ccAct(pid, m);
+    } else if (m.t === "lu" && S.phase === "lu") { luAct(pid, m);
     } else if (m.t === "vote" && S.phase === "imp-vote" && r && !(pid in S.answers)) {
       const g = S.groups.find(g => g.members.includes(pid));
       if (!g || !g.members.includes(m.target) || m.target === pid) return;
@@ -3115,6 +3255,7 @@ function startHost(){
     }
     if (S.phase === "guess" || S.phase === "guess-rev") { st.q = {text:q[0], unit:q[2]}; if (S.phase === "guess-rev") st.answer = q[1]; }
     if (S.phase === "tap-res" || S.phase === "react-res") st.last = S.last.pub;
+    if (S.phase === "lu" && S.lu) st.luBoard = S.lu.board.map(b => [b.c, b.t, b.lock ? 1 : 0]);
     return st;
   }
   function stateFor(pid, b){
@@ -3128,6 +3269,22 @@ function startHost(){
     if (S.phase === "guess" || S.phase === "guess-rev") { if (a !== undefined) st.mine = a; if (S.phase === "guess-rev") st.gained = S.last.gained[pid] || 0; }
     if (S.phase.startsWith("react")) { if (a) st.mine = a; if (S.phase === "react-res") st.gained = S.last.gained[pid] || 0; }
     if (S.phase === "tap-res") st.gained = S.last.gained[pid] || 0;
+    if (S.phase === "cc") {
+      const T = (S.tables || []).find(t => t.players.includes(pid));
+      if (!T) st.cc = {sitout:true};
+      else { const cur = T.players[T.turn];
+        st.cc = {table:T.name, top:T.top, color:T.color, log:T.log, hand:T.hands[pid], myTurn: !T.done && cur === pid, drew:T.drew, turnId:T.turnId,
+          turnName: S.players[cur] ? S.players[cur].name : "", done:T.done, winnerMe: T.winner === pid, winnerName: T.winner && S.players[T.winner] ? S.players[T.winner].name : "",
+          others: T.players.filter(x => x !== pid).map(x => ({av: S.players[x] ? S.players[x].av : "", n:T.hands[x].length, turn: x === cur}))};
+        st.endsIn = T.done ? 0 : Math.max(0, T.turnEnds - Date.now()); }
+    }
+    if (S.phase === "lu" && S.lu) {
+      const L = S.lu, tt = L.teams[L.turn];
+      st.lu = {inGame: L.teams.includes(p.team), hand: L.hands[p.team] || [], myTurn: L.player === pid, swapped: L.swapped, turnId: L.turnId, last: L.last,
+        turnName: S.players[L.player] ? S.players[L.player].name : "", turnTeam: tt, turnTeamName: TEAMS[tt].name, need: L.need,
+        seqs: L.teams.map(t => ({id:t, n:L.seqs[t]}))};
+      st.endsIn = Math.max(0, L.turnEnds - Date.now());
+    }
     if (S.phase.startsWith("imp")) {
       const g = S.groups.find(g => g.members.includes(pid));
       if (g) {
@@ -3162,13 +3319,20 @@ function startHost(){
   function startGame(){
     const n = online().length;
     if (S.game === "imposter" && n < 3) { toast("Guess the Imposter needs at least 3 players"); return; }
+    if (S.game === "crash" && n < 2) { toast("Color Crash needs at least 2 players"); return; }
+    if (S.game === "lineup") {
+      if (S.mode !== "teams") { S.mode = "teams"; toast("Line Up 5 is a team game, so it plays in teams"); }
+      if (teams().filter(t => online().some(([,p]) => p.team === t.id)).length < 2) { toast("Line Up 5 needs players on at least 2 teams"); render(); return; }
+    }
     resetScores(); S.round = 0; S.view = "lobby";
     if (["quiz","emoji","tf","herd"].includes(S.game)) { S.list = mcList(); S.total = S.list.length; if (!S.total) { toast("That quiz has no questions yet"); return; } startMC(); }
     else if (S.game === "tap") { S.total = CFG.tapRounds; startTapReady(); }
     else if (S.game === "react") { S.total = CFG.reactRounds; startReactWait(); }
     else if (S.game === "guess") { S.list = shuffle(GUESS).slice(0, CFG.guessN); S.total = S.list.length; startGuess(); }
     else if (S.game === "imposter") { S.total = CFG.impRounds; startImposter(); }
-    Sound.mood("game");
+    else if (S.game === "crash") { S.total = 1; startCrash(); }
+    else if (S.game === "lineup") { S.total = 1; startLineup(); }
+    Sound.mood(S.game);
   }
   const go = (phase, secs) => { S.phase = phase; S.answers = {}; S.startedAt = Date.now(); S.endsAt = secs ? S.startedAt + secs*1000 : 0; broadcast(); render(); };
 
@@ -3258,6 +3422,211 @@ function startHost(){
     S.last = {res, gained}; S.phase = "imp-res"; S.endsAt = 0; Sound.sfx("reveal"); broadcast(); render();
   }
 
+
+  /* ---- Color Crash (match colors or numbers, empty your hand first) ---- */
+  const nm = pid => S.players[pid] ? S.players[pid].name : "?";
+  const avOf = pid => S.players[pid] ? S.players[pid].av : "";
+  function pushTable(T){ rankCache = null; for (const pid of T.players) push(pid); soon(); }
+  function ccDeck(){ const d = [];
+    for (const c of "rgby") { d.push(c + "0"); for (let v = 1; v <= 9; v++) d.push(c + v, c + v); for (const x of ["S","R","+"]) d.push(c + x, c + x); }
+    for (let i = 0; i < 4; i++) d.push("wW", "w4");
+    return shuffle(d); }
+  function ccDraw(T){
+    if (!T.deck.length && T.discard.length > 1) { const top = T.discard.pop(); T.deck = shuffle(T.discard); T.discard = [top]; }
+    return T.deck.pop(); }
+  function startCrash(){
+    const ids = shuffle(online().map(([pid]) => pid)), nT = Math.ceil(ids.length / CFG.ccTable);
+    S.tables = Array.from({length:nT}, (_, i) => ({name:"Table " + (i + 1), players:[]}));
+    ids.forEach((pid, i) => S.tables[i % nT].players.push(pid));
+    for (const T of S.tables) {
+      T.deck = ccDeck(); T.hands = {};
+      for (const pid of T.players) T.hands[pid] = Array.from({length:7}, () => T.deck.pop());
+      let i = T.deck.findIndex(c => /^[rgby]\d$/.test(c)); const top = T.deck.splice(i, 1)[0];
+      Object.assign(T, {discard:[top], top, color:top[0], turn:0, dir:1, drew:false, done:false, winner:null, turnId:0, log:"Match the color or the number"});
+      ccTurnStart(T);
+    }
+    S.phase = "cc"; S.endsAt = 0; broadcast(); render();
+  }
+  function ccTurnStart(T){
+    T.drew = false; T.turnId++;
+    const pid = T.players[T.turn], p = S.players[pid];
+    T.turnEnds = Date.now() + (p && p.on ? CFG.ccTurn : 4) * 1000;
+    if (p && p.bot) { const id = T.turnId; setTimeout(() => ccBot(T, pid, id), 900 + Math.random() * 1600); }
+  }
+  function ccNext(T, steps){ const n = T.players.length; T.turn = ((T.turn + T.dir * steps) % n + n) % n; ccTurnStart(T); }
+  function ccAct(pid, m){
+    const T = (S.tables || []).find(t => t.players.includes(pid));
+    if (!T || T.done || T.players[T.turn] !== pid) return;
+    const hand = T.hands[pid], who = nm(pid), n = T.players.length;
+    if (m.a === "play") {
+      const i = Number(m.i), c = hand[i];
+      if (c === undefined || !ccPlayable(c, T.top, T.color)) return;
+      hand.splice(i, 1); T.discard.push(c); T.top = c;
+      T.color = c[0] === "w" ? (["r","g","b","y"].includes(m.color) ? m.color : pick(["r","g","b","y"])) : c[0];
+      T.log = who + " played " + ccName(c) + (c[0] === "w" ? " → " + CC_NAMES[T.color] : "");
+      if (!hand.length) { ccFinish(T, pid); return; }
+      const v = c.slice(1);
+      if (v === "S") ccNext(T, 2);
+      else if (v === "R") { if (n === 2) ccNext(T, 2); else { T.dir *= -1; ccNext(T, 1); } }
+      else if (v === "+" || c === "w4") {
+        const k = v === "+" ? 2 : 4, victim = T.players[((T.turn + T.dir) % n + n) % n];
+        for (let j = 0; j < k; j++) { const d = ccDraw(T); if (d) T.hands[victim].push(d); }
+        T.log += " · " + nm(victim) + " draws " + k; ccNext(T, 2);
+      } else ccNext(T, 1);
+      Sound.sfx("pop");
+    } else if (m.a === "draw" && !T.drew) {
+      const d = ccDraw(T); if (d) hand.push(d); T.drew = true; T.log = who + " drew a card";
+      if (!d || !ccPlayable(d, T.top, T.color)) ccNext(T, 1);
+    } else if (m.a === "pass" && T.drew) { T.log = who + " passed"; ccNext(T, 1); }
+    else return;
+    pushTable(T);
+  }
+  function ccFinish(T, winner){
+    T.done = true; T.winner = winner;
+    for (const pid of T.players) { const p = S.players[pid]; if (!p) continue;
+      p.pts += pid === winner ? 300 : Math.max(0, 150 - 10 * T.hands[pid].length); }
+    T.log = nm(winner) + " emptied their hand and wins the table!";
+    Sound.sfx("win");
+    if (S.tables.every(t => t.done)) endCards(); else pushTable(T);
+  }
+  function ccFinishAll(){
+    for (const T of S.tables) if (!T.done) { T.done = true;
+      const w = T.players.slice().sort((a,b) => T.hands[a].length - T.hands[b].length)[0]; T.winner = w;
+      for (const pid of T.players) { const p = S.players[pid]; if (p) p.pts += pid === w ? 300 : Math.max(0, 150 - 10 * T.hands[pid].length); }
+      T.log = nm(w) + " had the fewest cards"; }
+    endCards();
+  }
+  function ccTick(){
+    for (const T of S.tables || []) if (!T.done && Date.now() > T.turnEnds) {
+      const pid = T.players[T.turn];
+      if (!T.drew) { const d = ccDraw(T); if (d) T.hands[pid].push(d); }
+      T.log = nm(pid) + " ran out of time and drew a card"; ccNext(T, 1); pushTable(T);
+    }
+  }
+  function ccBot(T, pid, id){
+    if (S.phase !== "cc" || T.done || T.turnId !== id) return;
+    const hand = T.hands[pid], counts = {r:0,g:0,b:0,y:0}; hand.forEach(c => { if (c[0] !== "w") counts[c[0]]++; });
+    const best = Object.keys(counts).sort((a,b) => counts[b] - counts[a])[0];
+    const i = hand.findIndex(c => c[0] !== "w" && ccPlayable(c, T.top, T.color));
+    const j = i >= 0 ? i : hand.findIndex(c => ccPlayable(c, T.top, T.color));
+    if (j >= 0) { ccAct(pid, {a:"play", i:j, color:best}); return; }
+    ccAct(pid, {a:"draw"});
+    if (T.players[T.turn] === pid && T.drew) setTimeout(() => { if (T.turnId === id && T.players[T.turn] === pid && T.drew) ccAct(pid, {a:"play", i:hand.length - 1, color:best}); }, 700);
+  }
+  function endCards(){ S.phase = "final"; S.endsAt = 0; Sound.mood("lobby"); Sound.sfx("win"); broadcast(); render(); Confetti.burst(6500); }
+
+  /* ---- Line Up 5 (place chips, make rows of five) ---- */
+  function startLineup(){
+    const tl = teams().filter(t => online().some(([,p]) => p.team === t.id));
+    const cards = []; for (const s of "SHDC") for (const r of ["A","2","3","4","5","6","7","8","9","10","Q","K"]) cards.push(r + s, r + s);
+    const sh = shuffle(cards), board = [];
+    for (let i = 0; i < 100; i++) board.push({c: [0,9,90,99].includes(i) ? "*" : sh.pop(), t:-1, lock:false});
+    const deck = []; for (const s of "SHDC") for (const r of ["A","2","3","4","5","6","7","8","9","10","J","Q","K"]) deck.push(r + s, r + s);
+    const L = {board, deck:shuffle(deck), discard:[], teams:tl.map(t => t.id), turn:0, ptr:{}, hands:{}, seqs:{}, need: tl.length === 2 ? 2 : 1,
+      last:-1, swapped:false, turnId:0, player:null, log:"Place chips on the board. Make a row of five!"};
+    const hs = tl.length === 2 ? 7 : tl.length === 3 ? 6 : 5;
+    for (const id of L.teams) { L.hands[id] = Array.from({length:hs}, () => L.deck.pop()); L.ptr[id] = Math.floor(Math.random() * 50); L.seqs[id] = 0; }
+    S.lu = L; S.phase = "lu"; S.endsAt = 0; luTurnStart(); broadcast(); render();
+  }
+  function luDrawCard(){ const L = S.lu; if (!L.deck.length) { L.deck = shuffle(L.discard); L.discard = []; } return L.deck.pop(); }
+  function luActiveOf(team){ const ms = online().filter(([,p]) => p.team === team).map(([pid]) => pid).sort(); return ms.length ? ms[S.lu.ptr[team] % ms.length] : null; }
+  function luTurnStart(){
+    const L = S.lu;
+    for (let k = 0; k < L.teams.length && !luActiveOf(L.teams[L.turn]); k++) L.turn = (L.turn + 1) % L.teams.length;
+    L.turnId++; L.swapped = false; L.player = luActiveOf(L.teams[L.turn]);
+    L.turnEnds = Date.now() + CFG.luTurn * 1000;
+    const p = S.players[L.player];
+    if (p && p.bot) { const id = L.turnId; setTimeout(() => { if (S.phase === "lu" && S.lu.turnId === id) luAuto(L.player); }, 1200 + Math.random() * 1800); }
+  }
+  function luNext(){ const L = S.lu, team = L.teams[L.turn]; L.ptr[team]++; L.turn = (L.turn + 1) % L.teams.length; luTurnStart(); }
+  function luAct(pid, m){
+    const L = S.lu; if (!L || S.phase !== "lu" || pid !== L.player) return;
+    const team = L.teams[L.turn], hand = L.hands[team], i = Number(m.i), card = hand[i];
+    if (card === undefined) return;
+    if (m.a === "swap") {
+      if (L.swapped || !luDead(L.board, card)) return;
+      L.discard.push(card); hand[i] = luDrawCard(); L.swapped = true; L.log = nm(pid) + " swapped a dead card";
+      broadcast(); render(); return;
+    }
+    if (m.a !== "play") return;
+    const cell = Number(m.cell), b = L.board[cell];
+    if (!luOk(b, team, card)) return;
+    if (LU_ONE.includes(card)) { L.log = nm(pid) + " used a one-eyed jack to remove a " + TEAMS[b.t].name + " chip"; b.t = -1; }
+    else { b.t = team; L.log = nm(pid) + " placed a chip on " + (LU_TWO.includes(card) ? luLabel(b.c) + " with a wild jack" : luLabel(card)); }
+    hand.splice(i, 1); L.discard.push(card); const d = luDrawCard(); if (d) hand.push(d);
+    L.last = cell; Sound.sfx("pop");
+    if (luCheck(team)) { luWin(team); return; }
+    luNext(); broadcast(); render();
+  }
+  function luCheck(team){
+    const L = S.lu, B = L.board, own = i => B[i].c === "*" || B[i].t === team, wins = [];
+    for (let r = 0; r < 10; r++) for (let c = 0; c < 10; c++) for (const [dr, dc] of [[0,1],[1,0],[1,1],[1,-1]]) {
+      const cells = [];
+      for (let k = 0; k < 5; k++) { const rr = r + dr*k, cc = c + dc*k; if (rr < 0 || rr > 9 || cc < 0 || cc > 9) break; cells.push(rr*10 + cc); }
+      if (cells.length === 5 && cells.every(own) && cells.some(i => B[i].t === team)) wins.push(cells);
+    }
+    wins.sort((a,b) => b.filter(i => B[i].lock).length - a.filter(i => B[i].lock).length);
+    const chosen = [];
+    for (const w of wins) if (chosen.every(ch => ch.filter(i => w.includes(i)).length <= 1)) chosen.push(w);
+    chosen.flat().forEach(i => { if (B[i].t === team) B[i].lock = true; });
+    if (chosen.length > L.seqs[team]) { Sound.sfx("correct"); L.log = TEAMS[team].name + " made a row of five!"; }
+    L.seqs[team] = chosen.length;
+    return chosen.length >= L.need;
+  }
+  function luWin(team){
+    const L = S.lu; L.winner = team;
+    for (const [, p] of plist()) p.pts += p.team === team ? 500 : 100 * (L.seqs[p.team] || 0);
+    L.log = TEAMS[team].name + " completed " + L.need + " row" + (L.need > 1 ? "s" : "") + " of five and win!";
+    endCards();
+  }
+  function luAuto(pid){
+    const L = S.lu; if (S.phase !== "lu" || pid !== L.player) return;
+    const team = L.teams[L.turn], hand = L.hands[team], B = L.board;
+    const near = i => { let s = 0; const r = Math.floor(i/10), c = i % 10;
+      for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const rr = r+dr, cc = c+dc;
+        if ((dr || dc) && rr >= 0 && rr < 10 && cc >= 0 && cc < 10) { const x = B[rr*10+cc]; if (x.t === team || x.c === "*") s++; } }
+      return s; };
+    let best = null;
+    hand.forEach((card, i) => B.forEach((b, cell) => { if (!luOk(b, team, card)) return;
+      const score = near(cell) + Math.random() * 0.8 - (LU_ONE.includes(card) ? 2 : 0) - (LU_TWO.includes(card) ? 1 : 0);
+      if (!best || score > best.score) best = {i, cell, score}; }));
+    if (best) luAct(pid, {a:"play", i:best.i, cell:best.cell});
+    else { const dead = hand.findIndex(c => luDead(B, c)); if (dead >= 0 && !L.swapped) luAct(pid, {a:"swap", i:dead}); L.log = nm(pid) + " had no move"; luNext(); broadcast(); render(); }
+  }
+  function luTick(){ const L = S.lu; if (L && Date.now() > L.turnEnds) { const pid = L.player; if (pid) luAuto(pid); else { luNext(); broadcast(); } } }
+
+  /* ---- card game views (big screen) ---- */
+  function ccTableHTML(T, big){
+    const cur = T.players[T.turn], secs = Math.ceil(Math.max(0, T.turnEnds - Date.now()) / 1000), sz = big ? 46 : 30;
+    return `<div class="cctable ${big ? "big" : ""} ${T.done ? "done" : ""}">
+      <div class="cc-head"><b>${esc(T.name)}</b>${T.done ? `<span class="pill">🏆 ${esc(nm(T.winner))}</span>` : `<span class="pill">${T.dir > 0 ? "↻ clockwise" : "↺ reversed"} · <b>${secs}</b> s</span>`}</div>
+      <div class="cc-mid"><div class="pile">${ccCard(T.top, "top")}</div>
+        <div class="cc-info"><span class="curcol" style="--cc:${CC_COLORS[T.color]}">${CC_NAMES[T.color]}</span>${big ? `<p class="cc-log">${esc(T.log)}</p>` : ""}</div></div>
+      <div class="cc-seats">${T.players.map(x => { const n = T.hands[x].length;
+        return `<div class="seat ${x === cur && !T.done ? "turn" : ""} ${x === T.winner ? "win" : ""}">${Avatar.svg(avOf(x), sz, {crown: x === T.winner})}<span class="sn">${esc(nm(x))}</span><span class="cnt ${n === 1 ? "last" : ""}">${n === 1 ? "1 card!" : n + " cards"}</span></div>`; }).join("")}</div>
+      ${big ? "" : `<p class="cc-log sm">${esc(T.log)}</p>`}</div>`;
+  }
+  function ccView(){
+    const one = S.tables.length === 1, done = S.tables.filter(t => t.done).length;
+    return `<section class="stage card"><div class="qhead"><span class="label">Color Crash · ${S.tables.length} table${one ? "" : "s"} · ${done} finished</span>
+        <button class="ghost sm" data-act="ccfinish">Finish now</button></div>
+      <div class="cctables ${one ? "one" : ""}">${S.tables.map(T => ccTableHTML(T, one)).join("")}</div>
+      <p class="hint">Match the top card's color or number. ⊘ skips the next player, ⇄ reverses, +2 and +4 make the next player draw. First to empty their hand wins the table.</p></section>`;
+  }
+  function luView(){
+    const L = S.lu, team = L.teams[L.turn], secs = Math.ceil(Math.max(0, L.turnEnds - Date.now()) / 1000);
+    return `<section class="lu-wrap">
+      <div class="lu-board" role="img" aria-label="Line Up 5 board">${L.board.map((b, i) => `<div class="lc ${luRed(b.c) ? "red" : ""} ${b.c === "*" ? "free" : ""} ${i === L.last ? "last" : ""}">${luCell(b, i)}</div>`).join("")}</div>
+      <aside class="card lu-side">
+        <div class="label">Now playing</div>
+        <div class="lu-turn" style="--c:${TEAMS[team].c}">${L.player ? Avatar.svg(avOf(L.player), 56) : ""}<div><b>${esc(nm(L.player))}</b><div style="color:${TEAMS[team].c}">${esc(TEAMS[team].name)}</div></div><span class="big-num sm">${secs}</span></div>
+        <p class="cc-log">${esc(L.log)}</p>
+        <div class="label">Rows of five (need ${L.need})</div>
+        ${L.teams.map(t => `<div class="lu-seq" style="--c:${TEAMS[t].c}"><span>${esc(TEAMS[t].name)}</span><span>${Array.from({length:L.need}, (_, k) => `<i class="pip ${k < L.seqs[t] ? "on" : ""}"></i>`).join("")}</span></div>`).join("")}
+        <div class="label">Jacks</div><p class="hint">J♦ J♣ (two eyes): place a chip anywhere. J♠ J♥ (one eye): remove another team's chip. ★ corners count for every team.</p>
+      </aside></section>`;
+  }
+
   function next(){
     if (S.round + 1 >= S.total) { S.phase = "final"; S.endsAt = 0; Sound.mood("lobby"); Sound.sfx("win"); broadcast(); render(); Confetti.burst(6500); return; }
     S.round++;
@@ -3270,6 +3639,11 @@ function startHost(){
   let lastSec = -1;
   setInterval(() => {
     if (S.phase === "react-wait" && S.goAt && Date.now() >= S.goAt) { S.goAt = 0; startReactGo(); return; }
+    if (S.phase === "cc" || S.phase === "lu") {
+      if (S.phase === "cc") ccTick(); else luTick();
+      const sec = Math.floor(Date.now() / 1000); if (sec !== lastSec && S.view !== "editor" && !S.rules) { lastSec = sec; render(); }
+      return;
+    }
     if (!S.endsAt) return;
     const left = S.endsAt - Date.now();
     if (left <= 0) {
@@ -3356,6 +3730,8 @@ function startHost(){
     else if (S.phase.startsWith("react")) body = reactView();
     else if (S.phase.startsWith("guess")) body = guessView();
     else if (S.phase.startsWith("imp")) body = impView();
+    else if (S.phase === "cc") body = ccView();
+    else if (S.phase === "lu") body = luView();
     else if (S.phase === "final") body = finalView();
     const keep = S.view === "editor" ? captureEditor() : null;
     app.innerHTML = `<div class="wrap">${header()}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>${S.rules ? rulesView(S.rules) : ""}`;
@@ -3600,7 +3976,7 @@ The Earth is flat. | True | *False</pre>
     if (b.dataset.del !== undefined) { const qz = editing(); qz.questions.splice(+b.dataset.del, 1); saveQuiz(qz); render(); return; }
     if (b.dataset.up !== undefined) { const qz = editing(), i = +b.dataset.up; [qz.questions[i-1], qz.questions[i]] = [qz.questions[i], qz.questions[i-1]]; saveQuiz(qz); render(); return; }
     const a = b.dataset.act;
-    if (a === "music") { Sound.toggleMusic(); Sound.mood(S.phase === "lobby" || S.phase === "final" ? "lobby" : "game"); render(); }
+    if (a === "music") { Sound.toggleMusic(); Sound.mood(S.phase === "lobby" || S.phase === "final" ? "lobby" : S.game); render(); }
     if (a === "sfx") { Sound.toggleSfx(); render(); }
     if (a === "reload") location.reload();
     if (a === "copy") { const u = joinUrl();
@@ -3610,6 +3986,7 @@ The Earth is flat. | True | *False</pre>
     if (a === "start" || a === "again") startGame();
     if (a === "skip") { if (S.phase === "mc") endMC(); else if (S.phase === "guess") endGuess(); else if (S.phase === "imp-vote") endVote(); }
     if (a === "vote") startVote();
+    if (a === "ccfinish") ccFinishAll();
     if (a === "next") next();
     if (a === "lobby") toLobby();
     if (a === "editor") { S.view = "editor"; const all = Quizzes.all(); if (!S.editId && all.length) S.editId = all[0].id; render(); }
@@ -3657,7 +4034,7 @@ function startPlayer(code){
   let pid = null;
   try { pid = LOCAL ? sessionStorage.getItem("sp-pid") : store.get("sp-pid"); } catch(e){}
   if (!pid) { pid = "u" + uid() + uid(); try { LOCAL ? sessionStorage.setItem("sp-pid", pid) : store.set("sp-pid", pid); } catch(e){} }
-  const P = {status:"connecting", st:null, joined:false, name: store.get("sp-name") || "", av: Avatar.clean(store.get("sp-av")), team:null, taps:0, tapRound:-1, recvAt:0, err:"", goAt:0, prevPhase:""};
+  const P = {status:"connecting", st:null, joined:false, name: store.get("sp-name") || "", av: Avatar.clean(store.get("sp-av")), team:null, ccWild:null, luSel:null, luTurn:-1, taps:0, tapRound:-1, recvAt:0, err:"", goAt:0, prevPhase:""};
   let link = null, tapTimer = 0;
   const send = m => { if (link) link.send(m); };
 
@@ -3670,6 +4047,9 @@ function startPlayer(code){
       const prev = P.st; P.st = m; P.recvAt = Date.now();
       if (m.you) { P.joined = true; P.team = m.you.team; }
       if (m.phase === "tap" && P.tapRound !== m.round) { P.tapRound = m.round; P.taps = 0; }
+      if (m.lu && m.lu.turnId !== P.luTurn) { P.luTurn = m.lu.turnId; P.luSel = null; if (m.lu.myTurn) Sound.sfx("go"); }
+      if (m.cc && !m.cc.myTurn) P.ccWild = null;
+      if (m.cc && m.cc.myTurn && (!prev || !prev.cc || !prev.cc.myTurn)) Sound.sfx("go");
       if (m.phase === "react-go" && (!prev || prev.phase !== "react-go")) { P.goAt = performance.now(); Sound.sfx("go"); }
       if (prev && prev.phase !== m.phase) {
         if (m.phase === "mc-rev") Sound.sfx(m.gained > 0 ? "correct" : "wrong");
@@ -3714,9 +4094,18 @@ function startPlayer(code){
     else if (st.phase === "guess") body = guessQ(st);
     else if (st.phase.startsWith("imp")) body = impPhone(st);
     else if (st.phase.endsWith("-res") || st.phase === "guess-rev") body = resultCard(st);
+    else if (st.phase === "cc") body = ccPhone(st);
+    else if (st.phase === "lu") body = luPhone(st);
     else if (st.phase === "final") body = finalPhone(st);
-    app.innerHTML = `<div class="phone">${topbar()}${P.status === "lost" ? `<div class="pill">Reconnecting…</div>` : ""}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>`;
+    const html = `<div class="phone">${topbar()}${P.status === "lost" ? `<div class="pill">Reconnecting…</div>` : ""}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>`;
+    const key = html.replace(/data-left>\d+</g, "data-left><");
+    if (key === lastKey) return;
+    const nmEl = document.getElementById("nm"), typed = nmEl ? nmEl.value : null, gv = document.getElementById("gv"), guessTyped = gv ? gv.value : null;
+    lastKey = key; app.innerHTML = html;
+    if (typed !== null && document.getElementById("nm")) document.getElementById("nm").value = typed;
+    if (guessTyped !== null && document.getElementById("gv")) document.getElementById("gv").value = guessTyped;
   }
+  let lastKey = "";
   function joinForm(st){
     return `<form class="msg form" id="joinform"><h2>Join the game</h2>
       <div class="avpick"><button type="button" class="avbig" data-act="newav" aria-label="Make a new cartoon face">${Avatar.svg(P.av, 132)}</button>
@@ -3759,6 +4148,48 @@ function startPlayer(code){
       <input id="gv" type="number" inputmode="decimal" step="any" placeholder="Your guess${st.q.unit ? " (" + esc(st.q.unit) + ")" : ""}" required>
       <button class="big" type="submit">Send guess</button></form>`;
   }
+
+  /* ---- card games on the phone ---- */
+  function ccPhone(st){
+    const C = st.cc;
+    if (!C || C.sitout) return `<div class="msg"><h2>Watch this one</h2><p class="muted">You joined after the cards were dealt. You'll be in the next game.</p></div>`;
+    if (C.done) return `<div class="result ${C.winnerMe ? "ok" : "no"}"><h2>${C.winnerMe ? "You won your table! 🏆" : esc(C.winnerName) + " won your table"}</h2>
+      <p>${C.winnerMe ? "+300 points" : "You had " + C.hand.length + " card" + (C.hand.length === 1 ? "" : "s") + " left"}</p><p class="hint">Waiting for the other tables to finish…</p></div>${standing(st)}`;
+    const wildPick = P.ccWild !== null && C.myTurn ? `<div class="overlay" id="ccwild"><div class="sheet center"><h2>Pick a color</h2>
+      <div class="colpick">${["r","g","b","y"].map(c => `<button data-ccol="${c}" style="background:${CC_COLORS[c]}">${CC_NAMES[c]}</button>`).join("")}</div>
+      <button class="ghost" data-act="ccnowild">Cancel</button></div></div>` : "";
+    return `<div class="cc-phone">
+      <div class="turnbar ${C.myTurn ? "mine" : ""}">${C.myTurn ? "Your turn!" : esc(C.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
+      <div class="cc-pile">${ccCard(C.top, "top")}<div><span class="curcol" style="--cc:${CC_COLORS[C.color]}">${CC_NAMES[C.color]}</span><p class="hint">${esc(C.log)}</p></div></div>
+      <div class="mini-seats">${C.others.map(o => `<span class="ms ${o.turn ? "turn" : ""}">${Avatar.svg(o.av, 26)}<b>${o.n}</b></span>`).join("")}</div>
+      <div class="hand">${C.hand.map((c, i) => { const ok = C.myTurn && ccPlayable(c, C.top, C.color);
+        return `<button class="ucard ${c[0]} ${ok ? "ok" : ""} ${C.myTurn && !ok ? "no" : ""}" data-cc="${i}" ${ok ? "" : "disabled"} aria-label="${esc(ccName(c))}"><b>${ccLabel(c)}</b></button>`; }).join("")}</div>
+      ${C.myTurn ? `<div class="row center-row">${C.drew ? `<button class="big" data-act="ccpass">Pass</button>` : `<button class="big" data-act="ccdraw">Draw a card</button>`}</div>
+        <p class="hint center">${C.drew ? "You can play the card you drew, or pass." : "No match? Draw a card."}</p>` : ""}
+      </div>${wildPick}`;
+  }
+  function luPhone(st){
+    const L = st.lu;
+    if (!L || !L.inGame) return `<div class="msg"><h2>Watch this one</h2><p class="muted">Your team isn't in this game. Watch the big screen.</p></div>`;
+    const board = st.luBoard.map(([c, t, lock]) => ({c, t, lock:!!lock}));
+    const sel = L.myTurn && P.luSel !== null && L.hand[P.luSel] !== undefined ? L.hand[P.luSel] : null;
+    const myTeam = st.teams.find(t => t.id === P.team);
+    const hint = !L.myTurn ? `<b>${esc(L.turnName)}</b> is playing for ${L.turnTeam === P.team ? "your team. Help them choose!" : esc(L.turnTeamName) + "."}`
+      : !sel ? "Your turn! Tap a card, then tap a glowing space on the board."
+      : LU_TWO.includes(sel) ? "Wild jack: tap ANY empty space." : LU_ONE.includes(sel) ? "One-eyed jack: tap another team's chip to remove it."
+      : luDead(board, sel) ? "Both spaces for this card are taken. Swap it for a new card." : "Tap a glowing space.";
+    return `<div class="lu-phone">
+      <div class="turnbar ${L.myTurn ? "mine" : ""}" style="--c:${myTeam ? myTeam.c : "var(--t2)"}">${L.myTurn ? "Your turn!" : esc(L.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
+      <p class="hint center">${hint}</p>
+      <div class="lu-board sm">${board.map((b, i) => { const ok = sel && luOk(b, P.team, sel);
+        return `<button class="lc ${luRed(b.c) ? "red" : ""} ${b.c === "*" ? "free" : ""} ${ok ? "ok" : ""} ${i === L.last ? "last" : ""}" ${ok ? `data-cell="${i}"` : "disabled"} aria-label="${b.c === "*" ? "Free corner" : luLabel(b.c)}">${luCell(b, i)}</button>`; }).join("")}</div>
+      <div class="label">${L.myTurn ? "Your team's cards" : "Your team's cards (shared)"}</div>
+      <div class="phand">${L.hand.map((c, i) => `<button class="pcard ${luRed(c) ? "red" : ""} ${P.luSel === i && L.myTurn ? "sel" : ""} ${luDead(board, c) ? "dead" : ""}" data-lui="${i}" ${L.myTurn ? "" : "disabled"}>${luLabel(c)}${LU_TWO.includes(c) ? "<small>wild</small>" : LU_ONE.includes(c) ? "<small>remove</small>" : ""}</button>`).join("")}</div>
+      ${L.myTurn && sel && luDead(board, sel) && !L.swapped ? `<button class="big" data-act="luswap">Swap this dead card</button>` : ""}
+      <div class="lu-seqs">${L.seqs.map(s => { const t = st.teams.find(x => x.id === s.id); return `<span style="--c:${t ? t.c : "#fff"}">${t ? esc(t.name) : ""} <b>${s.n}/${L.need}</b></span>`; }).join("")}</div>
+      </div>`;
+  }
+
   function impPhone(st){
     const I = st.imp;
     if (!I || I.sitout) return `<div class="msg"><h2>Sit this round out</h2><p class="muted">You joined after the groups were made. You'll be in the next round.</p></div>`;
@@ -3799,6 +4230,15 @@ function startPlayer(code){
     if (b.dataset.team) { Sound.sfx("click"); P.team = Number(b.dataset.team); send({t:"join", pid, name:P.name, av:P.av, team:P.team}); return; }
     if (b.dataset.choice) { Sound.sfx("pop"); send({t:"answer", r:P.st.round, choice:Number(b.dataset.choice)}); b.classList.add("pressed"); return; }
     if (b.dataset.vote) { Sound.sfx("pop"); send({t:"vote", r:P.st.round, target:b.dataset.vote}); return; }
+    if (b.dataset.cc !== undefined) { const i = +b.dataset.cc, c = P.st.cc.hand[i]; Sound.sfx("pop");
+      if (c && c[0] === "w") { P.ccWild = i; render(); } else send({t:"cc", a:"play", i}); return; }
+    if (b.dataset.ccol) { Sound.sfx("pop"); send({t:"cc", a:"play", i:P.ccWild, color:b.dataset.ccol}); P.ccWild = null; render(); return; }
+    if (b.dataset.lui !== undefined) { Sound.sfx("click"); P.luSel = +b.dataset.lui; render(); return; }
+    if (b.dataset.cell !== undefined) { Sound.sfx("pop"); send({t:"lu", a:"play", i:P.luSel, cell:+b.dataset.cell}); P.luSel = null; return; }
+    if (b.dataset.act === "ccdraw") { Sound.sfx("click"); send({t:"cc", a:"draw"}); return; }
+    if (b.dataset.act === "ccpass") { Sound.sfx("click"); send({t:"cc", a:"pass"}); return; }
+    if (b.dataset.act === "ccnowild") { P.ccWild = null; render(); return; }
+    if (b.dataset.act === "luswap") { Sound.sfx("click"); send({t:"lu", a:"swap", i:P.luSel}); P.luSel = null; return; }
     if (b.dataset.act === "sfx") { Sound.toggleSfx(); render(); }
     if (b.dataset.act === "newav") { Sound.sfx("pop"); const nm = document.getElementById("nm"); if (nm) P.name = nm.value;
       P.av = Avatar.random(); store.set("sp-av", P.av); render(); return; }
