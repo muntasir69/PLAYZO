@@ -570,6 +570,29 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .voicebar.hear .vhear{display:flex;animation:pop .3s ease}
 .phone{padding-bottom:84px}
 .pill.talking{border-color:var(--good);color:var(--text);animation:pop .3s ease}
+
+/* v13: step-by-step walking, full 40-space Tycoon board with real pieces */
+.walking{z-index:9 !important;animation:none !important}
+.tyb{position:relative;grid-template-columns:1.6fr repeat(9,1fr) 1.6fr;grid-template-rows:1.6fr repeat(9,1fr) 1.6fr;gap:2px;padding:2px}
+.ttables.one .tyb{max-width:min(100%,82vh)}
+.tycenter{grid-area:2/2/11/11}
+.tt{padding:1px}
+.tt .tn{font-size:clamp(.36rem,.62vw,.66rem);line-height:1.05}
+.tt .tp{font-size:clamp(.34rem,.56vw,.6rem)}
+.tt .ticon{font-size:clamp(.7rem,1.3vw,1.4rem)}
+.tt.corner .tn{font-size:clamp(.4rem,.7vw,.75rem)}
+.tt.sl,.tt.sr{flex-direction:row;justify-content:center;gap:2px;flex-wrap:wrap;align-content:center}
+.tt.sl .band,.tt.sr .band{position:absolute;top:0;bottom:0;width:16%;height:auto}
+.tt.sl .band{right:0}.tt.sr .band{left:0}
+.tt.sl{padding-right:18%}.tt.sr{padding-left:18%}
+.tt.st .band{order:9;margin-top:auto}
+.tyb.small .tt .tn,.tyb.small .tt .tp,.typhone .tt .tn,.typhone .tt .tp{display:none}
+.tyb.small .tt .ticon,.typhone .tt .ticon{font-size:.6rem}
+.typhone .tylogo{font-size:1rem}.typhone .pot{font-size:.65rem}
+.tyt{position:absolute;width:8.2%;aspect-ratio:56/46;transform:translate(-50%,-70%);pointer-events:none;filter:drop-shadow(0 2px 1px rgba(0,0,0,.4))}
+.tyt .piece{display:block;width:100%;height:100%}
+.tyt.me{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
+.tyb.small .tyt,.typhone .tyt{width:9.5%}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -2952,9 +2975,9 @@ const GAMES = {
     rules:["On your turn, tap Roll the dice on your phone.","Roll a 6 or a 1 to bring a token out of your yard.","Move a token forward by the number you rolled. If two moves are possible, your phone asks which token to move.","Rolling a 6 gives you another roll (three 6s in a row ends your turn).","Land on another player's token to send it back to its yard, unless it's on a ★ safe square.","Go all the way round, up your colored home path, and land exactly in the center.","First player to bring both tokens home wins the board. You have 20 seconds per turn."],
     scoring:"Board winner: 300 points. Everyone else: up to 150 points for how far their tokens got."},
   tycoon: {name:"Tycoon Town", tag:"Board", color:"#2fae5f", players:"2–200+", mins:"10–15 min",
-    desc:"Roll, buy streets, collect rent. The richest player after 10 rounds wins.",
-    about:"A fast property-trading game. Up to 6 players share a town of 24 spaces, and big groups play in several towns at once. Everyone starts with $1,000.",
-    rules:["On your turn, tap Roll the dice. You move by the total of both dice. Doubles let you roll again.","Land on an empty street and your phone asks if you want to buy it.","When other players land on your street, they pay you rent (10% of the price).","Own both streets of the same color for double rent.","Pass GO to collect $200. 🎁 Lucky Cards can help or hurt you.","📱 Phone Bill pays into the Free Parking pot. Land on 🅿️ Free Parking to collect the whole pot.","🚓 Go to Traffic Jam makes you miss your next turn.","Run out of money and you're out. After 10 rounds, the richest player (cash + street prices) wins."],
+    desc:"Roll, buy streets, collect rent. The richest player after 12 rounds wins.",
+    about:"A property-trading game on a full 40-space board with streets, metro stations and power companies. Up to 6 players share a town, and big groups play in several towns at once. Everyone starts with $1,000.",
+    rules:["On your turn, tap Roll the dice. You move by the total of both dice. Doubles let you roll again.","Land on an empty street and your phone asks if you want to buy it.","When other players land on your street, they pay you rent (10% of the price).","Own every street of one color for double rent. 🚇 Metro rent grows with each metro you own. ⚡ Power and 💧 Water rent depends on the dice.","Pass GO to collect $200. 🎁 Lucky Cards can help or hurt you.","📱 Phone Bill pays into the Free Parking pot. Land on 🅿️ Free Parking to collect the whole pot.","🚓 Go to Traffic Jam makes you miss your next turn.","Run out of money and you're out. After 12 rounds, the richest player (cash + street prices) wins."],
     scoring:"1st place: 300 points, 2nd: 200, 3rd: 120, then 80, 60 and 40."},
   snakes: {name:"Snakes & Ladders", tag:"Board", color:"#7b5cff", players:"2–200+", mins:"6–10 min",
     desc:"Also called Ludo Snake. Roll the dice, climb ladders, dodge snakes, reach 100 first.",
@@ -3071,7 +3094,7 @@ const CFG = {
   quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
-  ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1000, tyRounds:10,
+  ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1500, tyRounds:12,
 };
 
 /* ------------------------------------------------------------ helpers */
@@ -3286,6 +3309,32 @@ function dieHTML(v, roll, size = 64){
 // play an animation only the first time an event is shown
 const SEEN = {};
 function fresh(key, id){ if (SEEN[key] === id) return false; SEEN[key] = id; return true; }
+/* Step-by-step token walking. A board registers a walk (list of points in % of the board) when it sees a new move;
+   every re-render picks the walk up again at the right moment, so the token keeps walking smoothly. */
+const WALK_MS = 300, TY_WALK_MS = 240;
+const WALKS = {};
+function walkSet(key, id, pts, ms = WALK_MS, slide = false){
+  if (WALKS[key] && WALKS[key].id === id) return;
+  if (!pts || pts.length < 2) { delete WALKS[key]; return; }
+  WALKS[key] = {id, pts, ms, slide, n: pts.length - 1, t0: performance.now()};
+  if (!slide && typeof Sound !== "undefined") for (let i = 1; i < pts.length; i++) setTimeout(() => Sound.sfx("step", Math.min(8, i)), i * ms - ms * 0.35);
+}
+function walkOn(key){ const w = WALKS[key]; if (!w) return false; if (performance.now() - w.t0 > w.n * w.ms + 60) { delete WALKS[key]; return false; } return true; }
+let walkQueued = false;
+function runWalks(){
+  walkQueued = false;
+  document.querySelectorAll("[data-walk]").forEach(el => {
+    if (el._walk || !el.animate) return; const w = WALKS[el.dataset.walk]; if (!w) return;
+    const fr = [], P = v => v.toFixed(2) + "%";
+    w.pts.forEach((p, i) => {
+      fr.push({left:P(p[0]), top:P(p[1]), translate:"0 0", offset:i / w.n, easing: w.slide ? "ease-in-out" : "ease-out"});
+      if (i < w.n && !w.slide) { const q = w.pts[i + 1]; fr.push({left:P((p[0] + q[0]) / 2), top:P((p[1] + q[1]) / 2), translate:"0 -45%", offset:(i + 0.5) / w.n, easing:"ease-in"}); }
+    });
+    try { const a = el.animate(fr, {duration: w.n * w.ms, fill:"backwards"}); a.currentTime = Math.max(0, performance.now() - w.t0);
+      el._walk = a; el.classList.add("walking"); a.onfinish = () => el.classList.remove("walking"); } catch (e) {}
+  });
+}
+if (typeof MutationObserver !== "undefined") new MutationObserver(() => { if (!walkQueued) { walkQueued = true; requestAnimationFrame(runWalks); } }).observe(document.documentElement, {childList:true, subtree:true});
 
 /* ------------------------------------------------------------ Ludo board geometry (15 × 15 grid) */
 const LUDO_TRACK = [[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],
@@ -3336,47 +3385,116 @@ function ludoBoardHTML(L, opt = {}){
     if (k === "mid") { if (r === 6 && c === 6) cells += `<div class="center" style="grid-area:7/7/span 3/span 3"></div>`; continue; }
     cells += `<div class="${k}" style="grid-area:${r+1}/${c+1}">${k.includes("safe") ? "★" : ""}</div>`;
   }
-  const count = {}; let toks = "";
+  const count = {}; let toks = ""; const bk = L.bk || "b";
+  const lpt = (seat, p, k) => { const [r, c] = ludoCell(seat, p, k); return [(c + 0.5) / 15 * 100, (r + 0.5) / 15 * 100]; };
   for (const S of L.seats) S.tokens.forEach((p, k) => {
     const [r, c] = ludoCell(S.seat, p, k), key = r + "," + c, n = count[key] = (count[key] || 0) + 1;
-    const off = (n - 1) * 0.18, hop = L.moved && L.moved.seat === S.seat && L.moved.k === k;
+    const off = (n - 1) * 0.18, wk = "L:" + bk + ":" + S.seat + ":" + k, fx = (c + 0.5 + off) / 15 * 100, fy = (r + 0.5 - off) / 15 * 100;
+    const mv = L.moved && L.moved.seat === S.seat && L.moved.k === k && L.moved.from !== undefined ? L.moved : null;
+    if (mv) { const pts = [lpt(S.seat, mv.from, k)];
+      if (mv.from < 0) pts.push([fx, fy]); else { for (let i = mv.from + 1; i < mv.to; i++) pts.push(lpt(S.seat, i, k)); pts.push([fx, fy]); }
+      walkSet(wk, mv.id, pts); }
+    const walking = walkOn(wk), hop = !walking && L.moved && L.moved.seat === S.seat && L.moved.k === k;
     const can = S.me && opt.pick && opt.pick.includes(k), tag = can ? "button" : "div";
-    toks += `<${tag} class="tok ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${can ? "pick" : ""} ${p >= LUDO_END ? "done" : ""}" ${can ? `data-lmove="${k}" aria-label="Move this token"` : ""} style="--tc:${LUDO_COL[S.seat]};left:${(c + 0.5 + off) / 15 * 100}%;top:${(r + 0.5 - off) / 15 * 100}%">${pawnSVG(LUDO_COL[S.seat])}</${tag}>`;
+    toks += `<${tag} class="tok ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${can ? "pick" : ""} ${p >= LUDO_END ? "done" : ""}" ${can ? `data-lmove="${k}" aria-label="Move this token"` : ""}${walking ? ` data-walk="${wk}"` : ""} style="--tc:${LUDO_COL[S.seat]};left:${fx}%;top:${fy}%">${pawnSVG(LUDO_COL[S.seat])}</${tag}>`;
   });
   return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="ludo"><div class="lgrid">${cells}<div class="lcenter-star" style="grid-area:7/7/span 3/span 3">★</div></div>${toks}</div></div>`;
 }
 
-/* ------------------------------------------------------------ Tycoon Town board (24 spaces, 7 × 7 ring) */
-const TY_GROUPS = {br:"#8d5a3b", lb:"#7cc8f2", pk:"#e86ab0", or:"#f59331", rd:"#e5383b", yl:"#f5cf22", gr:"#2fae5f", bl:"#2f6fd6"};
+/* ------------------------------------------------------------ Tycoon Town board (40 spaces, 11 × 11 ring) */
+const TY_GROUPS = {br:"#8d5a3b", lb:"#7cc8f2", pk:"#e86ab0", or:"#f59331", rd:"#e5383b", yl:"#f5cf22", gr:"#2fae5f", bl:"#2f6fd6", st:"#3b3b4f", ut:"#8aa0b4"};
 const TY = [
-  {k:"go", n:"GO", icon:"➜"}, {k:"p", g:"br", n:"Pixel Lane", $:60}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"br", n:"Byte Street", $:60},
-  {k:"tax", n:"Phone Bill", $:100, icon:"📱"}, {k:"p", g:"lb", n:"Cloud Avenue", $:100}, {k:"jail", n:"Traffic Jam", icon:"🚧"},
-  {k:"p", g:"lb", n:"Sky Road", $:120}, {k:"p", g:"pk", n:"Candy Court", $:140}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"pk", n:"Bubble Way", $:160},
-  {k:"p", g:"or", n:"Taco Plaza", $:180}, {k:"park", n:"Free Parking", icon:"🅿️"}, {k:"p", g:"or", n:"Pizza Park", $:200}, {k:"p", g:"rd", n:"Rocket Row", $:220},
-  {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"rd", n:"Comet Close", $:240}, {k:"p", g:"yl", n:"Sunny Square", $:260}, {k:"gojail", n:"Go to Traffic Jam", icon:"🚓"},
-  {k:"p", g:"yl", n:"Banana Blvd", $:280}, {k:"p", g:"gr", n:"Mint Market", $:300}, {k:"p", g:"gr", n:"Forest Drive", $:320}, {k:"p", g:"bl", n:"Ocean Tower", $:350}, {k:"p", g:"bl", n:"Diamond Bay", $:400},
+  {k:"go", n:"GO", icon:"➜"},
+  {k:"p", g:"br", n:"Pixel Lane", $:60}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"br", n:"Byte Street", $:60},
+  {k:"tax", n:"Phone Bill", $:100, icon:"📱"}, {k:"p", g:"st", n:"North Metro", $:200, icon:"🚇"},
+  {k:"p", g:"lb", n:"Cloud Avenue", $:100}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"lb", n:"Sky Road", $:100}, {k:"p", g:"lb", n:"Rainbow Lane", $:120},
+  {k:"jail", n:"Traffic Jam", icon:"🚧"},
+  {k:"p", g:"pk", n:"Candy Court", $:140}, {k:"p", g:"ut", n:"Power Plant", $:150, icon:"⚡"}, {k:"p", g:"pk", n:"Bubble Way", $:140}, {k:"p", g:"pk", n:"Cupcake Corner", $:160},
+  {k:"p", g:"st", n:"East Metro", $:200, icon:"🚇"},
+  {k:"p", g:"or", n:"Taco Plaza", $:180}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"or", n:"Pizza Park", $:180}, {k:"p", g:"or", n:"Burger Bay", $:200},
+  {k:"park", n:"Free Parking", icon:"🅿️"},
+  {k:"p", g:"rd", n:"Rocket Row", $:220}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"rd", n:"Comet Close", $:220}, {k:"p", g:"rd", n:"Meteor Mile", $:240},
+  {k:"p", g:"st", n:"South Metro", $:200, icon:"🚇"},
+  {k:"p", g:"yl", n:"Sunny Square", $:260}, {k:"p", g:"yl", n:"Banana Blvd", $:260}, {k:"p", g:"ut", n:"Water Works", $:150, icon:"💧"}, {k:"p", g:"yl", n:"Lemon Lane", $:280},
+  {k:"gojail", n:"Go to Traffic Jam", icon:"🚓"},
+  {k:"p", g:"gr", n:"Mint Market", $:300}, {k:"p", g:"gr", n:"Forest Drive", $:300}, {k:"luck", n:"Lucky Card", icon:"🎁"}, {k:"p", g:"gr", n:"Jungle Gym", $:320},
+  {k:"p", g:"st", n:"West Metro", $:200, icon:"🚇"}, {k:"luck", n:"Lucky Card", icon:"🎁"},
+  {k:"p", g:"bl", n:"Ocean Tower", $:350}, {k:"tax", n:"Fancy Sneakers", $:100, icon:"👟"}, {k:"p", g:"bl", n:"Diamond Bay", $:400},
 ];
+const TY_JAIL = 10;
 const TY_COL = ["#ff4d5e", "#3d8bff", "#2fbf71", "#f5b622", "#a77bff", "#ff8fd0"];
+const TY_PIECE_NAME = ["🚗 Race car", "🎩 Top hat", "⛵ Sailboat", "🚀 Rocket", "👑 Crown", "🛸 UFO"];
 function tyPos(i){ // GO bottom-right, then left along the bottom, up the left side, right along the top, down the right side
-  if (i <= 6) return [6, 6 - i]; if (i <= 12) return [12 - i, 0]; if (i <= 18) return [0, i - 12]; return [i - 18, 6]; }
+  if (i <= 10) return [10, 10 - i]; if (i <= 20) return [20 - i, 0]; if (i <= 30) return [0, i - 20]; return [i - 30, 10]; }
+const TY_UNIT = 1.6 * 2 + 9;
+function tyCellPct(i){ const [r, c] = tyPos(i), m = v => (v === 0 ? 0.8 : v === 10 ? TY_UNIT - 0.8 : 1.6 + (v - 1) + 0.5) / TY_UNIT * 100; return [m(c), m(r)]; }
 const TY_LUCK = [
   {t:"Birthday party! Collect $100", cash:100}, {t:"Pizza for the whole street: pay $50", cash:-50},
   {t:"Advance to GO and collect $200", go:0}, {t:"Oops, wrong bus! Move back 3 spaces", back:3},
   {t:"Everyone sends you $20", fromAll:20}, {t:"Treat everyone: pay $25 to each player", toAll:25},
   {t:"Speeding! Go to Traffic Jam", jail:true}, {t:"You found $50 in your old jacket", cash:50},
-  {t:"Ride a rocket to Rocket Row", go:14}, {t:"Phone fell in the pool: pay $75", cash:-75},
+  {t:"Ride a rocket to Rocket Row", go:21}, {t:"Phone fell in the pool: pay $75", cash:-75},
+  {t:"Take the metro to North Metro", go:5}, {t:"You won a dance contest! Collect $150", cash:150},
 ];
+/* Game pieces: shiny metal-and-color tokens, a different object for every seat. */
+const PIECE_CACHE = {};
+function pieceSVG(seat){
+  if (PIECE_CACHE[seat]) return PIECE_CACHE[seat];
+  const c = TY_COL[seat], hi = shade(c, .55), lo = shade(c, -.55), id = "pc" + seat;
+  const g = `url(#${id})`, st = `stroke="${lo}" stroke-width="1.2" stroke-linejoin="round"`;
+  const art = [
+    // race car
+    `<path d="M5 33 L7 25 Q9 21 15 21 L21 14 Q23 12 27 12 L34 12 Q38 12 40 16 L44 22 Q50 23 51 28 L51 33 Z" fill="${g}" ${st}/>
+     <path d="M22 15 L27 15 L27 21 L17.5 21 Z M30 15 L35 15 Q37.5 15 39 18 L40.5 21 L30 21 Z" fill="#cfefff" stroke="${lo}" stroke-width=".8"/>
+     <circle cx="15" cy="34" r="6" fill="#222" stroke="#000"/><circle cx="15" cy="34" r="2.6" fill="#ccc"/><circle cx="41" cy="34" r="6" fill="#222" stroke="#000"/><circle cx="41" cy="34" r="2.6" fill="#ccc"/>
+     <path d="M9 26 L48 26" stroke="#fff" stroke-width="1.4" opacity=".55"/>`,
+    // top hat
+    `<ellipse cx="28" cy="36" rx="22" ry="6" fill="${g}" ${st}/><path d="M15 35 L16 10 Q28 5 40 10 L41 35 Q28 39 15 35 Z" fill="${g}" ${st}/>
+     <ellipse cx="28" cy="10" rx="12" ry="3.4" fill="${hi}" ${st}/><path d="M15.6 28 Q28 32 40.4 28 L40.6 33 Q28 37 15.4 33 Z" fill="#15122e" opacity=".8"/>
+     <path d="M20 13 L20.6 27" stroke="#fff" stroke-width="2" opacity=".45" stroke-linecap="round"/>`,
+    // sailboat
+    `<path d="M6 30 L50 30 L43 39 L13 39 Z" fill="${g}" ${st}/><path d="M28 4 L28 30" stroke="${lo}" stroke-width="2"/>
+     <path d="M29.5 6 L46 27 L29.5 27 Z" fill="#fff" stroke="${lo}" stroke-width="1"/><path d="M26.5 10 L13 27 L26.5 27 Z" fill="${hi}" stroke="${lo}" stroke-width="1"/>
+     <path d="M28 4 L35 6.5 L28 9 Z" fill="${c}"/><path d="M10 33 L46 33" stroke="#fff" stroke-width="1.2" opacity=".5"/>`,
+    // rocket
+    `<path d="M28 2 Q39 11 38 28 L18 28 Q17 11 28 2 Z" fill="${g}" ${st}/><circle cx="28" cy="16" r="4.5" fill="#cfefff" stroke="${lo}" stroke-width="1.2"/>
+     <path d="M18 20 L9 32 L18 30 Z M38 20 L47 32 L38 30 Z" fill="${hi}" ${st}/><path d="M20 28 L36 28 L33 33 L23 33 Z" fill="#555" stroke="#222"/>
+     <path d="M24 33 Q28 42 32 33 Z" fill="#ffb703"/><path d="M26 33 Q28 38 30 33 Z" fill="#fff3b0"/><path d="M24 8 Q22 14 22.5 24" stroke="#fff" stroke-width="1.6" opacity=".5" fill="none"/>`,
+    // crown
+    `<path d="M8 34 L6 12 L17 22 L28 6 L39 22 L50 12 L48 34 Z" fill="${g}" ${st}/><rect x="8" y="33" width="40" height="6" rx="2" fill="${hi}" ${st}/>
+     <circle cx="6" cy="12" r="2.6" fill="#fff" stroke="${lo}"/><circle cx="28" cy="6" r="2.8" fill="#fff" stroke="${lo}"/><circle cx="50" cy="12" r="2.6" fill="#fff" stroke="${lo}"/>
+     <circle cx="28" cy="26" r="3.2" fill="#2fd3ff" stroke="${lo}"/><circle cx="18" cy="28" r="2.2" fill="#ff4d5e"/><circle cx="38" cy="28" r="2.2" fill="#2fbf71"/>`,
+    // UFO
+    `<ellipse cx="28" cy="18" rx="10" ry="9" fill="#cfefff" stroke="${lo}" stroke-width="1.2"/><ellipse cx="25" cy="14" rx="3" ry="2" fill="#fff" opacity=".8"/>
+     <ellipse cx="28" cy="26" rx="24" ry="8" fill="${g}" ${st}/><ellipse cx="28" cy="23.5" rx="15" ry="3" fill="${hi}" opacity=".7"/>
+     <circle cx="12" cy="27" r="1.8" fill="#fff3b0"/><circle cx="21" cy="30" r="1.8" fill="#fff3b0"/><circle cx="35" cy="30" r="1.8" fill="#fff3b0"/><circle cx="44" cy="27" r="1.8" fill="#fff3b0"/>
+     <path d="M20 33 L16 39 M36 33 L40 39" stroke="${lo}" stroke-width="2" stroke-linecap="round"/>`,
+  ][seat % 6];
+  return PIECE_CACHE[seat] = `<svg class="piece" viewBox="0 0 56 46" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${hi}"/><stop offset=".5" stop-color="${c}"/><stop offset="1" stop-color="${lo}"/></linearGradient></defs>
+    <ellipse cx="28" cy="42" rx="20" ry="3.4" fill="#000" opacity=".35"/>${art}</svg>`;
+}
+const TY_STACK = [[0, 0], [-1.7, -1.1], [1.7, -1.1], [-1.7, 1.3], [1.7, 1.3], [0, -2.2]];
 function tyBoardHTML(T, opt = {}){
-  // T = {owner:[seat|null], tokens:[{seat, av, pos, me, hop}], center:"html", groupsOwned}
+  // T = {bk, owner:[seat|null], tokens:[{seat, pos, me}], moved:{seat, from, to, steps|slide, id}, center:"html"}
   let tiles = "";
-  TY.forEach((s, i) => { const [r, c] = tyPos(i), corner = (r === 0 || r === 6) && (c === 0 || c === 6);
-    const own = T.owner[i], here = T.tokens.filter(x => x.pos === i);
-    tiles += `<div class="tt ${corner ? "corner" : ""} ${s.k}" style="grid-area:${r+1}/${c+1};${own !== null && own !== undefined ? `--own:${TY_COL[own]}` : ""}">
-      ${s.g ? `<span class="band" style="background:${TY_GROUPS[s.g]}"></span>` : ""}
+  TY.forEach((s, i) => { const [r, c] = tyPos(i), corner = (r === 0 || r === 10) && (c === 0 || c === 10);
+    const own = T.owner[i], side = c === 0 ? "sl" : c === 10 ? "sr" : r === 0 ? "st" : "sb";
+    tiles += `<div class="tt ${corner ? "corner" : side} ${s.k}" style="grid-area:${r+1}/${c+1};${own !== null && own !== undefined ? `--own:${TY_COL[own]}` : ""}">
+      ${s.g && !s.icon ? `<span class="band" style="background:${TY_GROUPS[s.g]}"></span>` : ""}
       ${s.icon ? `<span class="ticon">${s.icon}</span>` : ""}<span class="tn">${esc(s.n)}</span>${s.$ && s.k === "p" ? `<span class="tp">$${s.$}</span>` : s.k === "tax" ? `<span class="tp">-$${s.$}</span>` : ""}
-      ${own !== null && own !== undefined ? `<span class="owner"></span>` : ""}
-      <span class="tks">${here.map(x => `<span class="tytok ${x.hop ? "hop" : ""} ${x.me ? "me" : ""}" style="--tc:${TY_COL[x.seat]}">${pawnSVG(TY_COL[x.seat])}</span>`).join("")}</span></div>`; });
-  return `<div class="bframe dark ${opt.tilt ? "tilt" : ""}"><div class="tyb ${opt.small ? "small" : ""}">${tiles}<div class="tycenter">${T.center || ""}</div></div></div>`;
+      ${own !== null && own !== undefined ? `<span class="owner"></span>` : ""}</div>`; });
+  const count = {}, bk = T.bk || "b"; let toks = "";
+  for (const x of T.tokens) {
+    const n = count[x.pos] = (count[x.pos] || 0) + 1, [bx, by] = tyCellPct(x.pos), o = TY_STACK[(n - 1) % 6];
+    const fx = bx + o[0], fy = by + o[1], wk = "T:" + bk + ":" + x.seat, mv = T.moved && T.moved.seat === x.seat && T.moved.from !== undefined ? T.moved : null;
+    if (mv) { const pts = [tyCellPct(mv.from)];
+      if (mv.slide) pts.push([fx, fy]);
+      else { for (let k = 1; k < mv.steps; k++) pts.push(tyCellPct((mv.from + k) % TY.length)); pts.push([fx, fy]); }
+      walkSet(wk, mv.id, pts, mv.slide ? 700 : TY_WALK_MS, !!mv.slide); }
+    const walking = walkOn(wk);
+    toks += `<div class="tyt ${x.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="left:${fx}%;top:${fy}%;z-index:${walking ? 9 : 3 + n}">${pieceSVG(x.seat)}</div>`;
+  }
+  return `<div class="bframe dark ${opt.tilt ? "tilt" : ""} ${opt.phone ? "typhone" : ""}"><div class="tyb ${opt.small ? "small" : ""}">${tiles}<div class="tycenter">${T.center || ""}</div>${toks}</div></div>`;
 }
 
 
@@ -3466,9 +3584,16 @@ function snakesBoardHTML(B, opt = {}){
     cells += `<div class="slc ${(row + c) % 2 ? "a" : "b"} ${n === 100 ? "goal" : ""}" style="grid-area:${r + 1}/${c + 1}"><span>${n === 100 ? "🏁 100" : n}</span></div>`;
   }
   const count = {}; let toks = "";
+  const bk = B.bk || "b";
   for (const S of B.seats) { const key = S.pos, k = count[key] = (count[key] || 0) + 1, [x, y] = slXY(S.pos);
-    const off = (k - 1) * 2.2, hop = B.moved && B.moved.seat === S.seat;
-    toks += `<div class="tok sltok ${hop ? "hop" : ""} ${S.me ? "me" : ""}" style="--tc:${SL_COL[S.seat]};left:${x + off}%;top:${y - off * 0.6}%">${pawnSVG(SL_COL[S.seat])}</div>`; }
+    const off = (k - 1) * 2.2, fx = x + off, fy = y - off * 0.6, wk = "S:" + bk + ":" + S.seat;
+    const mv = B.moved && B.moved.seat === S.seat && B.moved.from !== undefined ? B.moved : null;
+    if (mv) { const pts = [slXY(mv.from)];
+      if (mv.slide) pts.push([fx, fy]);
+      else { for (let i = 1; i < mv.steps; i++) { let q = mv.from + i; if (q > 100) q = 200 - q; pts.push(slXY(q)); } pts.push([fx, fy]); }
+      walkSet(wk, mv.id, pts, mv.slide ? 750 : WALK_MS, !!mv.slide); }
+    const walking = walkOn(wk), hop = !walking && B.moved && B.moved.seat === S.seat;
+    toks += `<div class="tok sltok ${hop ? "hop" : ""} ${S.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="--tc:${SL_COL[S.seat]};left:${fx}%;top:${fy}%">${pawnSVG(SL_COL[S.seat])}</div>`; }
   return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="slboard"><div class="slgrid">${cells}</div><svg class="slart" viewBox="0 0 100 100" aria-hidden="true">${slArt()}</svg>${toks}</div></div>`;
 }
 
@@ -3881,7 +4006,7 @@ function startHost(){
     if (S.phase === "ludo") {
       const T = (S.ltables || []).find(t => t.players.includes(pid));
       if (!T) st.ludo = {sitout:true};
-      else { const cur = T.players[T.turn], mine = !T.done && cur === pid;
+      else { const cur = T.players[T.turn], mine = !T.done && cur === pid && !T.busy;
         st.ludo = {name:T.name, seat:T.seat[pid], myTurn:mine, rolled:T.rolled, dice:T.dice, rollId:T.rollId, log:T.log, done:T.done,
           winnerMe: T.winner === pid, winnerName: nm(T.winner), turnName: nm(cur), mine: T.tok[pid], moved: T.moved,
           moves: mine && T.rolled ? ludoMoves(T, pid, T.dice).map(x => ({k:x.k, to:x.to, from:T.tok[pid][x.k]})).filter((x, i, arr) => arr.findIndex(y => y.from === x.from) === i) : [],
@@ -3900,12 +4025,13 @@ function startHost(){
     if (S.phase === "ty") {
       const T = (S.ttables || []).find(t => t.players.includes(pid));
       if (!T) st.ty = {sitout:true};
-      else { const cur = T.players[T.turn], mine = !T.done && cur === pid;
+      else { const cur = T.players[T.turn], mine = !T.done && cur === pid && !T.busy;
         st.ty = {name:T.name, seat:T.seat[pid], myTurn:mine, rolled:T.rolled, dice:T.dice, rollId:T.rollId, log:T.log, done:T.done, out:T.out[pid],
           winnerMe: T.winner === pid, winnerName: nm(T.winner), turnName: nm(cur), cash:T.cash[pid], pos:T.pos[pid],
           buy: mine && T.buy !== null ? {i:T.buy, n:TY[T.buy].n, $:TY[T.buy].$, g:TY[T.buy].g} : null,
           card: T.card ? {t:T.card.t, id:T.card.id, mine: T.card.pid === pid} : null,
-          mine: T.owner.map((o, i) => o === T.seat[pid] ? i : -1).filter(i => i >= 0),
+          mine: T.owner.map((o, i) => o === T.seat[pid] ? i : -1).filter(i => i >= 0), owner:T.owner, moved:T.moved, pot:T.pot, round:T.round,
+          toks: T.players.filter(x => !T.out[x]).map(x => ({seat:T.seat[x], pos:T.pos[x], me: x === pid})),
           players: T.players.map(x => ({seat:T.seat[x], av:avOf(x), name:nm(x), cash:T.cash[x], out:T.out[x], me: x === pid}))};
         st.endsIn = T.done ? 0 : Math.max(0, T.turnEnds - Date.now()); }
     }
@@ -4302,7 +4428,7 @@ function startHost(){
   }
   function ludoAct(pid, m){
     const T = (S.ltables || []).find(t => t.players.includes(pid));
-    if (!T || T.done || T.players[T.turn] !== pid) return;
+    if (!T || T.done || T.players[T.turn] !== pid || T.busy) return;
     const who = nm(pid);
     if (m.a === "roll" && !T.rolled) {
       const d = 1 + Math.floor(Math.random() * 6);
@@ -4332,13 +4458,18 @@ function startHost(){
   }
   function ludoMove(T, pid, k){
     const seat = T.seat[pid], from = T.tok[pid][k], d = T.dice, to = from < 0 ? 0 : from + d, who = nm(pid);
-    T.tok[pid][k] = to; T.moved = {seat, k, id: ++T.moveId}; T.rolled = false;
+    T.tok[pid][k] = to; T.moved = {seat, k, from, to, id: ++T.moveId}; T.rolled = false; T.busy = true;
+    T.log = who + (from < 0 ? " brought a token out" : " is moving " + d + "…"); pushLudo(T);
+    const mid = T.moveId, steps = from < 0 ? 1 : d;
+    setTimeout(() => { if (T.moveId !== mid || T.done) return; T.busy = false; ludoLand(T, pid, k, from, to, d); }, steps * WALK_MS + 200);
+  }
+  function ludoLand(T, pid, k, from, to, d){
+    const seat = T.seat[pid], who = nm(pid);
     let extra = d === 6, msg = who + (from < 0 ? " brought a token out" : " moved " + d);
     if (to <= 50) { const abs = (LUDO_START[seat] + to) % 52;
       if (!LUDO_SAFE.includes(abs)) for (const q of T.players) if (q !== pid) T.tok[q].forEach((op, j) => {
         if (op >= 0 && op <= 50 && (LUDO_START[T.seat[q]] + op) % 52 === abs) { T.tok[q][j] = -1; extra = true; msg = who + " knocked " + nm(q) + "'s token home!"; Sound.sfx("capture"); } }); }
     if (to === LUDO_END) { msg = who + " got a token home!"; extra = true; Sound.sfx("correct"); }
-    else Sound.sfx("step", Math.min(6, d));
     T.log = msg + (extra && to !== LUDO_END && T.tok[pid].some(p => p < LUDO_END) ? " · roll again" : "");
     if (T.tok[pid].every(p => p >= LUDO_END)) { ludoFinish(T, pid); return; }
     ludoNext(T, extra); pushLudo(T);
@@ -4359,7 +4490,7 @@ function startHost(){
   }
   function pushLudo(T){ rankCache = null; for (const pid of T.players) push(pid); soon(); }
   function ludoTick(){
-    for (const T of S.ltables || []) if (!T.done && Date.now() > T.turnEnds) {
+    for (const T of S.ltables || []) if (!T.done && !T.busy && Date.now() > T.turnEnds) {
       const pid = T.players[T.turn];
       if (!T.rolled) ludoAct(pid, {a:"roll"});
       else { const mv = ludoMoves(T, pid, T.dice); if (mv.length) ludoMove(T, pid, ludoBest(T, pid, mv).k); else { ludoNext(T, false); pushLudo(T); } }
@@ -4367,7 +4498,7 @@ function startHost(){
   }
   function ludoBoardFor(T, mePid){
     const moved = T.moved && fresh("lm:" + T.name + ":" + (mePid || "host"), T.moved.id) ? T.moved : null;
-    return {seats: T.players.map(pid => ({seat:T.seat[pid], av:avOf(pid), name:nm(pid), tokens:T.tok[pid], me: pid === mePid})), moved};
+    return {bk:T.name, seats: T.players.map(pid => ({seat:T.seat[pid], av:avOf(pid), name:nm(pid), tokens:T.tok[pid], me: pid === mePid})), moved};
   }
   function ludoView(){
     const one = S.ltables.length === 1, done = S.ltables.filter(t => t.done).length;
@@ -4419,26 +4550,30 @@ function startHost(){
   }
   function tyPay(T, from, to, amt){ T.cash[from] -= amt; if (to) T.cash[to] += amt; }
   function tyGroupFull(T, g, seat){ return TY.every((s, i) => s.g !== g || T.owner[i] === seat); }
+  function tyRent(T, i, o){ const s = TY[i], cnt = TY.filter((x, j) => x.g === s.g && T.owner[j] === o).length;
+    if (s.g === "st") return 25 * Math.pow(2, cnt - 1);
+    if (s.g === "ut") return (T.dice[0] + T.dice[1]) * (cnt >= 2 ? 10 : 4);
+    return Math.round(s.$ / 10) * (tyGroupFull(T, s.g, o) ? 2 : 1); }
   function tyLand(T, pid, depth = 0){
     const i = T.pos[pid], s = TY[i], who = nm(pid), seat = T.seat[pid];
     if (s.k === "p") {
       const o = T.owner[i];
       if (o === null) { if (T.cash[pid] >= s.$) { T.buy = i; T.log = who + " landed on " + s.n + " · buy it for $" + s.$ + "?"; } else T.log = who + " can't afford " + s.n; }
       else if (o !== seat) { const owner = T.players.find(x => T.seat[x] === o);
-        if (owner && !T.out[owner]) { const rent = Math.round(s.$ / 10) * (tyGroupFull(T, s.g, o) ? 2 : 1); tyPay(T, pid, owner, rent); Sound.sfx("coin");
-          T.log = who + " paid $" + rent + " rent to " + nm(owner) + (tyGroupFull(T, s.g, o) ? " (full set: double rent!)" : ""); } }
+        if (owner && !T.out[owner]) { const rent = tyRent(T, i, o), full = s.g !== "st" && s.g !== "ut" && tyGroupFull(T, s.g, o); tyPay(T, pid, owner, rent); Sound.sfx("coin");
+          T.log = who + " paid $" + rent + " rent to " + nm(owner) + (full ? " (full set: double rent!)" : ""); } }
       else T.log = who + " is visiting their own street";
     } else if (s.k === "tax") { tyPay(T, pid, null, s.$); T.pot += s.$; T.log = who + " paid a $" + s.$ + " phone bill into the parking pot"; Sound.sfx("wrong"); }
     else if (s.k === "park") { const g = T.pot; T.cash[pid] += g; T.pot = 0; T.log = who + " parked and collected $" + g + " from the pot!"; if (g) Sound.sfx("buy"); }
-    else if (s.k === "gojail") { T.pos[pid] = 6; T.jail[pid] = 1; T.doubles = 0; T.log = who + " goes to the Traffic Jam!"; Sound.sfx("siren"); }
+    else if (s.k === "gojail") { T.pos[pid] = TY_JAIL; T.jail[pid] = 1; T.doubles = 0; T.log = who + " goes to the Traffic Jam!"; Sound.sfx("siren"); }
     else if (s.k === "luck" && depth < 2) {
       const c = pick(TY_LUCK); T.card = {t:c.t, id: T.moveId, pid}; T.log = who + " drew a Lucky Card: " + c.t; Sound.sfx("card");
       if (c.cash) T.cash[pid] += c.cash;
       if (c.fromAll) for (const q of tyAlive(T)) if (q !== pid) tyPay(T, q, pid, c.fromAll);
       if (c.toAll) for (const q of tyAlive(T)) if (q !== pid) tyPay(T, pid, q, c.toAll);
       if (c.go !== undefined) { if (c.go < T.pos[pid] || c.go === 0) T.cash[pid] += 200; T.pos[pid] = c.go; tyLand(T, pid, depth + 1); }
-      if (c.back) { T.pos[pid] = (T.pos[pid] - c.back + 24) % 24; tyLand(T, pid, depth + 1); }
-      if (c.jail) { T.pos[pid] = 6; T.jail[pid] = 1; T.doubles = 0; }
+      if (c.back) { T.pos[pid] = (T.pos[pid] - c.back + TY.length) % TY.length; tyLand(T, pid, depth + 1); }
+      if (c.jail) { T.pos[pid] = TY_JAIL; T.jail[pid] = 1; T.doubles = 0; }
     }
   }
   function tyBankrupt(T){
@@ -4454,24 +4589,33 @@ function startHost(){
       const a = 1 + Math.floor(Math.random() * 6), b = 1 + Math.floor(Math.random() * 6);
       T.dice = [a, b]; T.rolled = true; T.rollId++; Sound.sfx("dice");
       const dbl = a === b; T.doubles = dbl ? T.doubles + 1 : 0;
-      const from = T.pos[pid], to = (from + a + b) % 24;
-      if (to < from) { T.cash[pid] += 200; Sound.sfx("coin"); }
-      T.pos[pid] = to; T.moved = {pid, id: ++T.moveId};
-      T.log = who + " rolled " + (a + b) + (dbl ? " (doubles!)" : "") + (to < from ? " and passed GO (+$200)" : "");
-      tyLand(T, pid);
-      if (tyBankrupt(T)) return;
-      if (T.buy !== null) { T.turnEnds = Date.now() + CFG.tyTurn * 1000; pushTy(T);
-        const p = S.players[pid]; if (p && p.bot) { const id = T.turnId; setTimeout(() => { if (T.turnId === id && T.buy !== null) tyAct(pid, {a: isEasy(pid) ? (Math.random() < 0.5 ? "buy" : "skip") : (T.cash[pid] - TY[T.buy].$ >= 150 || T.owner.some((o, j) => o === T.seat[pid] && TY[j].g === TY[T.buy].g)) ? "buy" : "skip"}); }, 1000); }
-        return; }
-      tyEndMove(T, pid); return;
+      const from = T.pos[pid], to = (from + a + b) % TY.length;
+      T.pos[pid] = to; T.moved = {pid, seat:T.seat[pid], from, to, steps:a + b, id: ++T.moveId}; T.busy = true;
+      T.log = who + " rolled " + (a + b) + (dbl ? " (doubles!)" : "") + " · moving…";
+      pushTy(T);
+      const rid = T.turnId;
+      setTimeout(() => { if (T.turnId !== rid || T.done) return; T.busy = false;
+        if (to < from) { T.cash[pid] += 200; Sound.sfx("coin"); }
+        T.log = who + " rolled " + (a + b) + (dbl ? " (doubles!)" : "") + (to < from ? " and passed GO (+$200)" : "");
+        tyLand(T, pid);
+        if (T.pos[pid] !== to) T.moved = {pid, seat:T.seat[pid], from:to, to:T.pos[pid], slide:true, id: ++T.moveId};
+        tyAfterLand(T, pid); }, (a + b) * TY_WALK_MS + 250);
+      return;
     }
     if ((m.a === "buy" || m.a === "skip") && T.buy !== null) {
       const i = T.buy, s = TY[i];
       if (m.a === "buy" && T.cash[pid] >= s.$) { T.cash[pid] -= s.$; T.owner[i] = T.seat[pid]; Sound.sfx("buy");
-        T.log = who + " bought " + s.n + " for $" + s.$ + (tyGroupFull(T, s.g, T.seat[pid]) ? " · full set, double rent!" : ""); }
+        T.log = who + " bought " + s.n + " for $" + s.$ + (s.g !== "st" && s.g !== "ut" && tyGroupFull(T, s.g, T.seat[pid]) ? " · full set, double rent!" : ""); }
       else T.log = who + " skipped " + s.n;
       T.buy = null; tyEndMove(T, pid);
     }
+  }
+  function tyAfterLand(T, pid){
+      if (tyBankrupt(T)) return;
+      if (T.buy !== null) { T.turnEnds = Date.now() + CFG.tyTurn * 1000; pushTy(T);
+        const p = S.players[pid]; if (p && p.bot) { const id = T.turnId; setTimeout(() => { if (T.turnId === id && T.buy !== null) tyAct(pid, {a: isEasy(pid) ? (Math.random() < 0.5 ? "buy" : "skip") : (T.cash[pid] - TY[T.buy].$ >= 150 || T.owner.some((o, j) => o === T.seat[pid] && TY[j].g === TY[T.buy].g)) ? "buy" : "skip"}); }, 1000); }
+        return; }
+      tyEndMove(T, pid);
   }
   function tyEndMove(T, pid){
     pushTy(T);
@@ -4493,15 +4637,14 @@ function startHost(){
   function tyTick(){
     for (const T of S.ttables || []) if (!T.done && Date.now() > T.turnEnds) {
       const pid = T.players[T.turn];
-      if (!T.rolled) tyAct(pid, {a:"roll"}); else if (T.buy !== null) tyAct(pid, {a:"skip"});
+      if (!T.rolled) tyAct(pid, {a:"roll"}); else if (T.buy !== null && !T.busy) tyAct(pid, {a:"skip"});
     }
   }
   function tyBoardFor(T, mePid, big){
-    const hop = T.moved && fresh("tm:" + T.name + ":" + (mePid || "host"), T.moved.id) ? T.moved.pid : null;
     const center = `<div class="tylogo">TYCOON<br>TOWN</div>
       <div class="dice2">${dieHTML(T.dice[0], fresh("td1:" + T.name + (mePid || ""), T.rollId), big ? 58 : 34)}${dieHTML(T.dice[1], fresh("td2:" + T.name + (mePid || ""), T.rollId), big ? 58 : 34)}</div>
       ${big ? `<p class="tylog">${esc(T.log)}</p>` : ""}<div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`;
-    return {owner:T.owner, center, tokens: T.players.filter(p => !T.out[p]).map(pid => ({seat:T.seat[pid], av:avOf(pid), pos:T.pos[pid], me: pid === mePid, hop: pid === hop}))};
+    return {bk:T.name, owner:T.owner, center, moved:T.moved, tokens: T.players.filter(p => !T.out[p]).map(pid => ({seat:T.seat[pid], pos:T.pos[pid], me: pid === mePid}))};
   }
   function tyView(){
     const one = S.ttables.length === 1, done = S.ttables.filter(t => t.done).length;
@@ -4511,7 +4654,7 @@ function startHost(){
           <div class="tbody">${tyBoardHTML(tyBoardFor(T, null, one), {tilt: one, small: !one})}
             <div class="lside">${one ? "" : `<p class="cc-log sm">${esc(T.log)}</p>`}
               <div class="cc-seats col">${T.players.slice().sort((a,b) => tyWorth(T,b) - tyWorth(T,a)).map(x => `<div class="seat ${x === cur && !T.done ? "turn" : ""} ${x === T.winner ? "win" : ""} ${T.out[x] ? "out" : ""}" style="border-left:6px solid ${TY_COL[T.seat[x]]}">${Avatar.svg(avOf(x), one ? 34 : 24, {crown: x === T.winner})}<span class="sn">${esc(nm(x))}</span><span class="cnt">$${T.cash[x]}${T.out[x] ? " · out" : ""}</span></div>`).join("")}</div></div></div></div>`; }).join("")}</div>
-      <p class="hint">Roll two dice and move. Buy empty streets; others pay you rent when they land there. Own both streets of a color for double rent. Pass GO for $200. After ${CFG.tyRounds} rounds, the richest player (cash + streets) wins.</p></section>`;
+      <p class="hint">Roll two dice and move. Buy empty streets; others pay you rent when they land there. Own every street of a color for double rent. Pass GO for $200. After ${CFG.tyRounds} rounds, the richest player (cash + streets) wins.</p></section>`;
   }
 
 
@@ -4539,20 +4682,23 @@ function startHost(){
     T.dice = d; T.rollId++; T.sixes = d === 6 ? T.sixes + 1 : 0; Sound.sfx("dice");
     let to = from + d, msg = who + " rolled " + d;
     if (to > 100) { to = 100 - (to - 100); msg += " and bounced back from 100"; }
-    T.pos[pid] = to; T.moved = {seat:T.seat[pid], id: ++T.moveId}; T.busy = true;
+    T.pos[pid] = to; T.moved = {seat:T.seat[pid], from, to, steps:d, id: ++T.moveId}; T.busy = true;
     pushSl(T);
     const lad = SL_LADDERS.find(([a]) => a === to), snk = SL_SNAKES.find(([a]) => a === to), id = T.turnId;
     setTimeout(() => {
       if (T.turnId !== id || T.done) return;
-      if (lad) { T.pos[pid] = lad[1]; msg += " · 🪜 climbed a ladder to " + lad[1] + "!"; Sound.sfx("ladder"); T.moved = {seat:T.seat[pid], id: ++T.moveId}; }
-      else if (snk) { T.pos[pid] = snk[1]; msg += " · 🐍 bitten by a snake, down to " + snk[1] + "!"; Sound.sfx("snake"); T.moved = {seat:T.seat[pid], id: ++T.moveId}; }
-      else Sound.sfx("step", d);
-      T.log = msg; T.busy = false;
-      if (T.pos[pid] === 100) { slFinish(T, pid); return; }
-      const again = d === 6 && T.sixes < 3;
-      if (again) T.log += " · roll again!"; else { T.turn = (T.turn + 1) % T.players.length; T.sixes = 0; }
-      slTurnStart(T); pushSl(T);
-    }, lad || snk ? 900 : 500);
+      const next = () => { if (T.turnId !== id || T.done) return;
+        T.log = msg; T.busy = false;
+        if (T.pos[pid] === 100) { slFinish(T, pid); return; }
+        const again = d === 6 && T.sixes < 3;
+        if (again) T.log += " · rolled a 6, roll again"; else { T.turn = (T.turn + 1) % T.players.length; T.sixes = 0; }
+        slTurnStart(T); pushSl(T); };
+      if (lad || snk) { const top = lad ? lad[1] : snk[1];
+        T.pos[pid] = top; T.moved = {seat:T.seat[pid], from:to, to:top, slide:true, id: ++T.moveId};
+        if (lad) { msg += " · 🪜 climbed a ladder to " + top + "!"; Sound.sfx("ladder"); } else { msg += " · 🐍 bitten by a snake, down to " + top + "!"; Sound.sfx("snake"); }
+        T.log = msg; pushSl(T); setTimeout(next, 950); }
+      else next();
+    }, d * WALK_MS + 200);
   }
   function slFinish(T, winner){
     T.done = true; T.winner = winner;
@@ -4569,7 +4715,7 @@ function startHost(){
   function slTick(){ for (const T of S.stables || []) if (!T.done && !T.busy && Date.now() > T.turnEnds) slAct(T.players[T.turn], {a:"roll"}); }
   function slBoardFor(T, mePid){
     const moved = T.moved && fresh("sm:" + T.name + ":" + (mePid || "host"), T.moved.id) ? T.moved : null;
-    return {seats: T.players.map(pid => ({seat:T.seat[pid], av:avOf(pid), pos:T.pos[pid], me: pid === mePid})), moved};
+    return {bk:T.name, seats: T.players.map(pid => ({seat:T.seat[pid], av:avOf(pid), pos:T.pos[pid], me: pid === mePid})), moved};
   }
   function slView(){
     const one = S.stables.length === 1, done = S.stables.filter(t => t.done).length;
@@ -5285,7 +5431,7 @@ function startPlayer(code){
     const col = LUDO_COL[L.seat];
     if (L.done) return `<div class="result ${L.winnerMe ? "ok" : "no"}"><h2>${L.winnerMe ? "You won your board! 🏆" : esc(L.winnerName) + " won your board"}</h2><p class="hint">Waiting for the other boards…</p></div>${standing(st)}`;
     const choosing = L.myTurn && L.rolled && L.moves.length > 1;
-    const board = ludoBoardHTML({seats:L.seats, moved: L.moved && fresh("plm", L.moved.id) ? L.moved : null}, {pick: choosing ? L.moves.map(m => m.k) : null});
+    const board = ludoBoardHTML({bk:"me", seats:L.seats, moved: L.moved && fresh("plm", L.moved.id) ? L.moved : null}, {pick: choosing ? L.moves.map(m => m.k) : null});
     const canRoll = L.myTurn && !L.rolled;
     const die = dieHTML(L.dice || 6, L.dice && fresh("pld", L.rollId), 72);
     const yard = L.mine.filter(p => p < 0).length, home = L.mine.filter(p => p >= LUDO_END).length;
@@ -5305,7 +5451,7 @@ function startPlayer(code){
     return `<div class="board-phone">
       <div class="turnbar ${T.myTurn ? "mine" : ""}">${T.myTurn ? "Your turn!" : esc(T.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
       <div class="cashrow" style="--tc:${col}"><span class="label">You're on</span><span class="cash">${T.pos || "Start"}</span><span class="hint">${T.pos ? (100 - T.pos) + " to go" : "roll to begin"}</span></div>
-      ${snakesBoardHTML({seats:T.seats, moved: T.moved && fresh("psm", T.moved.id) ? T.moved : null}, {})}
+      ${snakesBoardHTML({bk:"me", seats:T.seats, moved: T.moved && fresh("psm", T.moved.id) ? T.moved : null}, {})}
       <div class="row center-row">${T.dice ? dieHTML(T.dice, fresh("psd", T.rollId), 62) : ""}<p class="hint" style="max-width:24ch">${esc(T.log)}</p></div>
       ${T.myTurn ? `<button class="big rollbtn" data-act="slroll" style="--tc:${col}">🎲 Roll the dice</button>` : ""}</div>`;
   }
@@ -5318,13 +5464,14 @@ function startPlayer(code){
     const card = T.card && fresh("ptc", T.card.id) && T.card.mine ? `<div class="luckcard">🎁 ${esc(T.card.t)}</div>` : "";
     let controls = "";
     if (T.myTurn && !T.rolled) controls = `<button class="big rollbtn" data-act="tyroll" style="--tc:${col}">🎲 Roll the dice</button>`;
-    else if (T.buy) controls = `<div class="buybox" style="--g:${TY_GROUPS[T.buy.g]}"><span class="band"></span><b>${esc(T.buy.n)}</b><span>Price $${T.buy.$} · rent $${Math.round(T.buy.$ / 10)}</span>
+    else if (T.buy) controls = `<div class="buybox" style="--g:${TY_GROUPS[T.buy.g]}"><span class="band"></span><b>${esc(T.buy.n)}</b><span>Price $${T.buy.$} · ${T.buy.g === "st" ? "rent $25+ (more metros, more rent)" : T.buy.g === "ut" ? "rent 4× the dice" : "rent $" + Math.round(T.buy.$ / 10)}</span>
       <div class="row center-row"><button class="big" data-act="tybuy">Buy for $${T.buy.$}</button><button class="ghost big" data-act="tyskip">Skip</button></div></div>`;
     return `<div class="board-phone">
       <div class="turnbar ${T.myTurn ? "mine" : ""}">${T.myTurn ? "Your turn!" : esc(T.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
-      <div class="cashrow" style="--tc:${col}"><span class="label">Your cash</span><span class="cash">$${T.cash}</span><span class="hint">on ${esc(here.n)}</span></div>
+      <div class="cashrow" style="--tc:${col}"><span class="label">Your cash</span><span class="cash">$${T.cash}</span><span class="hint">${TY_PIECE_NAME[T.seat]} · on ${esc(here.n)}</span></div>
       <div class="row center-row">${dieHTML(T.dice[0], fresh("ptd1", T.rollId), 54)}${dieHTML(T.dice[1], fresh("ptd2", T.rollId), 54)}<p class="hint" style="max-width:22ch">${esc(T.log)}</p></div>
       ${card}${controls}
+      ${tyBoardHTML({bk:"me", owner:T.owner, moved:T.moved, tokens:T.toks, center:`<div class="tylogo">TYCOON<br>TOWN</div><div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`}, {phone:true})}
       <div class="label">Your streets (${T.mine.length})</div>
       <div class="streets">${T.mine.map(i => `<span class="street" style="--g:${TY_GROUPS[TY[i].g]}">${esc(TY[i].n)}</span>`).join("") || `<span class="hint">None yet. Land on an empty street to buy it.</span>`}</div>
       <div class="label">Players</div>
