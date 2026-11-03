@@ -345,6 +345,11 @@ h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;letter-spacing:.02e
 .pcard:disabled{opacity:.85;cursor:default}
 .lu-seqs{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.9rem}
 .lu-seqs span{color:var(--c);font-weight:700}
+.fixlist{text-align:left;margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:6px;max-width:34ch}
+.jacks{display:flex;flex-direction:column;gap:10px}
+.jacks>div{display:grid;grid-template-columns:auto auto 1fr;gap:6px;align-items:center}
+.jacks .pcard{width:40px;height:54px;font-size:.9rem;font-weight:700}
+.jacks p{margin:0 0 0 6px;font-size:.85rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -2828,10 +2833,27 @@ const CFG = {
 const params = new URLSearchParams(location.search);
 const LOCAL = params.get("local") === "1";
 const BOTS = Math.min(300, Math.max(0, parseInt(params.get("bots") || "0", 10) || 0));
+const INAPP = /FBAN|FBAV|FB_IAB|Instagram|Line\/|Snapchat|MicroMessenger|TikTok|; wv\)/i.test(navigator.userAgent || "");
 const JOIN = (params.get("join") || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
 const PREFIX = "scanplay-v2-";
 // Add a TURN server here if some phones can't connect on strict networks.
-const ICE = [{urls:"stun:stun.l.google.com:19302"},{urls:"stun:global.stun.twilio.com:3478"}];
+/* ===== CONNECTION RELAY (TURN) =====
+   Phones on mobile data or strict Wi-Fi often can't connect directly to the big screen.
+   A free TURN relay fixes this. Sign up free at metered.ca (Open Relay, 20 GB a month),
+   then paste your credentials link between the quotes below, for example:
+   "https://playzo.metered.live/api/v1/turn/credentials?apiKey=abc123"                    */
+const TURN_URL = "";
+const STUN = [{urls:"stun:stun.l.google.com:19302"},{urls:"stun:global.stun.twilio.com:3478"}];
+let icePromise = null;
+function getIce(){
+  if (icePromise) return icePromise;
+  if (!TURN_URL) return icePromise = Promise.resolve(STUN);
+  const ctl = typeof AbortController === "function" ? new AbortController() : null;
+  const t = setTimeout(() => ctl && ctl.abort(), 5000);
+  return icePromise = fetch(TURN_URL, ctl ? {signal:ctl.signal} : {}).then(r => r.json())
+    .then(list => Array.isArray(list) && list.length ? STUN.concat(list) : STUN)
+    .catch(() => STUN).finally(() => clearTimeout(t));
+}
 const app = document.getElementById("app");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const store = {
@@ -3079,7 +3101,8 @@ const net = {
       return;
     }
     if (typeof Peer !== "function") { setTimeout(() => h.onError({type:"library"}), 0); return; }
-    const peer = new Peer(PREFIX + code, {config:{iceServers:ICE}});
+    getIce().then(iceServers => {
+    const peer = new Peer(PREFIX + code, {config:{iceServers}});
     peer.on("open", () => h.onReady());
     peer.on("error", err => h.onError(err));
     peer.on("disconnected", () => { try { peer.reconnect(); } catch(e){} });
@@ -3089,6 +3112,7 @@ const net = {
       conn.on("data", d => h.onData(L, d));
       conn.on("close", () => h.onClose(L));
       conn.on("error", () => h.onClose(L));
+    });
     });
   },
   join(code, h){
@@ -3101,17 +3125,23 @@ const net = {
       return { send: d => ch.postMessage({to:"host",from:me,kind:"data",msg:d}) };
     }
     if (typeof Peer !== "function") { setTimeout(() => h.onError({type:"library"}), 0); return {send(){}}; }
-    let conn = null, alive = true;
-    const peer = new Peer({config:{iceServers:ICE}});
+    let conn = null, alive = true, peer = null, tries = 0;
+    // Try again if the direct connection hasn't opened after 12 seconds.
     const connect = () => {
-      conn = peer.connect(PREFIX + code, {reliable:true});
-      conn.on("open", () => h.onOpen());
-      conn.on("data", d => h.onData(d));
-      conn.on("close", () => { h.onClose(); if (alive) setTimeout(connect, 2000); });
+      if (!alive || !peer) return;
+      const c = conn = peer.connect(PREFIX + code, {reliable:true}); tries++;
+      const guard = setTimeout(() => { if (!c.open && alive && conn === c) { try { c.close(); } catch(e){} h.onSlow && h.onSlow(tries); connect(); } }, 12000);
+      c.on("open", () => { clearTimeout(guard); h.onOpen(); });
+      c.on("data", d => h.onData(d));
+      c.on("close", () => { clearTimeout(guard); if (conn !== c) return; h.onClose(); if (alive) setTimeout(connect, 2000); });
+      c.on("error", () => {});
     };
-    peer.on("open", connect);
-    peer.on("error", err => h.onError(err));
-    peer.on("disconnected", () => { try { peer.reconnect(); } catch(e){} });
+    getIce().then(iceServers => {
+      peer = new Peer({config:{iceServers}});
+      peer.on("open", connect);
+      peer.on("error", err => h.onError(err));
+      peer.on("disconnected", () => { try { peer.reconnect(); } catch(e){} });
+    });
     addEventListener("pagehide", () => { alive = false; });
     return { send: d => { if (conn && conn.open) try { conn.send(d); } catch(e){} } };
   },
@@ -3623,7 +3653,9 @@ function startHost(){
         <p class="cc-log">${esc(L.log)}</p>
         <div class="label">Rows of five (need ${L.need})</div>
         ${L.teams.map(t => `<div class="lu-seq" style="--c:${TEAMS[t].c}"><span>${esc(TEAMS[t].name)}</span><span>${Array.from({length:L.need}, (_, k) => `<i class="pip ${k < L.seqs[t] ? "on" : ""}"></i>`).join("")}</span></div>`).join("")}
-        <div class="label">Jacks</div><p class="hint">J♦ J♣ (two eyes): place a chip anywhere. J♠ J♥ (one eye): remove another team's chip. ★ corners count for every team.</p>
+        <div class="label">Jacks</div><div class="jacks"><div><span class="pcard red">J♦<small>👀</small></span><span class="pcard">J♣<small>👀</small></span><p><b>Two-eyed jacks</b><br>Wild: place a chip on any empty space.</p></div>
+        <div><span class="pcard">J♠<small>👁</small></span><span class="pcard red">J♥<small>👁</small></span><p><b>One-eyed jacks</b><br>Remove another team's chip (not from a finished row).</p></div></div>
+        <p class="hint">★ corners count for every team.</p>
       </aside></section>`;
   }
 
@@ -3781,6 +3813,7 @@ function startHost(){
         <div class="code">${S.code}</div>
         <div class="url" id="joinurl">${esc(joinUrl())}</div>
         <button class="ghost sm" data-act="copy">Copy join link</button>
+        ${!TURN_URL && !LOCAL ? `<p class="hint">Tip: if a friend gets stuck on "Connecting", ask them to join your Wi-Fi, or add a free relay (see the guide).</p>` : ""}
         ${location.protocol === "file:" ? `<p class="warn">This page was opened from your computer, so phones can't open this link. Put it online first (Netlify Drop or Vercel).</p>` : ""}
         ${/^(localhost|127\.)/.test(location.hostname) && !LOCAL ? `<p class="warn">This is a localhost address. Phones can't reach it. Put the page online first.</p>` : ""}
       </section>
@@ -4062,6 +4095,7 @@ function startPlayer(code){
       render();
     },
     onClose(){ P.status = "lost"; render(); },
+    onSlow(n){ if (P.status !== "open") { P.status = "slow"; P.tries = n; render(); } },
     onError(err){ P.err = err && err.type === "peer-unavailable" ? "Room " + code + " isn't open. Check the code on the big screen, or scan the QR code again."
         : err && err.type === "library" ? "The game couldn't load on this phone. Check your internet and try again."
         : "Connection problem. Check your internet. If you're on Wi-Fi, try phone data."; P.status = "error"; render(); },
@@ -4081,7 +4115,14 @@ function startPlayer(code){
   function render(){
     let body = ""; const st = P.st;
     if (P.status === "error") body = `<div class="msg"><h2>Can't join</h2><p class="muted">${esc(P.err)}</p><button data-act="reload">Try again</button></div>`;
-    else if (!st) body = `<div class="msg"><h2>Joining room ${esc(code)}…</h2><p class="muted">Connecting to the big screen.</p></div>`;
+    else if (!st && P.status === "slow") body = `<div class="msg"><h2>Still connecting…</h2>
+      <p class="muted">Your phone can reach the game site but not the big screen yet (try ${P.tries}). It keeps trying by itself.</p>
+      <ol class="fixlist"><li>Switch between Wi-Fi and mobile data, or join the same Wi-Fi as the big screen.</li>
+        <li>Open the link in Chrome or Safari, not inside Facebook, Instagram or a QR scanner app.</li>
+        <li>Turn off any VPN, ad blocker or Low Data Mode.</li></ol>
+      <button data-act="reload">Try again</button></div>`;
+    else if (!st) body = `<div class="msg"><h2>Joining room ${esc(code)}…</h2><p class="muted">Connecting to the big screen.</p>
+      ${INAPP ? `<p class="warn">You opened this inside another app. If it stays on this screen, tap ⋯ or the share icon and choose <b>Open in browser</b>.</p>` : ""}</div>`;
     else if (!P.joined) body = joinForm(st);
     else if (st.phase === "lobby") body = lobbyWait(st);
     else if (st.phase === "mc") body = mcQ(st);
@@ -4176,7 +4217,7 @@ function startPlayer(code){
     const myTeam = st.teams.find(t => t.id === P.team);
     const hint = !L.myTurn ? `<b>${esc(L.turnName)}</b> is playing for ${L.turnTeam === P.team ? "your team. Help them choose!" : esc(L.turnTeamName) + "."}`
       : !sel ? "Your turn! Tap a card, then tap a glowing space on the board."
-      : LU_TWO.includes(sel) ? "Wild jack: tap ANY empty space." : LU_ONE.includes(sel) ? "One-eyed jack: tap another team's chip to remove it."
+      : LU_TWO.includes(sel) ? "👀 Two-eyed jack (wild): tap ANY empty space." : LU_ONE.includes(sel) ? "👁 One-eyed jack: tap another team's chip to remove it."
       : luDead(board, sel) ? "Both spaces for this card are taken. Swap it for a new card." : "Tap a glowing space.";
     return `<div class="lu-phone">
       <div class="turnbar ${L.myTurn ? "mine" : ""}" style="--c:${myTeam ? myTeam.c : "var(--t2)"}">${L.myTurn ? "Your turn!" : esc(L.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
@@ -4184,7 +4225,7 @@ function startPlayer(code){
       <div class="lu-board sm">${board.map((b, i) => { const ok = sel && luOk(b, P.team, sel);
         return `<button class="lc ${luRed(b.c) ? "red" : ""} ${b.c === "*" ? "free" : ""} ${ok ? "ok" : ""} ${i === L.last ? "last" : ""}" ${ok ? `data-cell="${i}"` : "disabled"} aria-label="${b.c === "*" ? "Free corner" : luLabel(b.c)}">${luCell(b, i)}</button>`; }).join("")}</div>
       <div class="label">${L.myTurn ? "Your team's cards" : "Your team's cards (shared)"}</div>
-      <div class="phand">${L.hand.map((c, i) => `<button class="pcard ${luRed(c) ? "red" : ""} ${P.luSel === i && L.myTurn ? "sel" : ""} ${luDead(board, c) ? "dead" : ""}" data-lui="${i}" ${L.myTurn ? "" : "disabled"}>${luLabel(c)}${LU_TWO.includes(c) ? "<small>wild</small>" : LU_ONE.includes(c) ? "<small>remove</small>" : ""}</button>`).join("")}</div>
+      <div class="phand">${L.hand.map((c, i) => `<button class="pcard ${luRed(c) ? "red" : ""} ${P.luSel === i && L.myTurn ? "sel" : ""} ${luDead(board, c) ? "dead" : ""}" data-lui="${i}" ${L.myTurn ? "" : "disabled"}>${luLabel(c)}${LU_TWO.includes(c) ? "<small>👀 wild</small>" : LU_ONE.includes(c) ? "<small>👁 remove</small>" : ""}</button>`).join("")}</div>
       ${L.myTurn && sel && luDead(board, sel) && !L.swapped ? `<button class="big" data-act="luswap">Swap this dead card</button>` : ""}
       <div class="lu-seqs">${L.seqs.map(s => { const t = st.teams.find(x => x.id === s.id); return `<span style="--c:${t ? t.c : "#fff"}">${t ? esc(t.name) : ""} <b>${s.n}/${L.need}</b></span>`; }).join("")}</div>
       </div>`;
