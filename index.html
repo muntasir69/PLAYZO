@@ -3482,6 +3482,15 @@ function walkSet(key, id, pts, ms = WALK_MS, slide = false){
 function walkOn(key){ const w = WALKS[key]; if (!w) return false; if (performance.now() - w.t0 > w.n * w.ms + 60) { delete WALKS[key]; return false; } return true; }
 let walkQueued = false;
 function runCounts(){
+  const fresh = [...document.querySelectorAll("[data-count]")].filter(el => !el._cnt);
+  if (fresh.length && typeof Sound !== "undefined") {
+    const climbs = document.querySelectorAll(".kq-row.climb").length, drops = document.querySelectorAll(".kq-down").length;
+    setTimeout(() => Sound.sfx("whoosh"), 800);
+    for (let k = 0; k < 18; k++) setTimeout(() => Sound.sfx("count", k), 950 + k * 70);
+    if (climbs) setTimeout(() => Sound.sfx("rankup"), 1500);
+    if (drops) setTimeout(() => Sound.sfx("rankdown"), 1650);
+    setTimeout(() => Sound.sfx("countend"), 2300);
+  }
   document.querySelectorAll("[data-count]").forEach(el => { if (el._cnt) return; el._cnt = 1;
     const [a, b] = el.dataset.count.split(":").map(Number), t0 = performance.now() + 900, dur = 1300;
     const step = now => { const u = Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - u, 3);
@@ -3830,38 +3839,61 @@ const Sound = (() => {
     whistle: (n, t, d, v, out) => voice("sine", hz(n), t, d, v * 0.9, out, {vib:5.5, vibDepth:7, a:0.02}),
     synth:   (n, t, d, v, out) => { voice("sawtooth", hz(n), t, d, v * 0.5, out, {detune:-8, f:{from:3200, to:900}}); voice("sawtooth", hz(n), t, d, v * 0.5, out, {detune:8, f:{from:3200, to:900}}); },
     pizz:    (n, t, d, v, out) => voice("triangle", hz(n), t, 0.18, v, out, {a:0.002, f:{from:2400, to:500}}),
+    glock:   (n, t, d, v, out) => { voice("sine", hz(n), t, 0.7, v * 0.9, out, {a:0.002}); voice("sine", hz(n) * 3.01, t, 0.18, v * 0.25, out, {a:0.001}); },
+    toypiano:(n, t, d, v, out) => { voice("sine", hz(n), t, 0.45, v, out, {a:0.002}); voice("square", hz(n) * 2, t, 0.06, v * 0.18, out, {f:{from:2500}}); voice("sine", hz(n) * 5.4, t, 0.05, v * 0.12, out); },
+  };
+  // chord accompaniment
+  const COMP = {
+    uke: (ch, t, out) => ch.slice(0, 4).forEach((n, k) => { voice("triangle", hz(n + 12), t + k * 0.014, 0.22, 0.035, out, {a:0.002, f:{from:3500, to:900}}); voice("square", hz(n + 12), t + k * 0.014, 0.05, 0.008, out, {f:{from:2500}}); }),
+    toy: (ch, t, out) => ch.slice(0, 3).forEach(n => voice("sine", hz(n + 12), t, 0.16, 0.035, out, {a:0.002})),
+  };
+  // soft, round percussion (no disco hi-hats)
+  const softKick = (t, v = 0.6, d = musicBus) => voice("sine", 120, t, 0.22, v, d, {slide:48, slideTime:0.1, a:0.004});
+  const snap = (t, v = 0.22, d = musicBus) => { noise(t, 0.025, v, d, "bandpass", 2600, 2.2); noise(t + 0.008, 0.06, v * 0.5, d, "bandpass", 1800, 1.5); };
+  const shaker = (t, v = 0.06, d = musicBus) => noise(t, 0.05, v, d, "bandpass", 6500, 0.9);
+  const woodblock = (t, k = 0, d = musicBus) => voice("sine", [880, 1175, 1320][k], t, 0.06, 0.16, d, {a:0.001, f:{type:"bandpass", from:[880, 1175, 1320][k], q:6}});
+  const cartoon = (t, k, d = musicBus) => {
+    if (k === 0) voice("sine", 180, t, 0.4, 0.16, d, {slide:560, slideTime:0.1, vib:14, vibDepth:40});            // boing
+    else if (k === 1) voice("sine", 600, t, 0.45, 0.07, d, {slide:1500, slideTime:0.4, vib:6, vibDepth:20});       // slide whistle up
+    else { voice("sine", 1500, t, 0.12, 0.08, d); voice("sine", 2000, t + 0.12, 0.14, 0.08, d); }                 // bird tweet
   };
   const BASS = {
     sub:     (n, t, d, out) => voice("sine", hz(n), t, d, 0.55, out, {a:0.01}),
     squelch: (n, t, d, out) => voice("sawtooth", hz(n), t, d, 0.32, out, {f:{from:1800, to:220, q:9, time:d * 0.9}}),
     pluck:   (n, t, d, out) => voice("square", hz(n), t, Math.min(d, 0.25), 0.26, out, {f:{from:1400, to:300}}),
     oompah:  (n, t, d, out) => voice("triangle", hz(n), t, 0.22, 0.5, out),
+    tuba:    (n, t, d, out) => { voice("triangle", hz(n), t, Math.min(0.3, d), 0.5, out, {a:0.015}); voice("sine", hz(n), t, Math.min(0.3, d), 0.3, out, {a:0.01}); },
+    bouncy:  (n, t, d, out) => voice("sine", hz(n) * 1.5, t, Math.min(0.2, d), 0.5, out, {slide:hz(n), slideTime:0.04, a:0.003}),
+    pizzb:   (n, t, d, out) => { voice("triangle", hz(n), t, 0.2, 0.5, out, {a:0.002, f:{from:1600, to:300}}); voice("sine", hz(n), t, 0.25, 0.25, out); },
   };
-  // A song = tempo, swing, chords (one per bar), and 16-step patterns. "x" = hit, "o" = bass an octave up.
-  const P4 = "x...x...x...x...", HIP = "x.....x...x.....", DEM = "x..x..x.x..x..x.", HALF = "x.........x.....";
+  // A song = tempo, swing, chords (one per bar) and 16-step patterns. Style: bouncy, cartoony, modern (no disco beat).
+  // bp: "x" = bass, "o" = bass an octave up. mel: melody rhythm. comp: chord strums. Percussion: kick, snap, shake, block.
   const SONGS = {
-    lobby:   {bpm:102, swing:0.08, chords:[[57,60,64,67],[53,57,60,64],[48,52,55,59],[55,59,62,65]], bass:"sub", bp:"x..x..x.x.......", lead:"marimba", rhythm:"x.x..x.x..x.x...", kick:P4, clap:"....x.......x...", hat:"..x...x...x...x."},
-    quiz:    {bpm:118, swing:0.12, chords:[[57,60,64],[57,60,64],[53,57,60],[52,56,59]], bass:"squelch", bp:"x..x..o.x..x.o..", lead:"synth", rhythm:"x..x..x...x.x...", kick:HIP, clap:"....x.......x...", hat:"x.x.x.x.x.x.x.x."},
-    emoji:   {bpm:124, swing:0, chords:[[60,64,67],[57,60,64],[53,57,60],[55,59,62]], bass:"pluck", bp:"x.o.x.o.x.o.x.o.", lead:"chip", rhythm:"x.xx..x.x.xx..x.", kick:P4, clap:"....x.......x...", hat:"..x...x...x...x."},
-    tf:      {bpm:140, swing:0, chords:[[62,65,69],[60,64,67],[58,62,65],[57,61,64]], bass:"squelch", bp:"x.x.x.x.x.x.x.x.", lead:"chip", rhythm:"x.x.x.x.xx.x..x.", kick:P4, clap:"....x.......x...", hat:"xxxxxxxxxxxxxxxx"},
-    herd:    {bpm:112, swing:0.1, chords:[[55,59,62],[60,64,67],[62,66,69],[55,59,62]], bass:"oompah", bp:"x...o...x...o...", lead:"kazoo", rhythm:"x.x.x...x.xxx...", kick:"x.......x.......", clap:"....x.......x...", hat:"..x...x...x...x."},
-    imposter:{bpm:96, swing:0.16, chords:[[57,60,64],[56,60,63],[55,58,62],[56,59,62]], bass:"sub", bp:"x.....x.x.......", lead:"pizz", rhythm:"x..x..x..x..x...", kick:HALF, clap:"............x...", hat:"....x.......x..."},
-    tap:     {bpm:152, swing:0, chords:[[52,55,59],[52,55,59],[50,53,57],[48,52,55]], bass:"squelch", bp:"x.xox.xox.xox.xo", lead:"synth", rhythm:"x.x.x.x.x.x.x.x.", kick:P4, clap:"....x.......x...", hat:"xxxxxxxxxxxxxxxx"},
-    react:   {bpm:128, swing:0, chords:[[57,60,64],[58,61,65],[57,60,64],[56,59,63]], bass:"sub", bp:"x.......x.......", lead:"bell", rhythm:"x.......x...x...", kick:P4, clap:"............x...", hat:"..x...x...x...x."},
-    guess:   {bpm:84, swing:0.18, chords:[[60,64,67,71],[57,60,64,67],[62,65,69,72],[55,59,62,65]], bass:"sub", bp:"x.....x...x.....", lead:"bell", rhythm:"x.....x...x.....", kick:HIP, clap:"....x.......x...", hat:"x.x.x.x.x.x.x.x."},
-    crash:   {bpm:120, swing:0.06, chords:[[55,59,62],[53,57,60],[52,55,59],[53,57,60]], bass:"squelch", bp:"x.ox.ox.x.ox.ox.", lead:"synth", rhythm:"..x..x.x..x..x.x", kick:P4, clap:"....x.......x...", hat:"..x...x...x...x."},
-    lineup:  {bpm:92, swing:0.15, chords:[[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,60,64,67]], bass:"sub", bp:"x.....x...x.....", lead:"marimba", rhythm:"x..x..x...x..x..", kick:HIP, clap:"....x.......x...", hat:"..x...x...x...x."},
-    ludo:    {bpm:98, swing:0.05, chords:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:"pluck", bp:"x..x..x.x..x..x.", lead:"whistle", rhythm:"x..x..x.x.......", kick:DEM, clap:"...x..x....x..x.", hat:"x.x.x.x.x.x.x.x."},
-    snakes:  {bpm:116, swing:0.1, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"oompah", bp:"x...o...x...o...", lead:"pluck", rhythm:"x.x.xx..x.x.x...", kick:"x.....x...x.....", clap:"....x.......x...", hat:"..x...x...x...x."},
-    tycoon:  {bpm:92, swing:0.14, chords:[[50,53,57,60],[50,53,57,60],[46,50,53,57],[48,52,55,58]], bass:"sub", bp:"x..x......x.x...", lead:"synth", rhythm:"x...x.x...x.....", kick:HIP, clap:"....x.......x...", hat:"x.xxx.x.x.xxx.x."},
+    lobby:   {bpm:100, swing:0.18, chords:[[60,64,67,71],[57,60,64,67],[62,65,69,72],[55,59,62,65]], bass:"tuba", bp:"x.....o...x.....", lead:"glock", mel:"x.x...x.x.x.....", comp:"uke", cp:"....x.......x.x.", kick:"x......x..x.....", snap:"....x.......x...", shake:"..x...x...x...xx", block:""},
+    quiz:    {bpm:112, swing:0.14, chords:[[57,60,64],[53,57,60],[60,64,67],[55,59,62]], bass:"bouncy", bp:"x..o..x...x.o...", lead:"marimba", mel:"x.xx..x.x..x.x..", comp:"toy", cp:"..x...x...x...x.", kick:"x.....x...x..x..", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:"...x..........x."},
+    emoji:   {bpm:118, swing:0.2, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"tuba", bp:"x...o...x...o...", lead:"whistle", mel:"x..x..x.x...x...", comp:"uke", cp:"..x...x...x...x.", kick:"x.......x.......", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x......x..x....."},
+    tf:      {bpm:132, swing:0.08, chords:[[62,65,69],[60,64,67],[58,62,65],[57,61,64]], bass:"bouncy", bp:"x.x...x.x.x...x.", lead:"toypiano", mel:"x.x.x...x.x.x...", comp:"toy", cp:"....x.......x...", kick:"x.....x.x.......", snap:"....x.......x...", shake:"x.xxx.xxx.xxx.xx", block:"..x.......x....."},
+    herd:    {bpm:108, swing:0.16, chords:[[55,59,62],[60,64,67],[62,66,69],[55,59,62]], bass:"tuba", bp:"x...o...x...o...", lead:"kazoo", mel:"x.x.x...x.xxx...", comp:"uke", cp:"..x...x...x...x.", kick:"x.......x.......", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x...........x..."},
+    imposter:{bpm:92, swing:0.22, chords:[[57,60,64],[56,60,63],[55,58,62],[56,59,62]], bass:"pizzb", bp:"x.....x.x.......", lead:"pizz", mel:"x..x..x..x..x...", comp:"", cp:"", kick:"x.........x.....", snap:"....x.......x...", shake:"", block:"..x..x.....x..x."},
+    tap:     {bpm:146, swing:0.05, chords:[[52,55,59],[52,55,59],[50,53,57],[48,52,55]], bass:"bouncy", bp:"x.xox.xox.xox.xo", lead:"toypiano", mel:"x.x.x.x.xx.x.x..", comp:"toy", cp:"....x.......x...", kick:"x.....x.x.....x.", snap:"....x.......x...", shake:"xxxxxxxxxxxxxxxx", block:"x...x...x...x..."},
+    react:   {bpm:120, swing:0.12, chords:[[57,60,64],[58,61,65],[57,60,64],[56,59,63]], bass:"pizzb", bp:"x.......x.......", lead:"glock", mel:"x.......x...x...", comp:"", cp:"", kick:"x.........x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x..x..x........."},
+    guess:   {bpm:86, swing:0.24, chords:[[60,64,67,71],[57,60,64,67],[62,65,69,72],[55,59,62,65]], bass:"tuba", bp:"x.....x...x.....", lead:"whistle", mel:"x.....x...x.x...", comp:"uke", cp:"....x.......x...", kick:"x......x..x.....", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:""},
+    crash:   {bpm:116, swing:0.16, chords:[[55,59,62],[53,57,60],[52,55,59],[53,57,60]], bass:"bouncy", bp:"x.ox..x.x.ox....", lead:"marimba", mel:"..x..x.x..x..x.x", comp:"uke", cp:"x...x...x...x...", kick:"x.....x...x.....", snap:"....x.......x...", shake:"..x...x...x..xx.", block:"x.........x....."},
+    lineup:  {bpm:94, swing:0.2, chords:[[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,60,64,67]], bass:"pizzb", bp:"x.....x...x.....", lead:"marimba", mel:"x..x..x...x..x..", comp:"toy", cp:"..x.......x.....", kick:"x......x..x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"......x.......x."},
+    ludo:    {bpm:104, swing:0.18, chords:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:"tuba", bp:"x...o...x...o...", lead:"whistle", mel:"x..x..x.x.......", comp:"uke", cp:"..x...x...x...x.", kick:"x.......x.......", snap:"....x.......x...", shake:"x.x.x.x.x.x.x.x.", block:"...x.......x...."},
+    snakes:  {bpm:112, swing:0.16, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"tuba", bp:"x...o...x...o...", lead:"marimba", mel:"x.x.xx..x.x.x...", comp:"uke", cp:"..x...x...x...x.", kick:"x.....x...x.....", snap:"....x.......x...", shake:"..x...x...x...x.", block:"x.......x......."},
+    tycoon:  {bpm:96, swing:0.22, chords:[[50,53,57,60],[50,53,57,60],[46,50,53,57],[48,52,55,58]], bass:"pizzb", bp:"x..x......x.x...", lead:"toypiano", mel:"x...x.x...x.....", comp:"toy", cp:"..x...x...x...x.", kick:"x......x..x.....", snap:"....x.......x...", shake:"x.xxx.x.x.xxx.x.", block:"......x........."},
   };
-  // a catchy two-bar motif per song, made once from a seed so the loop always sounds the same
+  // a catchy melody per song: chord tones on strong steps, little steps up and down in between
   const MOTIFS = {};
   function motif(key){
     if (MOTIFS[key]) return MOTIFS[key];
     let seed = [...key].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) >>> 0;
     const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
-    return MOTIFS[key] = Array.from({length:16}, () => ({deg: Math.floor(rnd() * 4), up: rnd() < 0.25 ? 12 : 0}));
+    let deg = 0;
+    return MOTIFS[key] = Array.from({length:32}, (_, i) => { const strong = i % 4 === 0;
+      deg = strong ? Math.floor(rnd() * 3) : Math.max(-1, Math.min(4, deg + (rnd() < 0.5 ? 1 : -1)));
+      return {deg, up: rnd() < 0.12 ? 12 : 0, slide: !strong && rnd() < 0.12}; });
   }
   function schedule(){
     if (!ctx || mood === "off") return;
@@ -3870,17 +3902,21 @@ const Sound = (() => {
       const bar = Math.floor(step / 16) % 4, i = step % 16, ch = song.chords[bar];
       const t = nextT + (i % 2 ? song.swing * s16 * 2 : 0);
       const bassNote = ch[0] - 12;
-      if (song.bp[i] === "x") BASS[song.bass](bassNote, t, s16 * 3, M);
-      if (song.bp[i] === "o") BASS[song.bass](bassNote + 12, t, s16 * 2, M);
-      if (song.bass === "oompah" && (i === 4 || i === 12)) ch.forEach(n => voice("triangle", hz(n), t, 0.15, 0.06, M));
-      if (song.rhythm[i] === "x") { const m = mo[(i + (bar % 2) * 3) % 16];
-        const fill = bar === 3 && i >= 12 ? 12 : 0;
-        INST[song.lead](ch[m.deg % ch.length] + 12 + m.up + fill, t, s16 * 2, 0.11, M); }
-      if (i === 0 && level >= 1) ch.forEach(n => voice("sawtooth", hz(n), t, s16 * 15, 0.012, M, {detune: (n % 2 ? 7 : -7), f:{from:900}, a:0.2}));
-      if (song.kick[i] === "x") kick(t);
-      if (song.clap[i] === "x") clap(t);
-      if (song.hat[i] === "x" || (level >= 2 && i % 2 === 1)) hat(t, level >= 2 ? 0.14 : 0.1);
-      if (level >= 2 && bar === 3 && i >= 12) snare(t, 0.12 + (i - 12) * 0.05);
+      if (song.bp[i] === "x") BASS[song.bass](bassNote, t, s16 * 2, M);
+      if (song.bp[i] === "o") BASS[song.bass](bassNote + 12, t, s16 * 1.5, M);
+      if (song.comp && song.cp[i] === "x") COMP[song.comp](ch, t, M);
+      // melody: plays bars 1-2, answers itself in bars 3-4 (a little higher), rests on the last beat
+      if (song.mel[i] === "x" && !(bar === 3 && i >= 12)) { const m = mo[(bar % 2) * 16 + i], scale = ch.concat(ch.map(n => n + 12));
+        const n = scale[Math.max(0, m.deg + 1) % scale.length] + 12 + m.up + (bar >= 2 ? 0 : 0) - (m.deg < 0 ? 2 : 0);
+        INST[song.lead](n, t, s16 * 2, 0.12, M);
+        if (level >= 2) INST.glock(n + 12, t, s16, 0.04, M); }
+      if (song.kick[i] === "x") softKick(t);
+      if (song.snap[i] === "x") snap(t);
+      if (song.shake && (song.shake[i] === "x" || (level >= 2 && i % 2))) shaker(t, level >= 2 ? 0.09 : 0.06);
+      if (song.block && song.block[i] === "x") woodblock(t, i % 4 ? 1 : 0);
+      // cartoon fills: a boing or a slide whistle at the end of every 4 bars, a drum roll when it gets exciting
+      if (bar === 3 && i === 14 && step % 128 === 62) cartoon(t, Math.floor(step / 64) % 3);
+      if (level >= 2 && bar === 3 && i >= 12) woodblock(t, 2);
       nextT += s16; step++;
     }
   }
@@ -3913,8 +3949,8 @@ const Sound = (() => {
           voice("sawtooth", hz(55), t + 0.34, 0.6, 0.22, d, {slide:hz(48), vib:6, vibDepth:18, f:{type:"bandpass", from:800, q:2}}); break;
         case "go": voice("sine", 1700, t, 0.18, 0.3, d, {vib:28, vibDepth:120}); voice("sine", 2100, t + 0.2, 0.25, 0.3, d, {vib:28, vibDepth:140}); break;
         case "reveal": for (let i = 0; i < 10; i++) snare(t + i * 0.035, 0.08 + i * 0.015, d);
-          noise(t + 0.36, 0.9, 0.18, d, "highpass", 5000); seq([67, 72, 76, 79], 0.0, "synth", 0.2, 0.5); break;
-        case "win": seq([72, 72, 72, 76, 79, 76, 79, 84], 0.12, "synth", 0.26, 0.2); kick(t, 0.8, d); kick(t + 0.48, 0.8, d);
+          noise(t + 0.36, 0.9, 0.14, d, "highpass", 6000); seq([72, 76, 79, 84], 0.05, "glock", 0.3, 0.5); break;
+        case "win": seq([72, 72, 72, 76, 79, 76, 79, 84], 0.12, "toypiano", 0.3, 0.2); kick(t, 0.8, d); kick(t + 0.48, 0.8, d);
           for (let i = 0; i < 6; i++) clap(t + 0.5 + i * 0.13, 0.22, d);
           noise(t + 0.4, 2.6, 0.12, d, "bandpass", 1800, 0.5); noise(t + 0.6, 2.2, 0.08, d, "bandpass", 3200, 0.6); break;
         case "drum": kick(t, 0.6, d); hat(t + 0.02, 0.06, false, d); break;
@@ -3927,6 +3963,10 @@ const Sound = (() => {
         case "chip": noise(t, 0.04, 0.35, d, "bandpass", 2600, 3); voice("triangle", 900, t, 0.06, 0.18, d); break;
         case "siren": voice("sine", 700, t, 0.9, 0.22, d, {vib:2.5, vibDepth:220}); break;
         case "whoosh": noise(t, 0.45, 0.2, d, "bandpass", 300, 1.2, 4000); break;
+        case "count": { const k = x || 0; voice("square", hz(79 + (k % 13)), t, 0.04, 0.07, d, {f:{from:3000}}); voice("sine", hz(91 + (k % 13)), t, 0.05, 0.12, d); break; }
+        case "countend": INST.glock(96, t, 0.5, 0.3, d); INST.glock(100, t + 0.08, 0.5, 0.26, d); noise(t, 0.3, 0.05, d, "highpass", 9000); break;
+        case "rankup": [72, 76, 79, 84].forEach((n, i) => INST.toypiano(n, t + i * 0.06, 0.2, 0.28, d)); voice("sine", 500, t, 0.35, 0.12, d, {slide:1600, slideTime:0.3}); break;
+        case "rankdown": voice("sine", 700, t, 0.4, 0.12, d, {slide:250, slideTime:0.35, vib:8, vibDepth:20}); break;
         case "ladder": [72, 76, 79, 84, 88, 91].forEach((n, i) => INST.marimba(n, t + i * 0.07, 0.2, 0.3, d)); noise(t + 0.4, 0.3, 0.05, d, "highpass", 9000); break;
         case "snake": noise(t, 0.5, 0.25, d, "highpass", 5000, 0.7); voice("sawtooth", hz(76), t + 0.1, 0.8, 0.18, d, {slide:hz(48), vib:9, vibDepth:25, f:{type:"bandpass", from:900, q:2}}); break;
         case "capture": voice("sine", 300, t, 0.5, 0.45, d, {slide:60}); noise(t, 0.3, 0.25, d, "lowpass", 900); voice("sine", 200, t + 0.25, 0.4, 0.35, d, {slide:700, vib:16, vibDepth:50}); break;
