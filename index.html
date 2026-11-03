@@ -461,6 +461,112 @@ button.on{border-color:var(--good);color:var(--good)}
 .selfpanel.min{height:auto}
 .selfpanel.min iframe{display:none}
 @media (min-width:1100px){body.selfon .wrap{max-width:none;margin-right:400px;margin-left:0}}
+
+/* v8: Snakes & Ladders */
+.slboard{position:relative;width:100%;max-width:min(100%,70vh);margin:0 auto;aspect-ratio:1;perspective:1400px}
+.slboard.tilt .slgrid,.slboard.tilt .slart{transform:rotateX(14deg);transform-origin:50% 100%}
+.slgrid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);border:4px solid #15122e;border-radius:12px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.slc{position:relative;display:block}
+.slc.a{background:#fff6d6}.slc.b{background:#d9f2ff}
+.slc:nth-child(3n).a{background:#ffe1ea}.slc:nth-child(4n).b{background:#dcf7e3}
+.slc span{position:absolute;left:6%;top:4%;font-size:clamp(.45rem,1vw,.85rem);font-weight:700;color:#5b5675}
+.slc.goal{background:#ffc23d!important}
+.slc.goal span{color:#15122e}
+.slart{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
+.sltok{width:7%}
+
+/* v9: categorized home page */
+.catnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:8px;overflow-x:auto;padding:10px 0;background:var(--ink);scrollbar-width:none}
+.catnav::-webkit-scrollbar{display:none}
+.catchip{flex:none;background:var(--panel);color:var(--text);border:2px solid var(--c);border-radius:999px;padding:8px 14px;font-size:.92rem}
+.catchip b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--c);color:var(--ink);font-size:.78rem;margin-left:4px}
+.catsec{display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px;padding-top:6px}
+.cathead{display:flex;align-items:center;gap:14px;border-left:6px solid var(--c);padding:4px 0 4px 14px}
+.cathead h2{font-size:1.5rem}
+.cathead p{margin:2px 0 0;font-size:.92rem}
+.caticon{font-size:2rem}
+.catcount{margin-left:auto;font-size:.82rem;color:var(--muted);white-space:nowrap}
+.gcard h3.gname{font-family:var(--display);font-weight:400;margin:0;font-size:1.2rem}
+
+/* v10: Ludo Star style controls */
+button.tok{padding:0;border:0;cursor:pointer;font:inherit}
+.tok.pick{width:8%;z-index:4;animation:pickpulse .9s ease-in-out infinite;box-shadow:0 0 0 3px #fff,0 0 0 6px var(--tc),0 0 18px 6px var(--tc)}
+.tok.pick::before{content:"";position:absolute;inset:-70%;border-radius:50%}
+@keyframes pickpulse{0%,100%{transform:translate(-50%,-62%) scale(1)}50%{transform:translate(-50%,-78%) scale(1.12)}}
+.dicebar{display:flex;align-items:center;gap:14px;background:var(--panel);border-left:6px solid var(--tc);border-radius:16px;padding:10px 14px}
+.dicebar p{margin:4px 0 0}
+.diebtn{background:none;border:0;padding:6px;border-radius:18px;flex:none}
+button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px var(--tc),0 0 20px 4px var(--tc);cursor:pointer}
+@keyframes pickpulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.diebtn.off{opacity:.85}
+.say.hot{color:var(--t2)}
+
+/* v11: realistic boards (wood frames, glossy surfaces, 3D pawns) */
+.bframe{position:relative;width:100%;max-width:min(100%,72vh);margin:0 auto;border-radius:20px;padding:clamp(8px,2.4%,18px);box-sizing:border-box}
+.bframe.wood{background:
+  linear-gradient(90deg,rgba(0,0,0,.18),transparent 12%,transparent 88%,rgba(0,0,0,.2)),
+  linear-gradient(180deg,rgba(255,255,255,.14),transparent 30%,rgba(0,0,0,.18)),
+  repeating-linear-gradient(7deg,#8b5a2b 0 5px,#7a4b22 5px 8px,#9a6636 8px 15px,#83532a 15px 19px);
+  box-shadow:0 22px 44px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.28),inset 0 -4px 0 rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.4)}
+.bframe.dark{background:linear-gradient(180deg,#3a2616,#24170d);box-shadow:0 22px 44px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(0,0,0,.5)}
+.bframe.tilt{transform:perspective(1500px) rotateX(15deg);transform-origin:50% 100%}
+.board-phone .bframe{max-width:100%;padding:6px;border-radius:14px}
+.bframe .ludo,.bframe .slboard,.bframe .tyb{max-width:none;width:100%;margin:0}
+.ludo.tilt .lgrid,.slboard.tilt .slgrid,.slboard.tilt .slart{transform:none}
+.lgrid{border:0;border-radius:10px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),0 2px 0 rgba(255,255,255,.2);background:#f7f4ec}
+.lgrid .path{background:linear-gradient(145deg,#ffffff,#ebe7dc);border:1px solid rgba(21,18,46,.16);box-shadow:inset 0 -2px 0 rgba(0,0,0,.05)}
+.lgrid .path.safe{color:#c9a227;text-shadow:0 1px 0 #fff}
+.lgrid .h0,.lgrid .y0{background:linear-gradient(145deg,#ff7a87,#d42a40)}
+.lgrid .h1,.lgrid .y1{background:linear-gradient(145deg,#4fdc90,#1b9455)}
+.lgrid .h2,.lgrid .y2{background:linear-gradient(145deg,#ffd75e,#dc9a00)}
+.lgrid .h3,.lgrid .y3{background:linear-gradient(145deg,#64a8ff,#2361cf)}
+.lgrid .path.h0,.lgrid .path.h1,.lgrid .path.h2,.lgrid .path.h3{border-color:rgba(0,0,0,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.12)}
+.lgrid .yard{box-shadow:inset 0 0 0 3px rgba(0,0,0,.12),inset 0 2px 0 rgba(255,255,255,.35)}
+.lgrid .yin{display:grid;grid-template-columns:1fr 1fr;place-items:center;width:70%;height:70%;padding:10%;box-sizing:border-box;background:linear-gradient(145deg,#fffdf8,#ece7da);border-radius:18%;box-shadow:inset 0 3px 6px rgba(0,0,0,.18),0 3px 0 rgba(0,0,0,.18)}
+.lgrid .yin i{width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#ddd7c8);box-shadow:inset 0 2px 4px rgba(0,0,0,.3),0 0 0 3px var(--yc)}
+.lgrid .y0 .yin i{--yc:#d42a40}.lgrid .y1 .yin i{--yc:#1b9455}.lgrid .y2 .yin i{--yc:#dc9a00}.lgrid .y3 .yin i{--yc:#2361cf}
+.lgrid .center{background:conic-gradient(from 45deg,#2fbf71 0 25%,#f5b622 0 50%,#3d8bff 0 75%,#ff4d5e 0);box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),inset 0 0 18px rgba(0,0,0,.25)}
+.lcenter-star{display:grid;place-items:center;color:#fff;font-size:clamp(1rem,3vw,2.4rem);text-shadow:0 2px 4px rgba(0,0,0,.45);z-index:1;pointer-events:none}
+.tok{width:5.2%;aspect-ratio:40/54;border-radius:0;background:none;box-shadow:none;transform:translate(-50%,-88%)}
+.tok .pawn{display:block;width:100%;height:100%;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.tok.me::after{content:"";position:absolute;left:4%;right:4%;bottom:2%;height:16%;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px 2px #fff;z-index:-1}
+.tok.hop{animation:hop2 .7s cubic-bezier(.3,1.7,.5,1)}
+@keyframes hop2{0%{transform:translate(-50%,-88%)}35%{transform:translate(-50%,-170%) scale(1.18)}70%{transform:translate(-50%,-82%) scale(1.05,.95)}100%{transform:translate(-50%,-88%)}}
+.tok.pick{width:7.4%;box-shadow:none;animation:pickpulse3 .9s ease-in-out infinite;filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px var(--tc))}
+@keyframes pickpulse3{0%,100%{transform:translate(-50%,-88%) scale(1)}50%{transform:translate(-50%,-104%) scale(1.1)}}
+.sltok{width:6.2%}
+.slgrid{border:0;border-radius:10px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35)}
+.slc{box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),inset 0 -2px 0 rgba(0,0,0,.05),inset 0 1px 0 rgba(255,255,255,.7)}
+.slc.a{background:linear-gradient(145deg,#fffaf0,#f6e5bd)}
+.slc.b{background:linear-gradient(145deg,#eef8ff,#c9e5f7)}
+.slc:nth-child(3n).a{background:linear-gradient(145deg,#fff1f4,#f9cbd8)}
+.slc:nth-child(4n).b{background:linear-gradient(145deg,#f0fbf2,#c9ecd2)}
+.slc span{font-family:var(--display);font-weight:400;color:#7a7392;font-size:clamp(.42rem,.95vw,.8rem)}
+.slc.goal{background:radial-gradient(circle at 40% 35%,#ffe28a,#f0b400)!important}
+.slart{filter:none}
+.tyb{background:#2a1a0e;gap:3px;padding:3px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.5)}
+.tt{background:linear-gradient(180deg,#fffdf6,#ece2c8);box-shadow:inset 0 0 0 1px rgba(0,0,0,.14),inset 0 0 0 3px var(--own,transparent),inset 0 -2px 0 rgba(0,0,0,.08)}
+.tt .band{position:relative;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.tt .band::after{content:"";position:absolute;inset:0 0 50% 0;background:linear-gradient(180deg,rgba(255,255,255,.45),transparent)}
+.tt.corner{background:linear-gradient(145deg,#fff6d5,#f1dc9c)}
+.tt.go .ticon{color:#e5383b}
+.tycenter{background:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px),radial-gradient(circle at 50% 35%,#38a862,#1d7442 60%,#12502a);box-shadow:inset 0 0 26px rgba(0,0,0,.45),inset 0 0 0 2px rgba(0,0,0,.35)}
+.tylogo{background:linear-gradient(180deg,#fff2b0,#ffc23d 55%,#d68b00);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 3px 0 #6b3d00) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.tytok{display:inline-block;width:clamp(12px,2.2vw,26px);aspect-ratio:40/54;background:none;box-shadow:none;border-radius:0}
+.tytok .pawn{width:100%;height:100%;display:block}
+.tyb.small .tytok{width:13px}
+.tytok.me{box-shadow:none;filter:drop-shadow(0 0 4px #fff)}
+.tok.me{box-shadow:none}
+/* push-to-talk */
+.voicebar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px)}
+.voicebar .ptt{display:flex;align-items:center;gap:8px;background:var(--vc,var(--t2));color:var(--ink);border-radius:999px;padding:12px 18px;font-weight:700;box-shadow:0 6px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.4);user-select:none;-webkit-user-select:none;touch-action:none;white-space:nowrap}
+.voicebar .ptt .mic{font-size:1.3rem}
+.voicebar.rec .ptt{background:#ff4d5e;color:#fff;animation:pickpulse2 .8s ease-in-out infinite;box-shadow:0 0 0 6px rgba(255,77,94,.35),0 10px 24px rgba(0,0,0,.4)}
+.voicebar .vmute{background:var(--panel);border-color:var(--line)}
+.voicebar .vhear{display:none;align-items:center;gap:6px;background:var(--panel);border:2px solid var(--good);border-radius:999px;padding:4px 10px 4px 4px;font-size:.85rem}
+.voicebar.hear .vhear{display:flex;animation:pop .3s ease}
+.phone{padding-bottom:84px}
+.pill.talking{border-color:var(--good);color:var(--text);animation:pop .3s ease}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -2845,6 +2951,11 @@ const GAMES = {
     about:"A fast property-trading game. Up to 6 players share a town of 24 spaces, and big groups play in several towns at once. Everyone starts with $1,000.",
     rules:["On your turn, tap Roll the dice. You move by the total of both dice. Doubles let you roll again.","Land on an empty street and your phone asks if you want to buy it.","When other players land on your street, they pay you rent (10% of the price).","Own both streets of the same color for double rent.","Pass GO to collect $200. 🎁 Lucky Cards can help or hurt you.","📱 Phone Bill pays into the Free Parking pot. Land on 🅿️ Free Parking to collect the whole pot.","🚓 Go to Traffic Jam makes you miss your next turn.","Run out of money and you're out. After 10 rounds, the richest player (cash + street prices) wins."],
     scoring:"1st place: 300 points, 2nd: 200, 3rd: 120, then 80, 60 and 40."},
+  snakes: {name:"Snakes & Ladders", tag:"Board", color:"#7b5cff", players:"2–200+", mins:"6–10 min",
+    desc:"Also called Ludo Snake. Roll the dice, climb ladders, dodge snakes, reach 100 first.",
+    about:"The classic dice race, also known as Ludo Snake or Shap Ludu. Up to 6 players share a board, and big groups play on several boards at once.",
+    rules:["On your turn, tap Roll the dice on your phone. Your token moves forward by the number rolled.","Land at the bottom of a 🪜 ladder and you climb up to its top.","Land on a 🐍 snake's head and you slide down to its tail.","Rolling a 6 gives you another roll (up to three in a row).","You must land exactly on 100. If you roll too high, you bounce back by the extra steps.","First player to reach 100 wins the board. You have 15 seconds per turn."],
+    scoring:"Board winner: 300 points. Everyone else: up to 150 points for how far they got."},
   tap: {name:"Tug of War", tag:"Action", color:"#c9a36a", players:"2–200+", mins:"2 min",
     desc:"Tap as fast as you can for 10 seconds. Teams pull the rope.",
     about:"Pure speed. With two teams, a rope marker on the big screen moves toward the team tapping harder.",
@@ -2862,6 +2973,14 @@ const GAMES = {
     scoring:"Exact answer: 200 points. Points go down the further off you are. More than 50% off: 0."},
 };
 
+// Home page sections. Each game's "tag" decides its section.
+const GAME_CATS = [
+  {id:"quiz",   title:"Quiz & brain",   icon:"🧠", color:"var(--t2)", tags:["Quiz","Brain"], desc:"Answer fast, think smart. Great for classes, teams and warm-ups."},
+  {id:"party",  title:"Party games",    icon:"🎉", color:"var(--t3)", tags:["Party"],        desc:"Laugh, bluff and guess what everyone else is thinking."},
+  {id:"cards",  title:"Card games",     icon:"🃏", color:"var(--t0)", tags:["Cards"],        desc:"Your cards stay secret on your phone. The table is on the big screen."},
+  {id:"board",  title:"Board games",    icon:"🎲", color:"var(--t1)", tags:["Board"],        desc:"Roll 3D dice and race, trade or climb your way to the win."},
+  {id:"action", title:"Action games",   icon:"⚡", color:"#3ddc84",   tags:["Action"],       desc:"Quick reflexes and fast fingers. Short, loud and fun."},
+];
 const QUIZ = [
   ["Which planet is known as the Red Planet?", ["Venus","Mars","Jupiter","Mercury"], 1],
   ["What is the largest ocean on Earth?", ["Atlantic","Indian","Arctic","Pacific"], 3],
@@ -2947,7 +3066,7 @@ const CFG = {
   quizN:10, quizSec:20, emojiN:10, tfN:10, tfSec:10, herdN:8, herdSec:15,
   tapRounds:3, tapSec:10, reactRounds:5, guessN:6, guessSec:25,
   impRounds:3, impTalkSec:120, impVoteSec:30, impGroup:7,
-  ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, tyTable:6, tyTurn:20, tyCash:1000, tyRounds:10,
+  ccTable:6, ccTurn:25, luTurn:45, ludoTurn:20, slTable:6, slTurn:15, tyTable:6, tyTurn:20, tyCash:1000, tyRounds:10,
 };
 
 /* ------------------------------------------------------------ helpers */
@@ -3051,6 +3170,7 @@ function gameIcon(key){
     guess: `<circle cx="30" cy="36" r="20" fill="${w}" ${st}/><circle cx="30" cy="36" r="13" fill="#ff5a5f" ${st}/><circle cx="30" cy="36" r="6" fill="${w}" ${st}/><path d="M30 36 L54 12" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/><path d="M54 12 l-2 -6 M54 12 l6 2 M49 10 l-1 -5 M52 15 l5 1" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`,
     crash: `<rect x="10" y="16" width="24" height="34" rx="5" fill="#4d9fff" ${st} transform="rotate(-16 22 33)"/><rect x="20" y="12" width="24" height="34" rx="5" fill="#3ddc84" ${st} transform="rotate(-2 32 29)"/><rect x="30" y="14" width="24" height="34" rx="5" fill="#ff5a5f" ${st} transform="rotate(14 42 31)"/><ellipse cx="42" cy="31" rx="7" ry="10" fill="${w}" transform="rotate(14 42 31)"/><text x="42" y="36" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="13" fill="${ink}" transform="rotate(14 42 31)">+2</text>`,
     lineup: `<rect x="8" y="8" width="48" height="48" rx="6" fill="${w}" ${st}/>${[0,1,2,3].map(r => [0,1,2,3].map(c => `<rect x="${12+c*11}" y="${12+r*11}" width="8" height="8" rx="2" fill="#e9e5ff"/>`).join("")).join("")}${[0,1,2,3].map(k => `<circle cx="${16+k*11}" cy="${16+k*11}" r="5" fill="#ff5a5f" stroke="${ink}" stroke-width="2"/>`).join("")}<circle cx="49" cy="16" r="5" fill="#19c3b4" stroke="${ink}" stroke-width="2"/>`,
+    snakes: `<rect x="8" y="8" width="48" height="48" rx="6" fill="${w}" ${st}/><path d="M18 50 L34 16 M24 52 L40 18" stroke="#a0652a" stroke-width="3" stroke-linecap="round"/><path d="M21 44 l6 3 M24 37 l6 3 M27 30 l6 3 M30 23 l6 3" stroke="#7a4a1c" stroke-width="2.4"/><path d="M48 14 C 30 22, 56 32, 40 40 S 30 50, 46 52" stroke="#15122e" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M48 14 C 30 22, 56 32, 40 40 S 30 50, 46 52" stroke="#2fbf71" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="48" cy="14" r="4" fill="#2fbf71" stroke="#15122e" stroke-width="2"/>`,
     ludo: `<rect x="8" y="8" width="48" height="48" rx="6" fill="${w}" ${st}/><rect x="8" y="8" width="20" height="20" rx="4" fill="#ff4d5e"/><rect x="36" y="8" width="20" height="20" rx="4" fill="#2fbf71"/><rect x="36" y="36" width="20" height="20" rx="4" fill="#f5b622"/><rect x="8" y="36" width="20" height="20" rx="4" fill="#3d8bff"/><path d="M28 28 L36 28 L32 32 Z" fill="#2fbf71"/><path d="M28 36 L36 36 L32 32 Z" fill="#f5b622"/><circle cx="18" cy="18" r="5" fill="${w}" stroke="${ink}" stroke-width="2"/><circle cx="46" cy="46" r="5" fill="${w}" stroke="${ink}" stroke-width="2"/>`,
     tycoon: `<path d="M10 52 V30 l12 -10 l12 10 V52 z" fill="${w}" ${st}/><path d="M34 52 V22 h18 V52 z" fill="#f5b622" ${st}/><rect x="17" y="38" width="10" height="14" fill="#2fae5f" ${st}/><path d="M38 28 h10 M38 34 h10 M38 40 h10" stroke="${ink}" stroke-width="2.5"/><circle cx="50" cy="13" r="8" fill="#f5b622" ${st}/><text x="50" y="17" text-anchor="middle" font-size="10" font-weight="700" fill="${ink}">$</text>`,
   };
@@ -3169,7 +3289,21 @@ const LUDO_TRACK = [[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],
 const LUDO_START = [0, 13, 26, 39];
 const LUDO_SAFE = [0, 8, 13, 21, 26, 34, 39, 47];
 const LUDO_HOME = [[[7,1],[7,2],[7,3],[7,4],[7,5]], [[1,7],[2,7],[3,7],[4,7],[5,7]], [[7,13],[7,12],[7,11],[7,10],[7,9]], [[13,7],[12,7],[11,7],[10,7],[9,7]]];
-const LUDO_YARD = [[[2,2],[3,3]], [[2,11],[3,12]], [[11,11],[12,12]], [[11,2],[12,3]]];
+const LUDO_YARD = [[[1.66,1.66],[3.34,3.34]], [[1.66,10.66],[3.34,12.34]], [[10.66,10.66],[12.34,12.34]], [[10.66,1.66],[12.34,3.34]]];
+function shade(hex, amt){ const n = parseInt(hex.slice(1), 16), t = amt < 0 ? 0 : 255, p = Math.abs(amt);
+  const ch = v => Math.round(v + (t - v) * p); return "#" + ((1 << 24) | (ch(n >> 16) << 16) | (ch((n >> 8) & 255) << 8) | ch(n & 255)).toString(16).slice(1); }
+const PAWN_CACHE = {};
+function pawnSVG(hex){
+  if (PAWN_CACHE[hex]) return PAWN_CACHE[hex];
+  const id = "pw" + hex.slice(1), hi = shade(hex, .6), lo = shade(hex, -.5);
+  return PAWN_CACHE[hex] = `<svg class="pawn" viewBox="0 0 40 54" aria-hidden="true"><defs><radialGradient id="${id}" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="${hi}"/><stop offset=".45" stop-color="${hex}"/><stop offset="1" stop-color="${lo}"/></radialGradient></defs>
+    <ellipse cx="20" cy="50" rx="14" ry="3.6" fill="#000" opacity=".38"/>
+    <path d="M5 45 Q5 37 14 35 L26 35 Q35 37 35 45 Q35 49.5 20 49.5 Q5 49.5 5 45 Z" fill="url(#${id})" stroke="${lo}" stroke-width=".8"/>
+    <path d="M14 35 Q17.5 26 16 21 L24 21 Q22.5 26 26 35 Z" fill="url(#${id})"/>
+    <ellipse cx="20" cy="21.5" rx="7.5" ry="2.6" fill="url(#${id})" stroke="${lo}" stroke-width=".6"/>
+    <circle cx="20" cy="13" r="9" fill="url(#${id})" stroke="${lo}" stroke-width=".6"/>
+    <ellipse cx="16.5" cy="9.5" rx="3.2" ry="2.2" fill="#fff" opacity=".6"/><ellipse cx="11" cy="42" rx="2.5" ry="1.4" fill="#fff" opacity=".35"/></svg>`;
+}
 const LUDO_COL = ["#ff4d5e", "#2fbf71", "#f5b622", "#3d8bff"];
 const LUDO_NAME = ["Red", "Green", "Yellow", "Blue"];
 const LUDO_END = 56;   // 51 squares around the board + 5 in the home column = home
@@ -3193,7 +3327,7 @@ function ludoBoardHTML(L, opt = {}){
   for (let r = 0; r < 15; r++) for (let c = 0; c < 15; c++) {
     const k = cls(r, c);
     if (k.startsWith("yard") && !((r === 0 || r === 9) && (c === 0 || c === 9))) continue;
-    if (k.startsWith("yard")) { cells += `<div class="${k}" style="grid-area:${r+1}/${c+1}/span 6/span 6"><div class="yin"></div></div>`; continue; }
+    if (k.startsWith("yard")) { cells += `<div class="${k}" style="grid-area:${r+1}/${c+1}/span 6/span 6"><div class="yin"><i></i><i></i><i></i><i></i></div></div>`; continue; }
     if (k === "mid") { if (r === 6 && c === 6) cells += `<div class="center" style="grid-area:7/7/span 3/span 3"></div>`; continue; }
     cells += `<div class="${k}" style="grid-area:${r+1}/${c+1}">${k.includes("safe") ? "★" : ""}</div>`;
   }
@@ -3201,9 +3335,10 @@ function ludoBoardHTML(L, opt = {}){
   for (const S of L.seats) S.tokens.forEach((p, k) => {
     const [r, c] = ludoCell(S.seat, p, k), key = r + "," + c, n = count[key] = (count[key] || 0) + 1;
     const off = (n - 1) * 0.18, hop = L.moved && L.moved.seat === S.seat && L.moved.k === k;
-    toks += `<div class="tok ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${p >= LUDO_END ? "done" : ""}" style="--tc:${LUDO_COL[S.seat]};left:${(c + 0.5 + off) / 15 * 100}%;top:${(r + 0.5 - off) / 15 * 100}%">${opt.noAv ? "" : Avatar.svg(S.av, 30)}</div>`;
+    const can = S.me && opt.pick && opt.pick.includes(k), tag = can ? "button" : "div";
+    toks += `<${tag} class="tok ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${can ? "pick" : ""} ${p >= LUDO_END ? "done" : ""}" ${can ? `data-lmove="${k}" aria-label="Move this token"` : ""} style="--tc:${LUDO_COL[S.seat]};left:${(c + 0.5 + off) / 15 * 100}%;top:${(r + 0.5 - off) / 15 * 100}%">${pawnSVG(LUDO_COL[S.seat])}</${tag}>`;
   });
-  return `<div class="ludo ${opt.tilt ? "tilt" : ""}"><div class="lgrid">${cells}</div>${toks}</div>`;
+  return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="ludo"><div class="lgrid">${cells}<div class="lcenter-star" style="grid-area:7/7/span 3/span 3">★</div></div>${toks}</div></div>`;
 }
 
 /* ------------------------------------------------------------ Tycoon Town board (24 spaces, 7 × 7 ring) */
@@ -3235,8 +3370,67 @@ function tyBoardHTML(T, opt = {}){
       ${s.g ? `<span class="band" style="background:${TY_GROUPS[s.g]}"></span>` : ""}
       ${s.icon ? `<span class="ticon">${s.icon}</span>` : ""}<span class="tn">${esc(s.n)}</span>${s.$ && s.k === "p" ? `<span class="tp">$${s.$}</span>` : s.k === "tax" ? `<span class="tp">-$${s.$}</span>` : ""}
       ${own !== null && own !== undefined ? `<span class="owner"></span>` : ""}
-      <span class="tks">${here.map(x => `<span class="tytok ${x.hop ? "hop" : ""} ${x.me ? "me" : ""}" style="--tc:${TY_COL[x.seat]}">${Avatar.svg(x.av, opt.small ? 18 : 28)}</span>`).join("")}</span></div>`; });
-  return `<div class="tyb ${opt.tilt ? "tilt" : ""} ${opt.small ? "small" : ""}">${tiles}<div class="tycenter">${T.center || ""}</div></div>`;
+      <span class="tks">${here.map(x => `<span class="tytok ${x.hop ? "hop" : ""} ${x.me ? "me" : ""}" style="--tc:${TY_COL[x.seat]}">${pawnSVG(TY_COL[x.seat])}</span>`).join("")}</span></div>`; });
+  return `<div class="bframe dark ${opt.tilt ? "tilt" : ""}"><div class="tyb ${opt.small ? "small" : ""}">${tiles}<div class="tycenter">${T.center || ""}</div></div></div>`;
+}
+
+
+/* ------------------------------------------------------------ Snakes & Ladders board (10 × 10, square 1 bottom-left) */
+const SL_LADDERS = [[4,25],[13,46],[33,49],[42,63],[50,69],[62,81],[74,92]];
+const SL_SNAKES = [[27,5],[40,3],[43,18],[54,31],[66,45],[76,58],[89,53],[99,41]];
+const SL_COL = ["#ff4d5e", "#3d8bff", "#2fbf71", "#f5b622", "#a77bff", "#ff8fd0"];
+function slXY(n){ // center of square n in 0..100 units
+  if (n < 1) return [-4, 95];
+  const r = Math.floor((n - 1) / 10), k = (n - 1) % 10, c = r % 2 === 0 ? k : 9 - k;
+  return [(c + 0.5) * 10, (9 - r + 0.5) * 10];
+}
+let SL_ART = null;
+function slArt(){
+  if (SL_ART) return SL_ART;
+  let s = "", defs = "";
+  for (const [a, b] of SL_LADDERS) {
+    const [x1, y1] = slXY(a), [x2, y2] = slXY(b), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy), px = -dy / len * 1.9, py = dx / len * 1.9;
+    let rungs = "", rs = "", rh = "";
+    for (let t = 0.07; t < 0.97; t += 4 / len) { const ax = x1 + dx*t + px, ay = y1 + dy*t + py, bx = x1 + dx*t - px, by = y1 + dy*t - py;
+      rs += `<line x1="${ax + .5}" y1="${ay + .7}" x2="${bx + .5}" y2="${by + .7}"/>`; rungs += `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>`; rh += `<line x1="${ax}" y1="${ay - .25}" x2="${bx}" y2="${by - .25}"/>`; }
+    const rail = (o, w, c, op = 1) => `<line x1="${x1 + px + o}" y1="${y1 + py + o * 1.4}" x2="${x2 + px + o}" y2="${y2 + py + o * 1.4}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/><line x1="${x1 - px + o}" y1="${y1 - py + o * 1.4}" x2="${x2 - px + o}" y2="${y2 - py + o * 1.4}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/>`;
+    s += `<g class="ladder"><g stroke="#000" stroke-width="1" opacity=".28" stroke-linecap="round">${rs}</g>${rail(.6, 1.6, "#000", .28)}
+      <g stroke="#7d4f22" stroke-width="1" stroke-linecap="round">${rungs}</g><g stroke="#d9a46a" stroke-width=".3" stroke-linecap="round">${rh}</g>
+      ${rail(0, 1.5, "#8f5a28")}${rail(-.25, .45, "#e3b47e", .9)}</g>`;
+  }
+  const SC = [["#2fae5f","#9be36a","#145c31"],["#e5383b","#ffb347","#7a1416"],["#7b5cff","#ff9de0","#3a2391"],["#f08c00","#ffe066","#7a4500"],["#0ea5a5","#9ff5e1","#06504f"]];
+  SL_SNAKES.forEach(([h, t], i) => {
+    const [x1, y1] = slXY(h), [x2, y2] = slXY(t), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy), nx = -dy / len, ny = dx / len, w = Math.min(7, len / 4);
+    const d = `M${x1} ${y1} C ${x1 + dx*.25 + nx*w} ${y1 + dy*.25 + ny*w}, ${x1 + dx*.5 - nx*w} ${y1 + dy*.5 - ny*w}, ${x1 + dx*.6} ${y1 + dy*.6} S ${x2 - nx*w*.6} ${y2 - ny*w*.6}, ${x2} ${y2}`;
+    const [c1, c2, c3] = SC[i % SC.length], ang = Math.atan2(dy, dx) * 180 / Math.PI, id = "slh" + i;
+    defs += `<radialGradient id="${id}" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="${c2}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${c3}"/></radialGradient>`;
+    s += `<g class="snake"><path d="${d}" stroke="#000" stroke-width="4.6" fill="none" stroke-linecap="round" opacity=".3" transform="translate(.8 1.1)"/>
+      <path d="${d}" stroke="${c3}" stroke-width="4.4" fill="none" stroke-linecap="round"/>
+      <path d="${d}" stroke="${c1}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="${d}" stroke="${c2}" stroke-width="1.6" fill="none" stroke-dasharray=".9 1.3" stroke-linecap="round" opacity=".9"/>
+      <path d="${d}" stroke="${c3}" stroke-width="3.5" fill="none" stroke-dasharray=".25 2" stroke-linecap="round" opacity=".55"/>
+      <path d="${d}" stroke="#fff" stroke-width=".55" fill="none" stroke-linecap="round" opacity=".45" transform="translate(-.45 -.55)"/>
+      <g transform="translate(${x1} ${y1}) rotate(${ang + 180})"><ellipse cx=".5" cy=".7" rx="3.4" ry="2.7" fill="#000" opacity=".3"/>
+        <ellipse rx="3.4" ry="2.7" fill="url(#${id})" stroke="${c3}" stroke-width=".5"/>
+        <ellipse cx="-.9" cy="-1.2" rx=".95" ry=".85" fill="#ffe066" stroke="${c3}" stroke-width=".2"/><ellipse cx="-.9" cy="1.2" rx=".95" ry=".85" fill="#ffe066" stroke="${c3}" stroke-width=".2"/>
+        <ellipse cx="-1" cy="-1.2" rx=".22" ry=".7" fill="#15122e"/><ellipse cx="-1" cy="1.2" rx=".22" ry=".7" fill="#15122e"/>
+        <circle cx="-2.7" cy="-.5" r=".18" fill="${c3}"/><circle cx="-2.7" cy=".5" r=".18" fill="${c3}"/><ellipse cx="0" cy="-.6" rx="1.3" ry=".5" fill="#fff" opacity=".4"/>
+        <path d="M-3.3 0 h-1.7 l-.8 -.7 M-5 0 l-.8 .7" stroke="#e5383b" stroke-width=".45" fill="none" stroke-linecap="round"/></g></g>`;
+  });
+  return SL_ART = `<defs>${defs}</defs>` + s;
+}
+function snakesBoardHTML(B, opt = {}){
+  // B = {seats:[{seat, av, pos, me}], moved:{seat}|null}
+  let cells = "";
+  for (let r = 9; r >= 0; r--) for (let c = 0; c < 10; c++) {
+    const row = 9 - r, n = row % 2 === 0 ? row * 10 + c + 1 : row * 10 + (9 - c) + 1;
+    cells += `<div class="slc ${(row + c) % 2 ? "a" : "b"} ${n === 100 ? "goal" : ""}" style="grid-area:${r + 1}/${c + 1}"><span>${n === 100 ? "🏁 100" : n}</span></div>`;
+  }
+  const count = {}; let toks = "";
+  for (const S of B.seats) { const key = S.pos, k = count[key] = (count[key] || 0) + 1, [x, y] = slXY(S.pos);
+    const off = (k - 1) * 2.2, hop = B.moved && B.moved.seat === S.seat;
+    toks += `<div class="tok sltok ${hop ? "hop" : ""} ${S.me ? "me" : ""}" style="--tc:${SL_COL[S.seat]};left:${x + off}%;top:${y - off * 0.6}%">${pawnSVG(SL_COL[S.seat])}</div>`; }
+  return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="slboard"><div class="slgrid">${cells}</div><svg class="slart" viewBox="0 0 100 100" aria-hidden="true">${slArt()}</svg>${toks}</div></div>`;
 }
 
 /* ------------------------------------------------------------ sound: modern, playful music + effects (Web Audio, no files)
@@ -3320,6 +3514,7 @@ const Sound = (() => {
     crash:   {bpm:120, swing:0.06, chords:[[55,59,62],[53,57,60],[52,55,59],[53,57,60]], bass:"squelch", bp:"x.ox.ox.x.ox.ox.", lead:"synth", rhythm:"..x..x.x..x..x.x", kick:P4, clap:"....x.......x...", hat:"..x...x...x...x."},
     lineup:  {bpm:92, swing:0.15, chords:[[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,60,64,67]], bass:"sub", bp:"x.....x...x.....", lead:"marimba", rhythm:"x..x..x...x..x..", kick:HIP, clap:"....x.......x...", hat:"..x...x...x...x."},
     ludo:    {bpm:98, swing:0.05, chords:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]], bass:"pluck", bp:"x..x..x.x..x..x.", lead:"whistle", rhythm:"x..x..x.x.......", kick:DEM, clap:"...x..x....x..x.", hat:"x.x.x.x.x.x.x.x."},
+    snakes:  {bpm:116, swing:0.1, chords:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]], bass:"oompah", bp:"x...o...x...o...", lead:"pluck", rhythm:"x.x.xx..x.x.x...", kick:"x.....x...x.....", clap:"....x.......x...", hat:"..x...x...x...x."},
     tycoon:  {bpm:92, swing:0.14, chords:[[50,53,57,60],[50,53,57,60],[46,50,53,57],[48,52,55,58]], bass:"sub", bp:"x..x......x.x...", lead:"synth", rhythm:"x...x.x...x.....", kick:HIP, clap:"....x.......x...", hat:"x.xxx.x.x.xxx.x."},
   };
   // a catchy two-bar motif per song, made once from a seed so the loop always sounds the same
@@ -3394,6 +3589,8 @@ const Sound = (() => {
         case "chip": noise(t, 0.04, 0.35, d, "bandpass", 2600, 3); voice("triangle", 900, t, 0.06, 0.18, d); break;
         case "siren": voice("sine", 700, t, 0.9, 0.22, d, {vib:2.5, vibDepth:220}); break;
         case "whoosh": noise(t, 0.45, 0.2, d, "bandpass", 300, 1.2, 4000); break;
+        case "ladder": [72, 76, 79, 84, 88, 91].forEach((n, i) => INST.marimba(n, t + i * 0.07, 0.2, 0.3, d)); noise(t + 0.4, 0.3, 0.05, d, "highpass", 9000); break;
+        case "snake": noise(t, 0.5, 0.25, d, "highpass", 5000, 0.7); voice("sawtooth", hz(76), t + 0.1, 0.8, 0.18, d, {slide:hz(48), vib:9, vibDepth:25, f:{type:"bandpass", from:900, q:2}}); break;
         case "capture": voice("sine", 300, t, 0.5, 0.45, d, {slide:60}); noise(t, 0.3, 0.25, d, "lowpass", 900); voice("sine", 200, t + 0.25, 0.4, 0.35, d, {slide:700, vib:16, vibDepth:50}); break;
       }
     },
@@ -3552,6 +3749,7 @@ function startHost(){
       soon(); push(pid); return;
     }
     const pid = S.links[L.id], p = pid && S.players[pid]; if (!p) return;
+    if (m.t === "voice") { relayVoice(pid, p, m); return; }
     const r = m.r === S.round;
     if (m.t === "answer" && S.phase === "mc" && r && !(pid in S.answers)) {
       const q = S.list[S.round], choice = Number(m.choice);
@@ -3574,12 +3772,27 @@ function startHost(){
     } else if (m.t === "lu" && S.phase === "lu") { luAct(pid, m);
     } else if (m.t === "ludo" && S.phase === "ludo") { ludoAct(pid, m);
     } else if (m.t === "ty" && S.phase === "ty") { tyAct(pid, m);
+    } else if (m.t === "sl" && S.phase === "sl") { slAct(pid, m);
     } else if (m.t === "vote" && S.phase === "imp-vote" && r && !(pid in S.answers)) {
       const g = S.groups.find(g => g.members.includes(pid));
       if (!g || !g.members.includes(m.target) || m.target === pid) return;
       S.answers[pid] = m.target; push(pid); soon();
       if (Object.keys(S.answers).length >= S.groups.reduce((s,g) => s + g.members.filter(x => S.players[x] && S.players[x].on).length, 0)) endVote();
     }
+  }
+  // Team voice: a short clip goes to your team (teams mode), your Imposter group, or everyone (solo mode).
+  function relayVoice(pid, p, m){
+    const now = Date.now(), data = m.data;
+    if (p.lastVoice && now - p.lastVoice < 1200) return; p.lastVoice = now;
+    if (!data || !(data instanceof ArrayBuffer || ArrayBuffer.isView(data)) || data.byteLength > 450000) return;
+    const grp = S.phase.startsWith("imp") ? (S.groups || []).find(g => g.members.includes(pid)) : null;
+    const to = grp ? "your group" : S.mode === "teams" ? (TEAMS[p.team] ? TEAMS[p.team].name : "team") : "everyone";
+    const out = {t:"voice", from:p.name, av:p.av, to, mime: String(m.mime || "").slice(0, 40), data};
+    for (const [qid, q] of plist()) {
+      if (qid === pid || !q.on || !q.link || q.bot) continue;
+      if (grp ? grp.members.includes(qid) : S.mode !== "teams" || q.team === p.team) q.link.send(out);
+    }
+    S.talk = {name:p.name, to, at:now}; soon(); clearTimeout(S.talkT); S.talkT = setTimeout(() => { S.talk = null; soon(); }, 3500);
   }
   function smallestTeam(){ let best=0, n=1e9; for (const t of teams()) { const c=members(t.id).length; if (c<n){n=c;best=t.id;} } return best; }
 
@@ -3632,8 +3845,17 @@ function startHost(){
       else { const cur = T.players[T.turn], mine = !T.done && cur === pid;
         st.ludo = {name:T.name, seat:T.seat[pid], myTurn:mine, rolled:T.rolled, dice:T.dice, rollId:T.rollId, log:T.log, done:T.done,
           winnerMe: T.winner === pid, winnerName: nm(T.winner), turnName: nm(cur), mine: T.tok[pid], moved: T.moved,
-          moves: mine && T.rolled ? ludoMoves(T, pid, T.dice).map(x => ({k:x.k, to:x.to, from:T.tok[pid][x.k]})) : [],
+          moves: mine && T.rolled ? ludoMoves(T, pid, T.dice).map(x => ({k:x.k, to:x.to, from:T.tok[pid][x.k]})).filter((x, i, arr) => arr.findIndex(y => y.from === x.from) === i) : [],
           seats: T.players.map(x => ({seat:T.seat[x], av:avOf(x), name:nm(x), tokens:T.tok[x], me: x === pid}))};
+        st.endsIn = T.done ? 0 : Math.max(0, T.turnEnds - Date.now()); }
+    }
+    if (S.phase === "sl") {
+      const T = (S.stables || []).find(t => t.players.includes(pid));
+      if (!T) st.sl = {sitout:true};
+      else { const cur = T.players[T.turn];
+        st.sl = {name:T.name, seat:T.seat[pid], myTurn: !T.done && cur === pid && !T.busy, dice:T.dice, rollId:T.rollId, log:T.log, done:T.done, pos:T.pos[pid],
+          winnerMe: T.winner === pid, winnerName: nm(T.winner), turnName: nm(cur), moved:T.moved,
+          seats: T.players.map(x => ({seat:T.seat[x], av:avOf(x), pos:T.pos[x], me: x === pid}))};
         st.endsIn = T.done ? 0 : Math.max(0, T.turnEnds - Date.now()); }
     }
     if (S.phase === "ty") {
@@ -3690,7 +3912,7 @@ function startHost(){
     const n = online().length;
     if (S.game === "imposter" && n < 3) { toast("Guess the Imposter needs at least 3 players"); return; }
     if (S.game === "crash" && n < 2) { toast("Color Crash needs at least 2 players"); return; }
-    if ((S.game === "ludo" || S.game === "tycoon") && n < 2) { toast(GAMES[S.game].name + " needs at least 2 players"); return; }
+    if ((S.game === "ludo" || S.game === "tycoon" || S.game === "snakes") && n < 2) { toast(GAMES[S.game].name + " needs at least 2 players"); return; }
     if (S.game === "lineup") {
       if (S.mode !== "teams") { S.mode = "teams"; toast("Line Up 5 is a team game, so it plays in teams"); }
       if (teams().filter(t => online().some(([,p]) => p.team === t.id)).length < 2) { toast("Line Up 5 needs players on at least 2 teams"); render(); return; }
@@ -3705,6 +3927,7 @@ function startHost(){
     else if (S.game === "lineup") { S.total = 1; startLineup(); }
     else if (S.game === "ludo") { S.total = 1; startLudo(); }
     else if (S.game === "tycoon") { S.total = 1; startTycoon(); }
+    else if (S.game === "snakes") { S.total = 1; startSnakes(); }
     Sound.mood(S.game);
   }
   const go = (phase, secs) => { S.phase = phase; S.answers = {}; S.startedAt = Date.now(); S.endsAt = secs ? S.startedAt + secs*1000 : 0; broadcast(); render(); };
@@ -4252,10 +4475,80 @@ function startHost(){
       <p class="hint">Roll two dice and move. Buy empty streets; others pay you rent when they land there. Own both streets of a color for double rent. Pass GO for $200. After ${CFG.tyRounds} rounds, the richest player (cash + streets) wins.</p></section>`;
   }
 
+
+  /* ---- Snakes & Ladders ---- */
+  function startSnakes(){
+    const ids = shuffle(online().map(([pid]) => pid)), nT = Math.ceil(ids.length / CFG.slTable);
+    S.stables = Array.from({length:nT}, (_, i) => ({name:"Board " + (i + 1), players:[]}));
+    ids.forEach((pid, i) => S.stables[i % nT].players.push(pid));
+    for (const T of S.stables) {
+      T.seat = {}; T.pos = {}; T.players.forEach((pid, i) => { T.seat[pid] = i; T.pos[pid] = 0; });
+      Object.assign(T, {turn:0, dice:0, sixes:0, rollId:0, moveId:0, moved:null, turnId:0, done:false, winner:null, log:"First to reach 100 wins. Climb ladders, dodge snakes!"});
+      slTurnStart(T);
+    }
+    S.phase = "sl"; S.endsAt = 0; broadcast(); render();
+  }
+  function slTurnStart(T){
+    T.turnId++; const pid = T.players[T.turn], p = S.players[pid];
+    T.turnEnds = Date.now() + (p && p.on ? CFG.slTurn : 3) * 1000;
+    if (p && p.bot) { const id = T.turnId; setTimeout(() => { if (T.turnId === id) slAct(pid, {a:"roll"}); }, 800 + Math.random() * 1000); }
+  }
+  function slAct(pid, m){
+    const T = (S.stables || []).find(t => t.players.includes(pid));
+    if (!T || T.done || T.players[T.turn] !== pid || m.a !== "roll" || T.busy) return;
+    const d = 1 + Math.floor(Math.random() * 6), who = nm(pid), from = T.pos[pid];
+    T.dice = d; T.rollId++; T.sixes = d === 6 ? T.sixes + 1 : 0; Sound.sfx("dice");
+    let to = from + d, msg = who + " rolled " + d;
+    if (to > 100) { to = 100 - (to - 100); msg += " and bounced back from 100"; }
+    T.pos[pid] = to; T.moved = {seat:T.seat[pid], id: ++T.moveId}; T.busy = true;
+    pushSl(T);
+    const lad = SL_LADDERS.find(([a]) => a === to), snk = SL_SNAKES.find(([a]) => a === to), id = T.turnId;
+    setTimeout(() => {
+      if (T.turnId !== id || T.done) return;
+      if (lad) { T.pos[pid] = lad[1]; msg += " · 🪜 climbed a ladder to " + lad[1] + "!"; Sound.sfx("ladder"); T.moved = {seat:T.seat[pid], id: ++T.moveId}; }
+      else if (snk) { T.pos[pid] = snk[1]; msg += " · 🐍 bitten by a snake, down to " + snk[1] + "!"; Sound.sfx("snake"); T.moved = {seat:T.seat[pid], id: ++T.moveId}; }
+      else Sound.sfx("step", d);
+      T.log = msg; T.busy = false;
+      if (T.pos[pid] === 100) { slFinish(T, pid); return; }
+      const again = d === 6 && T.sixes < 3;
+      if (again) T.log += " · roll again!"; else { T.turn = (T.turn + 1) % T.players.length; T.sixes = 0; }
+      slTurnStart(T); pushSl(T);
+    }, lad || snk ? 900 : 500);
+  }
+  function slFinish(T, winner){
+    T.done = true; T.winner = winner;
+    for (const pid of T.players) { const p = S.players[pid]; if (p) p.pts += pid === winner ? 300 : Math.round(150 * T.pos[pid] / 100); }
+    T.log = nm(winner) + " reached 100 and wins!"; Sound.sfx("win");
+    if (S.stables.every(t => t.done)) endCards(); else pushSl(T);
+  }
+  function slFinishAll(){
+    for (const T of S.stables) if (!T.done) { const w = T.players.slice().sort((a, b) => T.pos[b] - T.pos[a])[0]; T.done = true; T.winner = w;
+      for (const pid of T.players) { const p = S.players[pid]; if (p) p.pts += pid === w ? 300 : Math.round(150 * T.pos[pid] / 100); } }
+    endCards();
+  }
+  function pushSl(T){ rankCache = null; for (const pid of T.players) push(pid); soon(); }
+  function slTick(){ for (const T of S.stables || []) if (!T.done && !T.busy && Date.now() > T.turnEnds) slAct(T.players[T.turn], {a:"roll"}); }
+  function slBoardFor(T, mePid){
+    const moved = T.moved && fresh("sm:" + T.name + ":" + (mePid || "host"), T.moved.id) ? T.moved : null;
+    return {seats: T.players.map(pid => ({seat:T.seat[pid], av:avOf(pid), pos:T.pos[pid], me: pid === mePid})), moved};
+  }
+  function slView(){
+    const one = S.stables.length === 1, done = S.stables.filter(t => t.done).length;
+    return `<section class="stage card"><div class="qhead"><span class="label">Snakes &amp; Ladders · ${S.stables.length} board${one ? "" : "s"} · ${done} finished</span><button class="ghost sm" data-act="slfinish">Finish now</button></div>
+      <div class="ltables ${one ? "one" : ""}">${S.stables.map(T => { const cur = T.players[T.turn];
+        return `<div class="ltable ${T.done ? "done" : ""}"><div class="cc-head"><b>${esc(T.name)}</b>${T.done ? `<span class="pill">🏆 ${esc(nm(T.winner))}</span>` : `<span class="pill">${esc(nm(cur))} · <b data-ends="${T.turnEnds}">${Math.ceil(Math.max(0, T.turnEnds - Date.now()) / 1000)}</b> s</span>`}</div>
+          <div class="lbody">${snakesBoardHTML(slBoardFor(T, null), {tilt: one})}
+            <div class="lside">${T.dice ? dieHTML(T.dice, fresh("sd:" + T.name, T.rollId), one ? 84 : 46) : ""}
+              <p class="cc-log ${one ? "" : "sm"}">${esc(T.log)}</p>
+              <div class="cc-seats col">${T.players.slice().sort((a, b) => T.pos[b] - T.pos[a]).map(x => `<div class="seat ${x === cur && !T.done ? "turn" : ""} ${x === T.winner ? "win" : ""}" style="border-left:6px solid ${SL_COL[T.seat[x]]}">${Avatar.svg(avOf(x), one ? 34 : 24, {crown: x === T.winner})}<span class="sn">${esc(nm(x))}</span><span class="cnt">on ${T.pos[x] || "start"}</span></div>`).join("")}</div></div></div></div>`; }).join("")}</div>
+      <p class="hint">Roll and move. 🪜 Ladders take you up, 🐍 snakes take you down. A 6 rolls again. You need to land exactly on 100: roll too high and you bounce back.</p></section>`;
+  }
+
   function hype(){
     if (S.phase === "cc") return (S.tables || []).some(T => !T.done && T.players.some(x => T.hands[x].length === 1)) ? 2 : 1;
     if (S.phase === "lu") return S.lu && S.lu.need > 1 && S.lu.teams.some(t => S.lu.seqs[t] >= S.lu.need - 1) ? 2 : 1;
     if (S.phase === "ludo") return (S.ltables || []).some(T => !T.done && T.players.some(x => T.tok[x].some(p => p >= 46))) ? 2 : 1;
+    if (S.phase === "sl") return (S.stables || []).some(T => !T.done && T.players.some(x => T.pos[x] >= 80)) ? 2 : 1;
     if (S.phase === "ty") return (S.ttables || []).some(T => !T.done && T.round >= CFG.tyRounds - 1) ? 2 : 1;
     return 1;
   }
@@ -4271,8 +4564,8 @@ function startHost(){
   let lastSec = -1;
   setInterval(() => {
     if (S.phase === "react-wait" && S.goAt && Date.now() >= S.goAt) { S.goAt = 0; startReactGo(); return; }
-    if (["cc","lu","ludo","ty"].includes(S.phase)) {
-      if (S.phase === "cc") ccTick(); else if (S.phase === "lu") luTick(); else if (S.phase === "ludo") ludoTick(); else tyTick();
+    if (["cc","lu","ludo","ty","sl"].includes(S.phase)) {
+      if (S.phase === "cc") ccTick(); else if (S.phase === "lu") luTick(); else if (S.phase === "ludo") ludoTick(); else if (S.phase === "sl") slTick(); else tyTick();
       app.querySelectorAll("[data-ends]").forEach(el => { el.textContent = Math.ceil(Math.max(0, +el.dataset.ends - Date.now()) / 1000); });
       Sound.intensity(hype());
       return;
@@ -4346,6 +4639,7 @@ function startHost(){
       <div class="row">
         <button class="ghost sm" data-act="music" aria-pressed="${Sound.prefs.music}" title="Background music">${Sound.prefs.music ? "♫ Music on" : "♫ Music off"}</button>
         <button class="ghost sm" data-act="sfx" aria-pressed="${Sound.prefs.sfx}" title="Sound effects">${Sound.prefs.sfx ? "🔊 Sounds" : "🔇 Sounds"}</button>
+        ${S.talk ? `<span class="pill talking">🎙 ${esc(S.talk.name)} → ${esc(S.talk.to)}</span>` : ""}
         ${S.booted && S.ready ? `<button class="ghost sm ${S.selfOn ? "on" : ""}" data-act="selfplay">${S.selfOn ? "🙋 My controls" : "🙋 Play too"}</button>` : ""}
         ${S.booted ? `<span class="pill">Room <b>${S.code}</b></span>` : ""}
         ${S.phase !== "lobby" ? `<button class="ghost sm" data-act="lobby">End game</button>` : ""}</div></header>`;
@@ -4385,6 +4679,7 @@ function startHost(){
     else if (S.phase === "lu") body = luView();
     else if (S.phase === "ludo") body = ludoView();
     else if (S.phase === "ty") body = tyView();
+    else if (S.phase === "sl") body = slView();
     else if (S.phase === "final") body = finalView();
     const keep = S.view === "editor" ? captureEditor() : null;
     app.innerHTML = `<div class="wrap">${header()}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>${S.rules ? rulesView(S.rules) : ""}`;
@@ -4414,11 +4709,15 @@ function startHost(){
         <p class="muted">Choose a game, read the rules, then press <b>Host this game</b>. This screen shows a QR code, and everyone joins from their phone with a name and a cartoon face.</p></div>
         <ol class="how"><li><b>1</b><span>Pick a game</span></li><li><b>2</b><span>Show the QR code</span></li><li><b>3</b><span>Everyone scans and plays</span></li></ol></section>
       ${S.booted ? `<div class="card resume"><span>Room <b>${S.code}</b> is open with <b>${online().length}</b> players.</span><button class="sm" data-act="back">Back to the room</button></div>` : ""}
-      <div class="homegrid">${Object.entries(GAMES).map(([k,g]) => `<article class="gcard" style="--c:${g.color}">
+      <nav class="catnav" aria-label="Game categories">${GAME_CATS.map(c => { const n = Object.values(GAMES).filter(g => c.tags.includes(g.tag)).length;
+        return `<button class="catchip" data-cat="${c.id}" style="--c:${c.color}">${c.icon} ${esc(c.title)} <b>${n}</b></button>`; }).join("")}</nav>
+      ${GAME_CATS.map(c => { const list = Object.entries(GAMES).filter(([, g]) => c.tags.includes(g.tag));
+        return `<section class="catsec" id="cat-${c.id}" style="--c:${c.color}"><div class="cathead"><span class="caticon">${c.icon}</span><div><h2>${esc(c.title)}</h2><p class="muted">${esc(c.desc)}</p></div><span class="catcount">${list.length} game${list.length === 1 ? "" : "s"}</span></div>
+        <div class="homegrid">${list.map(([k,g]) => `<article class="gcard" style="--c:${g.color}">
         <div class="gicon">${gameIcon(k)}</div>
-        <div class="gbody"><span class="gtag">${g.tag}</span><h2 class="gname">${esc(g.name)}</h2><p class="gdesc">${esc(g.desc)}</p>
+        <div class="gbody"><h3 class="gname">${esc(g.name)}</h3><p class="gdesc">${esc(g.desc)}</p>
           <div class="meta"><span>👥 ${g.players}</span><span>⏱ ${g.mins}</span></div></div>
-        <div class="gact"><button class="sm" data-host="${k}">▶ Host this game</button><button class="ghost sm" data-rules="${k}">📖 Rules</button></div></article>`).join("")}</div>`;
+        <div class="gact"><button class="sm" data-host="${k}">▶ Host this game</button><button class="ghost sm" data-rules="${k}">📖 Rules</button></div></article>`).join("")}</div></section>`; }).join("")}`;
   }
   function rulesView(k){
     const g = GAMES[k];
@@ -4636,6 +4935,7 @@ The Earth is flat. | True | *False</pre>
   app.addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
     if (b.closest(".game, .opt, .seg, [data-act]")) Sound.sfx("click");
+    if (b.dataset.cat) { const sec = document.getElementById("cat-" + b.dataset.cat); if (sec) sec.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"}); return; }
     if (b.dataset.addbots) { addBots(Number(b.dataset.addbots), S.botLevel || "smart"); return; }
     if (b.dataset.botlevel) { S.botLevel = b.dataset.botlevel; render(); return; }
     if (b.dataset.host) { S.game = b.dataset.host; S.rules = null; S.view = "lobby"; if (!S.booted) boot(); else render(); return; }
@@ -4664,6 +4964,7 @@ The Earth is flat. | True | *False</pre>
       if (!S.selfOn) { S.selfOn = true; selfPanel(); render(); } else { const el = document.getElementById("selfpanel"); if (el) { el.classList.toggle("min"); document.body.classList.toggle("selfon", !el.classList.contains("min")); } } }
     if (a === "ludofinish") ludoFinishAll();
     if (a === "tyfinish") tyFinishAll();
+    if (a === "slfinish") slFinishAll();
     if (a === "next") next();
     if (a === "lobby") toLobby();
     if (a === "editor") { S.view = "editor"; const all = Quizzes.all(); if (!S.editId && all.length) S.editId = all[0].id; render(); }
@@ -4714,6 +5015,59 @@ function startPlayer(code){
   if (!pid) { pid = "u" + uid() + uid(); try { LOCAL ? sessionStorage.setItem(PKEY, pid) : store.set(PKEY, pid); } catch(e){} }
   const P = {status:"connecting", st:null, joined:false, name: store.get("sp-name") || "", av: Avatar.clean(store.get("sp-av")), team:null, ccWild:null, luSel:null, luTurn:-1, taps:0, tapRound:-1, recvAt:0, err:"", goAt:0, prevPhase:""};
   let link = null, tapTimer = 0;
+  /* ---- push-to-talk: hold the button, speak, release to send ---- */
+  const Voice = (() => {
+    const bar = document.createElement("div"); bar.className = "voicebar"; bar.hidden = true;
+    bar.innerHTML = `<span class="vhear" aria-live="polite"></span><button class="ghost xs vmute" aria-label="Mute voices">🔈</button><button class="ptt" aria-label="Hold to talk"><span class="mic">🎙</span><span class="ptt-l">Hold to talk</span></button>`;
+    document.body.appendChild(bar);
+    const btn = bar.querySelector(".ptt"), lab = bar.querySelector(".ptt-l"), hearEl = bar.querySelector(".vhear"), muteBtn = bar.querySelector(".vmute");
+    let stream = null, rec = null, chunks = [], pressing = false, t0 = 0, maxT = 0, muted = store.get("sp-vmute") === "1";
+    const q = []; let playing = false;
+    const MIME = () => ["audio/webm;codecs=opus", "audio/mp4", "audio/webm", "audio/ogg;codecs=opus"].find(x => window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(x)) || "";
+    async function start(){
+      pressing = true; if (rec) return;
+      if (!window.MediaRecorder || !navigator.mediaDevices) { toast("Voice isn't supported in this browser"); return; }
+      try { stream = stream || await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}); }
+      catch(e){ toast("Allow the microphone to talk"); pressing = false; return; }
+      if (!pressing) return;
+      const mime = MIME(); chunks = [];
+      try { rec = new MediaRecorder(stream, mime ? {mimeType:mime, audioBitsPerSecond:24000} : undefined); } catch(e){ rec = new MediaRecorder(stream); }
+      rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = async () => {
+        const type = (rec && rec.mimeType) || mime || "audio/webm", ms = Date.now() - t0; rec = null; bar.classList.remove("rec"); lab.textContent = "Hold to talk";
+        if (ms < 350 || !chunks.length) return;
+        const blob = new Blob(chunks, {type}), buf = await blob.arrayBuffer();
+        if (buf.byteLength > 440000) { toast("That was too long. Keep it under 10 seconds."); return; }
+        send({t:"voice", mime:type, data:buf}); Sound.sfx("click");
+      };
+      rec.start(); t0 = Date.now(); bar.classList.add("rec"); lab.textContent = "Talking… release to send";
+      clearTimeout(maxT); maxT = setTimeout(stop, 10000);
+    }
+    function stop(){ pressing = false; clearTimeout(maxT); if (rec && rec.state === "recording") rec.stop(); }
+    function next(){
+      const m = q.shift(); if (!m) { playing = false; bar.classList.remove("hear"); hearEl.textContent = ""; return; }
+      playing = true; bar.classList.add("hear"); hearEl.innerHTML = `${Avatar.svg(m.av, 22)}<b>${esc(m.from)}</b>`;
+      const url = URL.createObjectURL(new Blob([m.data], {type: m.mime || "audio/webm"})), a = new Audio(url);
+      const done = () => { URL.revokeObjectURL(url); next(); };
+      a.onended = done; a.onerror = done; a.play().catch(() => { toast("🎙 " + m.from + " sent a voice message. Tap the screen to allow sound."); done(); });
+    }
+    btn.addEventListener("pointerdown", e => { e.preventDefault(); btn.setPointerCapture && btn.setPointerCapture(e.pointerId); start(); });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach(ev => btn.addEventListener(ev, stop));
+    btn.addEventListener("contextmenu", e => e.preventDefault());
+    muteBtn.addEventListener("click", () => { muted = !muted; store.set("sp-vmute", muted ? "1" : "0"); muteBtn.textContent = muted ? "🔇" : "🔈"; });
+    muteBtn.textContent = muted ? "🔇" : "🔈";
+    return {
+      hear(m){ if (muted || !m.data) return; q.push(m); if (!playing) next(); },
+      update(st){
+        const show = P.joined && st && !(st.phase === "lobby" && st.mode !== "teams");
+        bar.hidden = !show; if (!show) return;
+        const grp = st.imp && st.imp.group && !st.imp.sitout;
+        const who = grp ? "your group" : st.mode === "teams" ? ((st.teams.find(t => t.id === P.team) || {}).name || "your team") : "everyone";
+        if (!rec) lab.textContent = "Hold to talk to " + who;
+        bar.style.setProperty("--vc", st.mode === "teams" && !grp ? ((st.teams.find(t => t.id === P.team) || {}).c || "var(--t2)") : "var(--t2)");
+      },
+    };
+  })();
   const send = m => { if (link) link.send(m); };
 
   link = net.join(code, {
@@ -4721,14 +5075,16 @@ function startPlayer(code){
     onData(m){
       if (!m) return;
       if (m.t === "tick") { if (P.st) { P.st.endsIn = m.endsIn; P.recvAt = Date.now(); } return; }
+      if (m.t === "voice") { Voice.hear(m); return; }
       if (m.t !== "state") return;
       const prev = P.st; P.st = m; P.recvAt = Date.now();
       if (m.you) { P.joined = true; P.team = m.you.team; }
+      Voice.update(m);
       if (m.phase === "tap" && P.tapRound !== m.round) { P.tapRound = m.round; P.taps = 0; }
       if (m.lu && m.lu.turnId !== P.luTurn) { P.luTurn = m.lu.turnId; P.luSel = null; if (m.lu.myTurn) Sound.sfx("go"); }
       if (m.cc && !m.cc.myTurn) P.ccWild = null;
       if (m.ty && prev && prev.ty && !m.ty.sitout && !prev.ty.sitout && m.ty.cash > prev.ty.cash) Sound.sfx("coin");
-      if ((m.ludo && m.ludo.myTurn && (!prev || !prev.ludo || !prev.ludo.myTurn)) || (m.ty && m.ty.myTurn && (!prev || !prev.ty || !prev.ty.myTurn))) Sound.sfx("go");
+      if ((m.ludo && m.ludo.myTurn && (!prev || !prev.ludo || !prev.ludo.myTurn)) || (m.ty && m.ty.myTurn && (!prev || !prev.ty || !prev.ty.myTurn)) || (m.sl && m.sl.myTurn && (!prev || !prev.sl || !prev.sl.myTurn))) Sound.sfx("go");
       if (m.cc && m.cc.myTurn && (!prev || !prev.cc || !prev.cc.myTurn)) Sound.sfx("go");
       if (m.phase === "react-go" && (!prev || prev.phase !== "react-go")) { P.goAt = performance.now(); Sound.sfx("go"); }
       if (prev && prev.phase !== m.phase) {
@@ -4786,6 +5142,7 @@ function startPlayer(code){
     else if (st.phase === "lu") body = luPhone(st);
     else if (st.phase === "ludo") body = ludoPhone(st);
     else if (st.phase === "ty") body = tyPhone(st);
+    else if (st.phase === "sl") body = slPhone(st);
     else if (st.phase === "final") body = finalPhone(st);
     const html = `<div class="phone">${topbar()}${P.status === "lost" ? `<div class="pill">Reconnecting…</div>` : ""}${body}<footer class="credit">Made by <b>Muntasir Mamun</b></footer></div>`;
     const key = html.replace(/data-left>\d+</g, "data-left><");
@@ -4887,17 +5244,30 @@ function startPlayer(code){
     if (!L || L.sitout) return `<div class="msg"><h2>Watch this one</h2><p class="muted">You joined after the boards were set up. You'll be in the next game.</p></div>`;
     const col = LUDO_COL[L.seat];
     if (L.done) return `<div class="result ${L.winnerMe ? "ok" : "no"}"><h2>${L.winnerMe ? "You won your board! 🏆" : esc(L.winnerName) + " won your board"}</h2><p class="hint">Waiting for the other boards…</p></div>${standing(st)}`;
-    const board = ludoBoardHTML({seats:L.seats, moved: L.moved && fresh("plm", L.moved.id) ? L.moved : null}, {});
-    const status = L.mine.map((p, k) => `<span class="tokstat" style="--tc:${col}"><b>Token ${k + 1}</b> ${p < 0 ? "in the yard" : p >= LUDO_END ? "home ✓" : (LUDO_END - p) + " steps to go"}</span>`).join("");
-    let controls = "";
-    if (L.myTurn && !L.rolled) controls = `<button class="big rollbtn" data-act="ludoroll" style="--tc:${col}">🎲 Roll the dice</button>`;
-    else if (L.myTurn && L.moves.length > 1) controls = `<div class="label">Which token?</div><div class="row center-row">${L.moves.map(m => `<button class="big" data-lmove="${m.k}" style="background:${col}">Token ${m.k + 1}: ${m.from < 0 ? "come out" : "move to " + (m.to >= LUDO_END ? "home" : (LUDO_END - m.to) + " to go")}</button>`).join("")}</div>`;
+    const choosing = L.myTurn && L.rolled && L.moves.length > 1;
+    const board = ludoBoardHTML({seats:L.seats, moved: L.moved && fresh("plm", L.moved.id) ? L.moved : null}, {pick: choosing ? L.moves.map(m => m.k) : null});
+    const canRoll = L.myTurn && !L.rolled;
+    const die = dieHTML(L.dice || 6, L.dice && fresh("pld", L.rollId), 72);
+    const yard = L.mine.filter(p => p < 0).length, home = L.mine.filter(p => p >= LUDO_END).length;
+    const say = canRoll ? "Tap the dice to roll!" : choosing ? "Tap a glowing token to move it" : L.myTurn ? "Moving…" : esc(L.turnName) + " is playing";
     return `<div class="board-phone">
       <div class="turnbar ${L.myTurn ? "mine" : ""}">${L.myTurn ? "Your turn!" : esc(L.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
-      <div class="you-are" style="--tc:${col}">You are <b>${LUDO_NAME[L.seat]}</b></div>
+      <div class="you-are" style="--tc:${col}">You are <b>${LUDO_NAME[L.seat]}</b> · ${yard} in yard · ${home} home</div>
       ${board}
-      <div class="row center-row">${L.dice ? dieHTML(L.dice, fresh("pld", L.rollId), 62) : ""}<p class="hint" style="max-width:24ch">${esc(L.log)}</p></div>
-      ${controls}<div class="tokstats">${status}</div></div>`;
+      <div class="dicebar" style="--tc:${col}">${canRoll ? `<button class="diebtn" data-act="ludoroll" aria-label="Roll the dice">${die}</button>` : `<div class="diebtn off">${die}</div>`}
+        <div><b class="say ${canRoll || choosing ? "hot" : ""}">${say}</b><p class="hint">${esc(L.log)}</p></div></div></div>`;
+  }
+  function slPhone(st){
+    const T = st.sl;
+    if (!T || T.sitout) return `<div class="msg"><h2>Watch this one</h2><p class="muted">You joined after the boards were set up. You'll be in the next game.</p></div>`;
+    if (T.done) return `<div class="result ${T.winnerMe ? "ok" : "no"}"><h2>${T.winnerMe ? "You reached 100! 🏆" : esc(T.winnerName) + " won your board"}</h2><p class="hint">Waiting for the other boards…</p></div>${standing(st)}`;
+    const col = SL_COL[T.seat];
+    return `<div class="board-phone">
+      <div class="turnbar ${T.myTurn ? "mine" : ""}">${T.myTurn ? "Your turn!" : esc(T.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
+      <div class="cashrow" style="--tc:${col}"><span class="label">You're on</span><span class="cash">${T.pos || "Start"}</span><span class="hint">${T.pos ? (100 - T.pos) + " to go" : "roll to begin"}</span></div>
+      ${snakesBoardHTML({seats:T.seats, moved: T.moved && fresh("psm", T.moved.id) ? T.moved : null}, {})}
+      <div class="row center-row">${T.dice ? dieHTML(T.dice, fresh("psd", T.rollId), 62) : ""}<p class="hint" style="max-width:24ch">${esc(T.log)}</p></div>
+      ${T.myTurn ? `<button class="big rollbtn" data-act="slroll" style="--tc:${col}">🎲 Roll the dice</button>` : ""}</div>`;
   }
   function tyPhone(st){
     const T = st.ty;
@@ -4968,6 +5338,7 @@ function startPlayer(code){
     if (b.dataset.cell !== undefined) { Sound.sfx("pop"); send({t:"lu", a:"play", i:P.luSel, cell:+b.dataset.cell}); P.luSel = null; return; }
     if (b.dataset.act === "ludoroll") { Sound.sfx("dice"); send({t:"ludo", a:"roll"}); return; }
     if (b.dataset.lmove !== undefined) { Sound.sfx("pop"); send({t:"ludo", a:"move", k:+b.dataset.lmove}); return; }
+    if (b.dataset.act === "slroll") { Sound.sfx("dice"); send({t:"sl", a:"roll"}); return; }
     if (b.dataset.act === "tyroll") { Sound.sfx("dice"); send({t:"ty", a:"roll"}); return; }
     if (b.dataset.act === "tybuy") { Sound.sfx("buy"); send({t:"ty", a:"buy"}); return; }
     if (b.dataset.act === "tyskip") { Sound.sfx("click"); send({t:"ty", a:"skip"}); return; }
