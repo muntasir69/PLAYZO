@@ -1066,6 +1066,151 @@ body.driving{overflow:hidden}
 .backup{background:var(--panel-2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;border:2px solid transparent}
 .backup.warn{border-color:var(--t2)}
 .backup p{margin:0}.bwarn{color:var(--t2);font-weight:800;font-size:.9rem}.bok{color:var(--good);font-weight:700;font-size:.9rem}
+
+/* v27: animated how-to-play lessons */
+.tutor{display:flex;flex-direction:column;gap:8px}
+.tstage{position:relative;height:clamp(190px,26vw,260px)}
+.tutor.phone .tstage{height:250px}
+.tstep{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4%;opacity:0;visibility:hidden;transition:opacity .35s}
+.tstep.on{opacity:1;visibility:visible}
+.ttv{width:62%;max-width:420px;position:relative}
+.ttv-s{aspect-ratio:16/10;background:linear-gradient(160deg,#2a1f5c,#15122e);border:7px solid #0b0920;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6%;padding:5%;overflow:hidden;position:relative}
+.ttv-leg{display:block;width:26%;height:8px;margin:0 auto;background:#0b0920;border-radius:0 0 8px 8px}
+.tph{width:clamp(96px,17vw,132px);aspect-ratio:9/17;background:#0b0920;border-radius:18px;padding:5px;box-shadow:0 10px 24px rgba(0,0,0,.5);position:relative;flex:none}
+.tutor.phone .tph{width:112px}
+.tph-s{width:100%;height:100%;border-radius:13px;background:linear-gradient(#2a1f5c,#1d1840);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7%;padding:8%;overflow:hidden;position:relative}
+.t-finger{display:none}
+.tcap{position:relative;min-height:2.8em}
+.tcap p{position:absolute;inset:0;margin:0;display:flex;gap:8px;align-items:flex-start;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;font-weight:700;font-size:.95rem}
+.tcap p.on{opacity:1;transform:none}
+.tcap b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--t2);color:var(--ink);display:grid;place-items:center;font-size:.75rem}
+.tdots{display:flex;gap:6px;justify-content:center}
+.tdots i{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.25);transition:width .3s,background .3s}.tdots i.on{width:22px;background:var(--t2)}
+.tstep.on .ttv-s > *,.tstep.on .tph-s > *{animation:tin .5s cubic-bezier(.2,1.4,.4,1) backwards}
+.tstep.on .ttv-s > *:nth-child(2),.tstep.on .tph-s > *:nth-child(2){animation-delay:.15s}
+.tstep.on .ttv-s > *:nth-child(3),.tstep.on .tph-s > *:nth-child(3){animation-delay:.3s}
+@keyframes tin{from{opacity:0;transform:scale(.7) translateY(8px)}}
+.ttap{position:relative}
+.tstep.on .ttap{animation:tpress 3.4s ease-in-out both}
+.tstep.on .ttap::after{content:"👆";position:absolute;right:-6px;bottom:-14px;font-size:1.3rem;animation:tfing 3.4s ease-in-out both;pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+@keyframes tpress{0%,38%{transform:none;box-shadow:none}44%{transform:scale(.88)}50%,100%{transform:scale(1.05);box-shadow:0 0 0 3px #fff,0 0 14px #fff}}
+@keyframes tfing{0%{opacity:0;transform:translate(30px,30px)}25%{opacity:1;transform:translate(6px,6px)}40%{transform:translate(0,0)}46%{transform:translate(-2px,-4px) scale(.9)}60%,100%{opacity:1;transform:translate(4px,4px)}}
+.tshp{width:1em;height:1em;flex:none}
+.t-q{background:#fff;color:#222;font-weight:900;border-radius:5px;padding:3px 10px;font-size:clamp(.6rem,1.2vw,.85rem);text-align:center}
+.t-tiles{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%}
+.t-tile{background:var(--c);color:#fff;border-radius:4px;display:flex;align-items:center;gap:4px;padding:4px 6px;font-weight:800;font-size:clamp(.5rem,1vw,.72rem);transition:opacity .4s}
+.t-tile.tfade{opacity:.3}.t-tile.ttap::after{display:none}
+.tstep.on .t-tile.ttap{animation:none;box-shadow:0 0 0 2px #fff}
+.t-btns{display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;height:78%}
+.t-btns.two{grid-template-columns:1fr}
+.t-btn{background:var(--c);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff;font-weight:800;font-size:.62rem;font-size:clamp(.55rem,.9vw,.7rem)}
+.t-btn .tshp{width:1.4em;height:1.4em}
+.t-big{font-family:var(--display);font-size:clamp(.75rem,1.6vw,1.15rem);text-align:center;color:#fff}
+.t-big.title{background:#fff;color:#222;border-radius:5px;padding:2px 10px}.t-big.night{color:#cfd8ff}.t-big.money{color:var(--t2);font-size:1.3rem}
+.t-big.wait{color:#ff6b6b}.t-big.go{color:#3ddc84;animation:kqzoom .4s}
+.t-big.shake{animation:rpsshake .5s ease-in-out infinite !important}
+.t-txt{font-weight:800;font-size:clamp(.55rem,1vw,.72rem);text-align:center;color:#fff}
+.t-pill{background:var(--t2);color:var(--ink);border-radius:8px;padding:5px 10px;font-weight:900;font-size:.68rem}
+.t-pill.green{background:#2fbf71;color:#fff}
+.t-res{width:100%;height:100%;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:.78rem}
+.t-res.ok{background:#26890c}.t-res.no{background:#e21b3c}
+.t-res span{background:rgba(0,0,0,.3);border-radius:5px;padding:2px 8px;font-weight:900}
+.t-board{width:90%;display:flex;flex-direction:column;gap:4px}
+.t-board div{display:flex;gap:6px;align-items:center;background:rgba(255,255,255,.12);border-radius:4px;padding:3px 8px;font-size:clamp(.55rem,1vw,.72rem);font-weight:800}
+.t-board div.lead{background:#fff;color:#222}.t-board em{margin-left:auto;font-style:normal}
+.tstep.on .t-board div{animation:kqslide .6s cubic-bezier(.2,1.3,.4,1) backwards}.tstep.on .t-board div:nth-child(2){animation-delay:.15s}.tstep.on .t-board div:nth-child(3){animation-delay:.3s}
+.t-av{display:inline-flex;align-items:center;gap:3px;font-size:.62rem;font-weight:800;background:rgba(255,255,255,.12);border-radius:99px;padding:2px 7px}
+.t-av::before{content:"";width:12px;height:12px;border-radius:50%;background:hsl(calc(var(--k) * 80),70%,60%)}
+.t-chat{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.tstep.on .t-chat .t-av{animation:tin .4s backwards}.tstep.on .t-chat .t-av:nth-child(2){animation-delay:.6s}.tstep.on .t-chat .t-av:nth-child(3){animation-delay:1.2s}
+.t-secret{background:#fff;color:#15122e;border-radius:8px;padding:10px 8px;font-weight:900;font-size:.85rem;text-align:center;animation:cardflip .7s}
+.t-secret.imp{background:#e5383b;color:#fff;font-size:.62rem}.t-secret.imp b{font-size:.85rem}
+.t-role{background:linear-gradient(160deg,var(--c),#15122e);border-radius:10px;width:80%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;animation:cardflip .8s}
+.t-role b{font-size:.8rem;font-family:var(--display)}
+.t-input{background:#fff;color:#15122e;border-radius:6px;padding:5px 8px;font-weight:900;width:90%;font-size:.8rem}
+.t-type{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;border-right:2px solid #46178f;width:0}
+.tstep.on .t-type{animation:ttype 1.6s steps(3) .5s forwards}
+@keyframes ttype{to{width:2.2ch}}
+.t-die{font-size:2.2rem;line-height:1;color:#fff}
+.tstep.on .t-die.roll{animation:troll .9s ease-out}
+@keyframes troll{0%{transform:rotate(-200deg) scale(.4)}100%{transform:none}}
+.t-card{width:30px;height:44px;border-radius:5px;background:var(--c);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.8rem;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.t-card.big{width:46px;height:66px;font-size:1.2rem}.t-card.dark{color:#c4161c;font-size:.62rem}
+.tstep.on .t-card.drop{animation:tdrop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes tdrop{from{transform:translateY(-60px) rotate(-20deg);opacity:0}}
+.t-hand{display:flex;gap:4px}
+.t-bars{display:flex;align-items:flex-end;gap:6px;height:70%;width:70%}
+.t-bars i{flex:1;background:var(--c);border-radius:3px 3px 0 0;height:var(--h)}
+.tstep.on .t-bars i{animation:kqgrow .8s cubic-bezier(.2,1.2,.4,1) backwards;transform-origin:bottom}
+.t-bars i.win{box-shadow:0 0 0 2px #fff}
+.t-line{position:relative;width:90%;height:40%;border-bottom:3px solid #fff}
+.t-line i{position:absolute;bottom:4px;transform:translateX(-50%);font-style:normal;font-size:.6rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:4px;padding:2px 4px;white-space:nowrap}
+.t-line i.win{background:#26890c}.t-line b{position:absolute;bottom:-18px;transform:translateX(-50%);font-size:.6rem;color:var(--t2)}
+.tstep.on .t-line i{animation:tin .4s backwards}.tstep.on .t-line i:nth-child(2){animation-delay:.3s}.tstep.on .t-line i:nth-child(3){animation-delay:.6s}
+.t-canvas{background:#fff;border-radius:6px;width:80%;aspect-ratio:10/7;display:grid;place-items:center}.t-canvas.small{width:100%}
+.t-cat{width:90%}.t-cat path{stroke-dasharray:400;stroke-dashoffset:400}
+.tstep.on .t-cat path{animation:tdraw 2.6s ease-in-out forwards}
+@keyframes tdraw{to{stroke-dashoffset:0}}
+.t-feed{font-size:.62rem;background:rgba(47,191,113,.4);border-radius:4px;padding:2px 6px;animation:tin .4s 1.2s backwards}
+.t-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;width:52%}
+.t-grid i{aspect-ratio:1;background:#f4f1e6;border-radius:2px;position:relative}
+.t-grid i.chip::after{content:"";position:absolute;inset:18%;border-radius:50%;background:#e5383b;box-shadow:0 1px 0 rgba(0,0,0,.4)}.t-grid i.chip.b::after{background:#2f7bff}
+.t-grid i.glow{box-shadow:0 0 0 2px var(--t2),0 0 8px var(--t2)}
+.tstep.on .t-grid i.pop::after{animation:kqzoom .5s .3s backwards}
+.t-ludo{width:46%;aspect-ratio:1;border-radius:6px;position:relative;background:conic-gradient(#e5383b 0 25%,#2fbf71 0 50%,#f5b622 0 75%,#3d8bff 0);box-shadow:inset 0 0 0 14px rgba(255,255,255,.85)}
+.t-ludo .tok,.t-ludo .tok2{position:absolute;width:14%;aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #e5383b;left:12%;top:12%}
+.t-ludo .tok2{box-shadow:0 0 0 3px #3d8bff;left:62%;top:6%}
+.tstep.on .t-ludo .tok.move,.tstep.on .t-ludo .tok.hit{animation:twalk 2.4s steps(6) .3s forwards}
+@keyframes twalk{to{left:62%;top:6%}}
+.tstep.on .t-ludo .tok2.back{animation:tback .6s 2.6s forwards}
+@keyframes tback{to{left:80%;top:80%;opacity:.4}}
+.t-tokpick{display:flex;gap:10px}.t-tokpick i{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #e5383b}.t-tokpick i.ttap{box-shadow:0 0 0 3px #e5383b,0 0 12px #fff}
+.t-ring{width:50%;aspect-ratio:1;border-radius:6px;background:#2b8a3e;box-shadow:inset 0 0 0 16px #f4f1e6,inset 0 0 0 17px #2a1a0e;position:relative;display:grid;place-items:center}
+.t-ring .pc{position:absolute;width:12%;aspect-ratio:1;border-radius:50%;background:#ff4d5e;box-shadow:0 0 0 2px #fff;right:4%;bottom:4%}
+.tstep.on .t-ring .pc.move{animation:tring 2.2s steps(5) .3s forwards}
+@keyframes tring{to{right:60%;bottom:4%}}
+.t-ring .pc.at{right:60%;bottom:4%}
+.t-ring .deed{font-size:.55rem;background:#fff;color:#15122e;border-radius:4px;padding:3px 6px;border-top:5px solid #e5383b;animation:tin .4s .3s backwards}.t-ring .deed.own{border-top-color:#ffc23d}
+.t-sl{width:46%;aspect-ratio:1;border-radius:4px;background:repeating-conic-gradient(#fdf3d0 0 25%,#d8efff 0 50%) 0 0/25% 25%;position:relative}
+.t-sl .pc{position:absolute;width:16%;aspect-ratio:1;border-radius:50%;background:#7b5cff;box-shadow:0 0 0 2px #fff;left:8%;bottom:8%}
+.t-sl .lad,.t-sl .snk{position:absolute;font-size:2rem;left:35%;top:25%}
+.tstep.on .t-sl .pc{animation:tslw 1.2s steps(4) .2s forwards}
+@keyframes tslw{to{left:58%;bottom:8%}}
+.tstep.on .t-sl .pc.up{animation:tslup 1.4s .4s forwards;left:30%}
+@keyframes tslup{to{left:52%;bottom:72%}}
+.tstep.on .t-sl .pc.down{animation:tsldn 1.4s .4s forwards;left:60%;bottom:76%}
+@keyframes tsldn{to{left:20%;bottom:10%}}
+.t-road{width:100%;height:100%;border-radius:6px;background:linear-gradient(#7ec8ff 0 40%,#48ad4c 40%);position:relative;overflow:hidden}
+.t-road::before{content:"";position:absolute;left:50%;bottom:0;width:120%;height:60%;transform:translateX(-50%);background:#5f5f6b;clip-path:polygon(46% 0,54% 0,100% 100%,0 100%)}
+.t-road::after{content:"";position:absolute;left:50%;bottom:0;width:4px;height:60%;transform:translateX(-50%);background:repeating-linear-gradient(#fff 0 10px,transparent 10px 22px);animation:troad .4s linear infinite}
+@keyframes troad{to{background-position:0 22px}}
+.t-road.small{height:58%}
+.t-road .car{position:absolute;left:50%;bottom:8%;width:26%;height:16%;transform:translateX(-50%);background:#ff2a3d;border-radius:5px 5px 3px 3px;box-shadow:inset 0 -4px 0 #9c0d14;z-index:2}
+.tstep.on .t-road .car{animation:tsteer 2s ease-in-out .3s infinite alternate}
+@keyframes tsteer{to{left:38%}}
+.tstep.on .t-road .car.dodge{animation:tdodge 2.4s ease-in-out .2s forwards}
+@keyframes tdodge{40%{left:50%}70%,100%{left:68%}}
+.t-road .traffic{position:absolute;left:52%;bottom:40%;width:10%;height:7%;background:#d9dbe3;border-radius:3px;z-index:1}
+.tstep.on .t-road .traffic{animation:ttraf 2.4s ease-in .2s forwards}
+@keyframes ttraf{to{bottom:6%;left:42%;width:24%;height:15%}}
+.t-road.nitro{box-shadow:inset 0 0 40px rgba(60,180,255,.7)}
+.t-road.nitro .car::after{content:"";position:absolute;left:30%;right:30%;top:100%;height:120%;background:linear-gradient(#7fe3ff,transparent);animation:flick .08s steps(2) infinite}
+.t-ctl{display:flex;gap:4px;width:100%}.t-ctl b{flex:1;text-align:center;background:#2a2550;border-radius:5px;padding:5px 0;font-size:.6rem}.t-ctl b.nb{background:#3fb2ff;color:#0b2342}
+.t-rope{width:80%;height:8px;background:#c9a36a;border-radius:4px;position:relative}
+.t-rope i{position:absolute;left:48%;top:-6px;width:14px;height:20px;background:#e5383b;border-radius:3px}
+.tstep.on .t-rope i{animation:trope 1.4s ease-in-out infinite alternate}.tstep.on .t-rope.pull i{animation:tropep 2.5s ease-in forwards}
+@keyframes trope{to{left:42%}}@keyframes tropep{to{left:10%}}
+.t-tapbtn{width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(#ff8a5c,#ff4d1f);display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;color:#fff}
+.tstep.on .t-tapbtn.fast{animation:ttapf .18s ease-in-out infinite alternate}.tstep.on .t-tapbtn.fast::after{animation:none;right:10%;bottom:10%}
+@keyframes ttapf{to{transform:scale(.9)}}
+.t-pad{width:100%;height:85%;border-radius:10px;display:grid;place-items:center;font-family:var(--display);font-size:1rem}
+.t-pad.red{background:#e5383b}.t-pad.green{background:#2fbf71}
+.tutcard{display:flex;flex-direction:column;gap:8px}
+.tutor.phone .tcap{min-height:4.6em}.tutor.phone .tstage{height:230px}
+.msg .tutwrap{align-self:stretch;width:100%;max-width:420px;margin-left:auto;margin-right:auto}
+.tutwrap{margin-top:14px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px}
+.sheet .tutor{margin:4px 0 10px;background:var(--panel-2);border-radius:14px;padding:12px}
+@media (prefers-reduced-motion:reduce){.tstep{transition:none}}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -4385,6 +4530,101 @@ const DRAW_COLS = ["#15122e", "#e5383b", "#3d8bff", "#2fbf71", "#f5b622", "#a77b
 function drawStroke(c, s, W, H){ if (!s || s.length < 4) return; c.strokeStyle = DRAW_COLS[s[0]] || "#15122e"; c.lineWidth = (s[1] || 1) * W / 160; c.lineCap = "round"; c.lineJoin = "round";
   c.beginPath(); c.moveTo(s[2] * W, s[3] * H); for (let i = 4; i + 1 < s.length; i += 2) c.lineTo(s[i] * W, s[i + 1] * H); if (s.length === 4) c.lineTo(s[2] * W + 0.5, s[3] * H); c.stroke(); }
 
+/* ------------------------------------------------------------ animated "how to play" lessons for every game
+   Each lesson is 3-4 short steps. Every step shows the big screen and a phone acting out the move, with a caption.
+   Steps change by the clock, so re-drawing the page doesn't restart the lesson. */
+const TUT_MS = 3400;
+const TQ = ["#e21b3c", "#1368ce", "#d89e00", "#26890c"];
+const tsh = i => `<svg viewBox="0 0 24 24" class="tshp"><path fill="#fff" d="${["M12 3 L22 20 H2 Z", "M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z", "M12 2 A10 10 0 1 0 12.01 2 Z", "M3 3 H21 V21 H3 Z"][i]}"/></svg>`;
+const T_ = {
+  tiles: (labels, hi = -1, fade = false) => `<div class="t-tiles">${labels.map((l, i) => `<div class="t-tile ${i === hi ? "ttap" : ""} ${fade && i !== hi ? "tfade" : ""}" style="--c:${TQ[i]}">${tsh(i)}<span>${l}</span></div>`).join("")}</div>`,
+  btns: (labels, hi = -1) => `<div class="t-btns ${labels.length === 2 ? "two" : ""}">${labels.map((l, i) => `<div class="t-btn ${i === hi ? "ttap" : ""}" style="--c:${TQ[i]}">${tsh(i)}${l ? `<span>${l}</span>` : ""}</div>`).join("")}</div>`,
+  q: t => `<div class="t-q">${t}</div>`,
+  big: (t, cls = "") => `<div class="t-big ${cls}">${t}</div>`,
+  txt: (t, cls = "") => `<div class="t-txt ${cls}">${t}</div>`,
+  btn: (t, cls = "") => `<div class="t-pill ttap ${cls}">${t}</div>`,
+  ok: (t, pts) => `<div class="t-res ok"><b>${t}</b>${pts ? `<span>${pts}</span>` : ""}</div>`,
+  no: t => `<div class="t-res no"><b>${t}</b></div>`,
+  av: (k, n) => `<span class="t-av" style="--k:${k}">${n || ""}</span>`,
+  board: rows => `<div class="t-board">${rows.map((r, i) => `<div class="${i === 0 ? "lead" : ""}"><b>${i + 1}</b>${r[0]}<em>${r[1]}</em></div>`).join("")}</div>`,
+  die: v => `<div class="t-die roll">${["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"][v]}</div>`,
+  card: (t, c, cls = "") => `<div class="t-card ${cls}" style="--c:${c}">${t}</div>`,
+};
+function tutSteps(k){
+  const S = (tv, ph, cap) => ({tv, ph, cap});
+  const quizLike = (q, opts, right, cap1) => [
+    S(T_.q(q) + T_.tiles(opts), T_.btns(["", "", "", ""].slice(0, opts.length)), cap1),
+    S(T_.q(q) + T_.tiles(opts), T_.btns(["", "", "", ""].slice(0, opts.length), right), "Tap the same color and shape on your phone. Faster = more points!"),
+    S(T_.q(q) + T_.tiles(opts, right, true), T_.ok("Correct!", "+ 950"), "The right answer lights up. Your phone shows your points."),
+    S(T_.big("Scoreboard", "title") + T_.board([["Sam", "2,830"], ["You", "2,610"], ["Ava", "1,900"]]), T_.txt("You're 2nd! 🔥"), "Climb the scoreboard after every question. Most points wins! 🏆")];
+  const L = {
+    quiz: quizLike("Largest planet?", ["Mars", "Earth", "Venus", "Jupiter"], 3, "The question and 4 answers show on the big screen."),
+    emoji: quizLike("🦁 👑", ["Shrek", "Lion King", "Cars", "Up"], 1, "Guess the movie from the emojis on the big screen."),
+    tf: [S(T_.q("Bananas are berries."), T_.btns(["True", "False"]), "A statement shows on the big screen. Is it true or false?"),
+         S(T_.q("Bananas are berries."), T_.btns(["True", "False"], 0), "Tap True or False on your phone within 10 seconds."),
+         S(T_.q("Bananas are berries. ✓ TRUE"), T_.ok("Correct!", "+ 870"), "Right and fast = more points!")],
+    herd: [S(T_.q("Best pizza topping?") + T_.tiles(["Cheese", "Pepperoni", "Pineapple", "Mushroom"]), T_.btns(["", "", "", ""]), "There's no right answer. Guess what MOST people will pick."),
+           S(T_.q("Best pizza topping?") + T_.tiles(["Cheese", "Pepperoni", "Pineapple", "Mushroom"]), T_.btns(["", "", "", ""], 1), "Tap the answer you think the herd will choose 🐑"),
+           S(`<div class="t-bars"><i style="--h:30%;--c:${TQ[0]}"></i><i class="win" style="--h:90%;--c:${TQ[1]}"></i><i style="--h:20%;--c:${TQ[2]}"></i><i style="--h:40%;--c:${TQ[3]}"></i></div>`, T_.ok("With the herd!", "+ 800"), "If you picked the most popular answer, you score!")],
+    guess: [S(T_.q("How tall is the Eiffel Tower? (m)"), T_.txt("Your guess:") + `<div class="t-input">3<span class="t-type">30</span></div>`, "A number question shows on the big screen. Type your best guess."),
+            S(`<div class="t-line"><i style="left:20%">Ava 200</i><i class="win" style="left:62%">You 330</i><i style="left:88%">Leo 500</i><b style="left:60%">✓ 330</b></div>`, T_.ok("Closest!", "+ 500"), "The closest guess wins the most points. 🎯")],
+    imposter: [S(T_.big("🤫 Check your word"), `<div class="t-secret">PIZZA</div>`, "Everyone gets the same secret word on their phone…"),
+               S(T_.big("🤫 Check your word"), `<div class="t-secret imp">You are the<br><b>IMPOSTER</b></div>`, "…except one secret imposter, who doesn't know it!"),
+               S(T_.big("💬 Say one word each") + `<div class="t-chat">${T_.av(1, "cheese")}${T_.av(2, "round")}${T_.av(3, "hot?")}</div>`, T_.txt("Give a clue that proves you know the word, but don't make it too easy!"), "Take turns saying ONE word about it out loud."),
+               S(T_.big("🗳️ Vote!"), T_.btns(["Sam", "Ava", "Leo"], 2), "Vote on your phone for who you think the imposter is.")],
+    mafia: [S(T_.big("🎭 Check your role"), `<div class="t-role" style="--c:#e5383b">🔪<b>MAFIA</b></div>`, "Everyone gets a secret role: Mafia, Doctor, Detective or Villager."),
+            S(T_.big("🌙 Night", "night"), T_.txt("Who will the Mafia eliminate?") + T_.btns(["Sam", "Ava"], 1), "At night the Mafia picks a victim. The Doctor saves someone. The Detective checks someone."),
+            S(T_.big("☀️ Ava was found in the morning…"), T_.txt("🗣️ Discuss! Who is lying?"), "In the day, everyone talks it out. Who is acting suspicious?"),
+            S(T_.big("🗳️ Vote someone out"), T_.btns(["Sam", "Leo", "Skip"], 0), "Vote out the Mafia. Catch them all before they take over! 🎉")],
+    doodle: [S(T_.big("Sam is drawing…"), `<div class="t-secret">Draw: <b>CAT</b></div>`, "One player gets a secret word to draw."),
+             S(`<div class="t-canvas">${tutDoodle()}</div>`, `<div class="t-canvas small">${tutDoodle()}</div><span class="t-finger draw">👆</span>`, "They draw it with their finger. The drawing shows live on the big screen."),
+             S(`<div class="t-canvas">${tutDoodle()}</div><div class="t-feed">✅ <b>Ava</b> guessed it!</div>`, `<div class="t-input">c<span class="t-type">at</span></div>` + T_.btn("Guess"), "Everyone else types guesses on their phone. Faster = more points!")],
+    crash: [S(T_.txt("Top card") + T_.card("5", "#ff5a5f", "big"), `<div class="t-hand">${T_.card("2", "#4d9fff")}${T_.card("9", "#ff5a5f", "ttap")}${T_.card("7", "#3ddc84")}</div>`, "Your cards are secret on your phone. The top card is on the big screen."),
+            S(T_.txt("Top card") + T_.card("9", "#ff5a5f", "big drop"), `<div class="t-hand">${T_.card("2", "#4d9fff")}${T_.card("7", "#3ddc84")}</div>`, "Play a card with the same color OR number. Red 9 on red 5 ✓"),
+            S(T_.big("🎉 Sam wins!"), `<div class="t-hand">${T_.card("4", "#ffc23d", "ttap")}</div>` + T_.txt("Last card!"), "Special cards skip, reverse or make others draw. First to empty their hand wins!")],
+    lineup: [S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${i === 12 ? "glow" : [6, 7, 8, 11].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""}"></i>`).join("")}</div>`, `<div class="t-hand">${T_.card("7♥", "#fff", "ttap dark")}${T_.card("K♠", "#fff", "dark")}</div>`, "Your team shares a hand of cards. Tap a card…"),
+             S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${[6, 7, 8, 11, 12].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""} ${i === 12 ? "pop" : ""}"></i>`).join("")}</div>`, T_.txt("Placed on 7♥ ✓"), "…then tap the matching space on the board to put your team's chip there."),
+             S(T_.big("🎉 5 in a row!"), T_.txt("Two-eyed Jacks are wild. One-eyed Jacks remove a chip."), "Make lines of 5 chips in a row to win!")],
+    ludo: [S(`<div class="t-ludo"><i class="tok"></i></div>`, T_.die(6) + T_.btn("🎲 Roll"), "Tap the dice on your phone. Roll a 6 or a 1 to bring a token out."),
+           S(`<div class="t-ludo"><i class="tok move"></i></div>`, T_.txt("Tap a glowing token") + `<div class="t-tokpick"><i class="ttap"></i><i></i></div>`, "Tap the token you want to move. It walks square by square."),
+           S(`<div class="t-ludo"><i class="tok hit"></i><i class="tok2 back"></i></div>`, T_.ok("Knocked home!"), "Land on someone to send them home (★ squares are safe). Get all your tokens home to win!")],
+    tycoon: [S(`<div class="t-ring"><i class="pc move"></i></div>`, T_.die(5) + T_.btn("🎲 Roll"), "Roll two dice and move around Tycoon Town."),
+             S(`<div class="t-ring"><i class="pc at"></i><b class="deed">Rocket Row $220</b></div>`, T_.btn("Buy for $220", "green"), "Land on an empty street? Buy it!"),
+             S(`<div class="t-ring"><i class="pc at"></i><b class="deed own">💰 +$22 rent</b></div>`, T_.txt("Your cash") + T_.big("$1,722", "money"), "Others pay you rent when they land on your streets. Richest player wins!")],
+    snakes: [S(`<div class="t-sl"><i class="pc"></i></div>`, T_.die(4) + T_.btn("🎲 Roll"), "Tap Roll the dice. Your token moves forward."),
+             S(`<div class="t-sl"><i class="pc up"></i><b class="lad">🪜</b></div>`, T_.ok("Climbed a ladder!"), "Land on a ladder and climb up! 🪜"),
+             S(`<div class="t-sl"><i class="pc down"></i><b class="snk">🐍</b></div>`, T_.no("Snake! Slide down"), "Land on a snake's head and slide down. First to 100 wins!")],
+    race: [S(`<div class="t-road"><i class="car"></i></div>`, `<div class="t-road small"><i class="car"></i></div><div class="t-ctl"><b class="ttap">◀</b><b>NITRO</b><b>▶</b></div>`, "Your car speeds up by itself. Hold ◀ ▶ (or tilt your phone) to steer."),
+           S(`<div class="t-road"><i class="car dodge"></i><i class="traffic"></i></div>`, T_.txt("Dodge the traffic! 🚗💥"), "Stay on the road and dodge traffic. Crashes slow you down."),
+           S(`<div class="t-road nitro"><i class="car"></i></div>`, `<div class="t-ctl"><b>◀</b><b class="ttap nb">NITRO</b><b>▶</b></div>`, "Grab blue N₂O cans, then tap NITRO for a huge boost! First across the line wins 🏁")],
+    rps: [S(T_.big("Sam ✊ vs ✊ You"), T_.btns(["✊", "✋", "✌️"]), "You're paired with an opponent each round."),
+          S(T_.big("Sam ✊ vs ✊ You", "shake"), T_.btns(["✊", "✋", "✌️"], 1), "Pick Rock, Paper or Scissors on your phone before time runs out."),
+          S(T_.big("Sam ✊ vs ✋ You"), T_.ok("You win!"), "Paper beats rock! Losers are out. Last one standing is champion 🏆")],
+    tap: [S(`<div class="t-rope"><i></i></div>`, `<div class="t-tapbtn ttap fast">42</div>`, "Tap the big button as fast as you can!"),
+          S(`<div class="t-rope pull"><i></i></div>`, `<div class="t-tapbtn ttap fast">87</div>`, "Every tap pulls the rope toward your team. Strongest team wins!")],
+    react: [S(T_.big("Wait for green…", "wait"), `<div class="t-pad red">Wait…</div>`, "Your phone turns red. DON'T tap yet!"),
+            S(T_.big("TAP NOW!", "go"), `<div class="t-pad green ttap">TAP!</div>`, "The moment it turns green, TAP as fast as you can!"),
+            S(T_.board([["You", "212 ms"], ["Ava", "260 ms"], ["Leo", "301 ms"]]), T_.ok("212 ms!"), "Fastest reaction wins. Tapping too early gets 0 points.")],
+  };
+  return L[k] || [];
+}
+function tutDoodle(){ return `<svg viewBox="0 0 100 70" class="t-cat"><path d="M30 55 Q20 30 35 25 L38 12 L45 22 Q50 20 55 22 L62 12 L65 25 Q80 30 70 55 Z M42 38 A2 2 0 1 0 42.1 38 M58 38 A2 2 0 1 0 58.1 38 M47 46 Q50 49 53 46" fill="none" stroke="#15122e" stroke-width="2.5" stroke-linecap="round"/></svg>`; }
+function tutorHTML(k, mode = "full"){
+  const steps = tutSteps(k); if (!steps.length) return "";
+  return `<div class="tutor ${mode}" data-n="${steps.length}" aria-label="How to play animation">
+    <div class="tstage">${steps.map((s, i) => `<div class="tstep" data-i="${i}">
+      ${mode === "full" ? `<div class="ttv"><div class="ttv-s">${s.tv}</div><i class="ttv-leg"></i></div>` : ""}
+      <div class="tph"><div class="tph-s">${s.ph}</div><span class="t-finger">👆</span></div></div>`).join("")}</div>
+    <div class="tcap">${steps.map((s, i) => `<p data-i="${i}"><b>${i + 1}</b>${s.cap}</p>`).join("")}</div>
+    <div class="tdots">${steps.map((_, i) => `<i data-i="${i}"></i>`).join("")}</div></div>`;
+}
+(function tutorClock(){
+  const tick = () => { const now = Date.now();
+    document.querySelectorAll(".tutor").forEach(el => { const n = Number(el.dataset.n) || 1, i = Math.floor(now / TUT_MS) % n;
+      if (el.dataset.on !== String(i)) { el.dataset.on = i; el.querySelectorAll("[data-i]").forEach(x => x.classList.toggle("on", x.dataset.i === String(i))); } }); };
+  setInterval(tick, 250); if (typeof MutationObserver !== "undefined") new MutationObserver(() => requestAnimationFrame(() => { document.querySelectorAll(".tutor").forEach(el => { if (!el.querySelector(".tstep.on")) delete el.dataset.on; }); tick(); })).observe(document.documentElement, {childList:true, subtree:true});
+})();
+
 /* ------------------------------------------------------------ Snakes & Ladders board (10 × 10, square 1 bottom-left) */
 const SL_LADDERS = [[4,25],[13,46],[33,49],[42,63],[50,69],[62,81],[74,92]];
 const SL_SNAKES = [[27,5],[40,3],[43,18],[54,31],[66,45],[76,58],[89,53],[99,41]];
@@ -6247,6 +6487,7 @@ function startHost(){
     return `<div class="overlay" id="rulesov"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rtitle" style="--c:${g.color}">
       <div class="sheet-head"><div class="gicon">${gameIcon(k)}</div><div><span class="gtag">${g.tag} · 👥 ${g.players} · ⏱ ${g.mins}</span><h2 id="rtitle">${esc(g.name)}</h2></div>
         <button class="ghost xs close" data-act="closerules" aria-label="Close rules">✕</button></div>
+      ${tutorHTML(k)}
       <h3 class="label">About</h3><p>${esc(g.about)}</p>
       <h3 class="label">How to play</h3><ol class="rules">${g.rules.map(r => `<li>${esc(r)}</li>`).join("")}</ol>
       <h3 class="label">Scoring</h3><p>${esc(g.scoring)}</p>
@@ -6281,6 +6522,7 @@ function startHost(){
             <button class="sm" data-act="editor">✎ Make or edit quizzes</button>
             <label class="ghost sm filebtn">📂 Open quiz file<input type="file" class="importfile" accept=".json,application/json" multiple hidden></label></div>` : ""}
         </section>
+        ${tutSteps(S.game).length ? `<section class="card tutcard"><div class="label">🎬 How to play · leave this on the big screen while people join</div>${tutorHTML(S.game)}</section>` : ""}
         <section class="card"><div class="row spread"><div class="label">Who plays</div>
           ${FIXED_MODE[S.game] ? `<span class="hint">${FIXED_MODE[S.game] === "teams" ? "Team game · pick how many teams" : "Everyone plays for themselves"}</span>`
             : `<div class="seg" role="group" aria-label="Play mode"><button data-mode="solo" aria-pressed="${S.mode==="solo"}">Solo</button><button data-mode="teams" aria-pressed="${S.mode==="teams"}">Teams</button></div>`}</div>
@@ -6760,6 +7002,7 @@ function startPlayer(code){
     const t = team();
     return `<div class="msg"><div class="bounce">${Avatar.svg(P.av, 120)}</div><div class="label">You're in, ${esc(P.name)}!</div><h2 style="color:${t?t.c:'var(--t2)'}">${t ? esc(t.name) : "Get ready"}</h2>
       <p class="muted">Watch the big screen. The game starts when the host is ready.</p>
+      ${GAMES[st.game] && tutSteps(st.game).length ? `<div class="tutwrap"><div class="label">🎬 How to play ${esc(GAMES[st.game].name)}</div>${tutorHTML(st.game, "phone")}</div>` : ""}
       ${st.mode === "teams" ? `<div class="teampick">${st.teams.map(x => `<button style="--c:${x.c}" data-team="${x.id}" aria-pressed="${x.id===P.team}">${esc(x.name)}</button>`).join("")}</div><p class="hint">Tap a team to switch.</p>` : ""}</div>`;
   }
   /* ---- Kahoot-style quiz screens (phone) ---- */
