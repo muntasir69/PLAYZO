@@ -593,6 +593,21 @@ button.diebtn{animation:pickpulse2 1s ease-in-out infinite;box-shadow:0 0 0 3px 
 .tyt .piece{display:block;width:100%;height:100%}
 .tyt.me{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
 .tyb.small .tyt,.typhone .tyt{width:9.5%}
+
+/* v14: round chips with the player's avatar */
+.chip{border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff 0 30%,#ece8ff);aspect-ratio:1;display:grid;place-items:center;overflow:visible;
+  box-shadow:0 0 0 3px var(--tc),0 0 0 4.5px rgba(0,0,0,.55),0 5px 7px rgba(0,0,0,.45);filter:none}
+.chip{overflow:hidden}
+.chip .av{width:100%;height:100%;display:block;transform:scale(1.75) translateY(3%)}
+.tok.chip{width:6.4%;transform:translate(-50%,-50%);border-radius:50%}
+.tok.sltok.chip{width:7.2%}
+.tyt.chip{width:6.6%;aspect-ratio:1;transform:translate(-50%,-50%)}
+.typhone .tyt.chip,.tyb.small .tyt.chip{width:9%}
+.tok.chip.hop{animation:none}
+.tok.chip.me::after{display:none}
+.chip.me{box-shadow:0 0 0 3px var(--tc),0 0 0 5.5px #fff,0 0 14px 5px rgba(255,255,255,.7),0 5px 7px rgba(0,0,0,.45);filter:none}
+.tok.chip.pick{width:7.6%;box-shadow:0 0 0 3px var(--tc),0 0 0 6px #fff,0 0 20px 8px var(--tc);filter:none}
+.tok.chip.done{opacity:.95}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -3311,7 +3326,8 @@ const SEEN = {};
 function fresh(key, id){ if (SEEN[key] === id) return false; SEEN[key] = id; return true; }
 /* Step-by-step token walking. A board registers a walk (list of points in % of the board) when it sees a new move;
    every re-render picks the walk up again at the right moment, so the token keeps walking smoothly. */
-const WALK_MS = 300, TY_WALK_MS = 240;
+const WALK_MS = 420, TY_WALK_MS = 330;
+function chipHTML(av, col){ return Avatar.svg(av || "0-0-0-0-0", 40); }
 const WALKS = {};
 function walkSet(key, id, pts, ms = WALK_MS, slide = false){
   if (WALKS[key] && WALKS[key].id === id) return;
@@ -3326,9 +3342,16 @@ function runWalks(){
   document.querySelectorAll("[data-walk]").forEach(el => {
     if (el._walk || !el.animate) return; const w = WALKS[el.dataset.walk]; if (!w) return;
     const fr = [], P = v => v.toFixed(2) + "%";
-    w.pts.forEach((p, i) => {
-      fr.push({left:P(p[0]), top:P(p[1]), translate:"0 0", offset:i / w.n, easing: w.slide ? "ease-in-out" : "ease-out"});
-      if (i < w.n && !w.slide) { const q = w.pts[i + 1]; fr.push({left:P((p[0] + q[0]) / 2), top:P((p[1] + q[1]) / 2), translate:"0 -45%", offset:(i + 0.5) / w.n, easing:"ease-in"}); }
+    // each step: lift off, hop over, land and touch the square (little squash), rest a moment on it
+    const F = (p, o, lift, sc, e) => fr.push({left:P(p[0]), top:P(p[1]), translate: lift ? "0 -" + lift + "%" : "0 0", scale: sc || "1", offset: Math.min(1, o), easing: e || "linear"});
+    if (w.slide) { F(w.pts[0], 0, 0, "1", "ease-in-out"); F(w.pts[1], 1, 0, "1"); }
+    else w.pts.forEach((p, i) => {
+      if (i === 0) { F(p, 0, 0, "1", "ease-out"); return; }
+      const q = w.pts[i - 1], b = (i - 1) / w.n, u = 1 / w.n;
+      F([(p[0] + q[0]) / 2, (p[1] + q[1]) / 2], b + u * 0.32, 55, "1.08", "ease-in");
+      F(p, b + u * 0.62, 0, "1.18 0.82", "ease-out");
+      F(p, b + u * 0.78, 0, "1", "linear");
+      if (i < w.n) F(p, b + u, 0, "1", "ease-out"); else if (fr[fr.length - 1].offset < 1) F(p, 1, 0, "1");
     });
     try { const a = el.animate(fr, {duration: w.n * w.ms, fill:"backwards"}); a.currentTime = Math.max(0, performance.now() - w.t0);
       el._walk = a; el.classList.add("walking"); a.onfinish = () => el.classList.remove("walking"); } catch (e) {}
@@ -3396,7 +3419,7 @@ function ludoBoardHTML(L, opt = {}){
       walkSet(wk, mv.id, pts); }
     const walking = walkOn(wk), hop = !walking && L.moved && L.moved.seat === S.seat && L.moved.k === k;
     const can = S.me && opt.pick && opt.pick.includes(k), tag = can ? "button" : "div";
-    toks += `<${tag} class="tok ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${can ? "pick" : ""} ${p >= LUDO_END ? "done" : ""}" ${can ? `data-lmove="${k}" aria-label="Move this token"` : ""}${walking ? ` data-walk="${wk}"` : ""} style="--tc:${LUDO_COL[S.seat]};left:${fx}%;top:${fy}%">${pawnSVG(LUDO_COL[S.seat])}</${tag}>`;
+    toks += `<${tag} class="tok chip ${hop ? "hop" : ""} ${S.me ? "me" : ""} ${can ? "pick" : ""} ${p >= LUDO_END ? "done" : ""}" ${can ? `data-lmove="${k}" aria-label="Move this token"` : ""}${walking ? ` data-walk="${wk}"` : ""} style="--tc:${LUDO_COL[S.seat]};left:${fx}%;top:${fy}%">${chipHTML(S.av, LUDO_COL[S.seat])}</${tag}>`;
   });
   return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="ludo"><div class="lgrid">${cells}<div class="lcenter-star" style="grid-area:7/7/span 3/span 3">★</div></div>${toks}</div></div>`;
 }
@@ -3492,7 +3515,7 @@ function tyBoardHTML(T, opt = {}){
       else { for (let k = 1; k < mv.steps; k++) pts.push(tyCellPct((mv.from + k) % TY.length)); pts.push([fx, fy]); }
       walkSet(wk, mv.id, pts, mv.slide ? 700 : TY_WALK_MS, !!mv.slide); }
     const walking = walkOn(wk);
-    toks += `<div class="tyt ${x.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="left:${fx}%;top:${fy}%;z-index:${walking ? 9 : 3 + n}">${pieceSVG(x.seat)}</div>`;
+    toks += `<div class="tyt chip ${x.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="left:${fx}%;top:${fy}%;z-index:${walking ? 9 : 3 + n};--tc:${TY_COL[x.seat]}">${chipHTML(x.av, TY_COL[x.seat])}</div>`;
   }
   return `<div class="bframe dark ${opt.tilt ? "tilt" : ""} ${opt.phone ? "typhone" : ""}"><div class="tyb ${opt.small ? "small" : ""}">${tiles}<div class="tycenter">${T.center || ""}</div>${toks}</div></div>`;
 }
@@ -3593,7 +3616,7 @@ function snakesBoardHTML(B, opt = {}){
       else { for (let i = 1; i < mv.steps; i++) { let q = mv.from + i; if (q > 100) q = 200 - q; pts.push(slXY(q)); } pts.push([fx, fy]); }
       walkSet(wk, mv.id, pts, mv.slide ? 750 : WALK_MS, !!mv.slide); }
     const walking = walkOn(wk), hop = !walking && B.moved && B.moved.seat === S.seat;
-    toks += `<div class="tok sltok ${hop ? "hop" : ""} ${S.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="--tc:${SL_COL[S.seat]};left:${fx}%;top:${fy}%">${pawnSVG(SL_COL[S.seat])}</div>`; }
+    toks += `<div class="tok sltok chip ${hop ? "hop" : ""} ${S.me ? "me" : ""}"${walking ? ` data-walk="${wk}"` : ""} style="--tc:${SL_COL[S.seat]};left:${fx}%;top:${fy}%">${chipHTML(S.av, SL_COL[S.seat])}</div>`; }
   return `<div class="bframe wood ${opt.tilt ? "tilt" : ""}"><div class="slboard"><div class="slgrid">${cells}</div><svg class="slart" viewBox="0 0 100 100" aria-hidden="true">${slArt()}</svg>${toks}</div></div>`;
 }
 
@@ -4031,7 +4054,7 @@ function startHost(){
           buy: mine && T.buy !== null ? {i:T.buy, n:TY[T.buy].n, $:TY[T.buy].$, g:TY[T.buy].g} : null,
           card: T.card ? {t:T.card.t, id:T.card.id, mine: T.card.pid === pid} : null,
           mine: T.owner.map((o, i) => o === T.seat[pid] ? i : -1).filter(i => i >= 0), owner:T.owner, moved:T.moved, pot:T.pot, round:T.round,
-          toks: T.players.filter(x => !T.out[x]).map(x => ({seat:T.seat[x], pos:T.pos[x], me: x === pid})),
+          toks: T.players.filter(x => !T.out[x]).map(x => ({seat:T.seat[x], av:avOf(x), pos:T.pos[x], me: x === pid})),
           players: T.players.map(x => ({seat:T.seat[x], av:avOf(x), name:nm(x), cash:T.cash[x], out:T.out[x], me: x === pid}))};
         st.endsIn = T.done ? 0 : Math.max(0, T.turnEnds - Date.now()); }
     }
@@ -4644,7 +4667,7 @@ function startHost(){
     const center = `<div class="tylogo">TYCOON<br>TOWN</div>
       <div class="dice2">${dieHTML(T.dice[0], fresh("td1:" + T.name + (mePid || ""), T.rollId), big ? 58 : 34)}${dieHTML(T.dice[1], fresh("td2:" + T.name + (mePid || ""), T.rollId), big ? 58 : 34)}</div>
       ${big ? `<p class="tylog">${esc(T.log)}</p>` : ""}<div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`;
-    return {bk:T.name, owner:T.owner, center, moved:T.moved, tokens: T.players.filter(p => !T.out[p]).map(pid => ({seat:T.seat[pid], pos:T.pos[pid], me: pid === mePid}))};
+    return {bk:T.name, owner:T.owner, center, moved:T.moved, tokens: T.players.filter(p => !T.out[p]).map(pid => ({seat:T.seat[pid], av:avOf(pid), pos:T.pos[pid], me: pid === mePid}))};
   }
   function tyView(){
     const one = S.ttables.length === 1, done = S.ttables.filter(t => t.done).length;
@@ -5468,7 +5491,7 @@ function startPlayer(code){
       <div class="row center-row"><button class="big" data-act="tybuy">Buy for $${T.buy.$}</button><button class="ghost big" data-act="tyskip">Skip</button></div></div>`;
     return `<div class="board-phone">
       <div class="turnbar ${T.myTurn ? "mine" : ""}">${T.myTurn ? "Your turn!" : esc(T.turnName) + "'s turn"} · <b data-left>${Math.ceil(left()/1000)}</b> s</div>
-      <div class="cashrow" style="--tc:${col}"><span class="label">Your cash</span><span class="cash">$${T.cash}</span><span class="hint">${TY_PIECE_NAME[T.seat]} · on ${esc(here.n)}</span></div>
+      <div class="cashrow" style="--tc:${col}"><span class="label">Your cash</span><span class="cash">$${T.cash}</span><span class="hint">on ${esc(here.n)}</span></div>
       <div class="row center-row">${dieHTML(T.dice[0], fresh("ptd1", T.rollId), 54)}${dieHTML(T.dice[1], fresh("ptd2", T.rollId), 54)}<p class="hint" style="max-width:22ch">${esc(T.log)}</p></div>
       ${card}${controls}
       ${tyBoardHTML({bk:"me", owner:T.owner, moved:T.moved, tokens:T.toks, center:`<div class="tylogo">TYCOON<br>TOWN</div><div class="pot">🅿️ Pot $${T.pot} · Round ${Math.min(T.round, CFG.tyRounds)}/${CFG.tyRounds}</div>`}, {phone:true})}
