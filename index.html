@@ -1061,6 +1061,11 @@ body.driving{overflow:hidden}
 .ddc{width:34px;height:34px;border-radius:50%;background:var(--c);border:3px solid rgba(255,255,255,.3);cursor:pointer}.ddc.on{border-color:#fff;transform:scale(1.15)}
 .ddw{width:40px;height:34px;border-radius:10px;border:2px solid rgba(255,255,255,.3);background:var(--panel-2);color:#fff;font-size:.7rem;cursor:pointer}.ddw.big{font-size:1.2rem}.ddw.on{border-color:var(--t2)}
 .ddform{display:flex;gap:8px}.ddform input{flex:1;font:inherit;font-size:1.1rem;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--panel);color:var(--text)}
+
+/* v26: quiz backup */
+.backup{background:var(--panel-2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;border:2px solid transparent}
+.backup.warn{border-color:var(--t2)}
+.backup p{margin:0}.bwarn{color:var(--t2);font-weight:800;font-size:.9rem}.bok{color:var(--good);font-weight:700;font-size:.9rem}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -6273,7 +6278,8 @@ function startHost(){
           ${S.game === "ludo" ? `<div class="row src"><span class="label">Tokens each</span><div class="seg" role="group" aria-label="Tokens per player">${[2,4].map(k => `<button data-ltok="${k}" aria-pressed="${(S.ludoTokens === 4 ? 4 : 2) === k}">${k} tokens${k === 2 ? " · quick" : " · classic"}</button>`).join("")}</div></div>` : ""}
           ${isQuiz ? `<div class="row src"><label class="label" for="srcsel">Questions</label>
             <select id="srcsel"><option value="builtin">Built-in trivia (random 10)</option>${quizzes.map(q => `<option value="${q.id}" ${S.source===q.id?"selected":""}>${esc(q.title)} (${q.questions.length})</option>`).join("")}</select>
-            <button class="sm" data-act="editor">✎ Make or edit quizzes</button></div>` : ""}
+            <button class="sm" data-act="editor">✎ Make or edit quizzes</button>
+            <label class="ghost sm filebtn">📂 Open quiz file<input type="file" class="importfile" accept=".json,application/json" multiple hidden></label></div>` : ""}
         </section>
         <section class="card"><div class="row spread"><div class="label">Who plays</div>
           ${FIXED_MODE[S.game] ? `<span class="hint">${FIXED_MODE[S.game] === "teams" ? "Team game · pick how many teams" : "Everyone plays for themselves"}</span>`
@@ -6423,10 +6429,19 @@ function startHost(){
 
   /* ---- quiz editor ---- */
   function editing(){ return Quizzes.all().find(q => q.id === S.editId) || null; }
+  function downloadJSON(obj, name){
+    const blob = new Blob([JSON.stringify(obj, null, 1)], {type:"application/json"}), url = URL.createObjectURL(blob), link = document.createElement("a");
+    link.href = url; link.download = name; document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+    store.set("sp-lastexport", String(Date.now())); toast("💾 Saved " + name + " to your Downloads"); setTimeout(render, 50);
+  }
+  const needBackup = () => Quizzes.all().length > 0 && Number(store.get("sp-lastedit") || 0) > Number(store.get("sp-lastexport") || 0);
+  function lastExportText(){ const t = Number(store.get("sp-lastexport") || 0); if (!t) return ""; const m = Math.round((Date.now() - t) / 60000);
+    return m < 1 ? "just now" : m < 60 ? m + " min ago" : m < 1440 ? Math.round(m / 60) + " h ago" : new Date(t).toLocaleDateString(); }
   function saveQuiz(qz){
     const all = Quizzes.all(), i = all.findIndex(q => q.id === qz.id);
     if (i >= 0) all[i] = qz; else all.push(qz);
     if (!Quizzes.save(all)) { toast("This browser is out of space. Remove some pictures or export and delete old quizzes."); return false; }
+    store.set("sp-lastedit", String(Date.now()));
     return true;
   }
   function editorView(){
@@ -6434,9 +6449,12 @@ function startHost(){
     return `<section class="editor">
       <div class="card ed-side"><div class="row spread"><h2 class="h-sm">Your quizzes</h2><button class="sm" data-act="newquiz">+ New quiz</button></div>
         <div class="qzlist">${all.map(q => `<button class="qzitem" data-open="${q.id}" aria-pressed="${q.id===S.editId}"><b>${esc(q.title)}</b><span class="hint">${q.questions.length} question${q.questions.length===1?'':'s'}</span></button>`).join("") || `<p class="hint">No quizzes yet. Make your first one.</p>`}</div>
-        <div class="row"><label class="ghost sm filebtn">Import file<input type="file" id="importfile" accept=".json,application/json" hidden></label>
-          ${qz ? `<button class="ghost sm" data-act="export">Export this quiz</button>` : ""}</div>
-        <p class="hint">Quizzes are saved in this browser on this computer. Export to keep a copy or move it to another computer.</p>
+        <div class="backup ${needBackup() ? "warn" : ""}"><b>💾 Keep your quizzes safe</b>
+          <p class="hint">Quizzes live only in this browser. Save them to a file (put it in Google Drive, email or a USB stick), then open the file on any computer.</p>
+          ${needBackup() ? `<p class="bwarn">⚠️ You have changes that aren't saved to a file yet.</p>` : all.length ? `<p class="bok">✅ Backed up ${lastExportText()}</p>` : ""}
+          <div class="row">${qz ? `<button class="sm" data-act="export">💾 Save this quiz to a file</button>` : ""}
+            ${all.length ? `<button class="sm ${qz ? "ghost" : ""}" data-act="exportall">🗂️ Back up all ${all.length} quiz${all.length === 1 ? "" : "zes"}</button>` : ""}
+            <label class="ghost sm filebtn">📂 Open quiz file<input type="file" class="importfile" accept=".json,application/json" multiple hidden></label></div></div>
         <button class="big" data-act="back">← Back to the lobby</button></div>
       ${qz ? `<div class="ed-main">
         <div class="card"><label class="label" for="qztitle">Quiz name</label><div class="row"><input id="qztitle" value="${esc(qz.title)}" maxlength="60">
@@ -6476,14 +6494,20 @@ The Earth is flat. | True | *False</pre>
     if (e.target.id === "qztitle") { const qz = editing(); if (qz) { qz.title = e.target.value.trim() || "Untitled quiz"; saveQuiz(qz); render(); } return; }
     if (e.target.id === "nimg" && e.target.files[0]) {
       try { S.editImg = await resizeImage(e.target.files[0]); render(); } catch(err) { toast("That picture couldn't be opened. Try a JPG or PNG."); } return; }
-    if (e.target.id === "importfile" && e.target.files[0]) {
-      try { const data = JSON.parse(await e.target.files[0].text());
-        const list = (Array.isArray(data) ? data : [data]).filter(q => q && Array.isArray(q.questions));
-        if (!list.length) throw new Error("none");
-        for (const q of list) { q.id = "q" + uid(); q.title = String(q.title || "Imported quiz").slice(0,60);
-          q.questions = q.questions.filter(x => x && x.text && Array.isArray(x.options) && x.options.length >= 2).slice(0, 200); saveQuiz(q); S.editId = q.id; }
-        toast("Imported " + list.length + " quiz" + (list.length>1?"zes":"")); render();
-      } catch(err) { toast("That file isn't a Playzo quiz export."); } }
+    if (e.target.classList.contains("importfile") && e.target.files.length) {
+      let n = 0, upd = 0, last = null;
+      for (const f of e.target.files) {
+        try { const data = JSON.parse(await f.text()), arr = Array.isArray(data) ? data : Array.isArray(data.quizzes) ? data.quizzes : [data];
+          for (const q of arr.filter(q => q && Array.isArray(q.questions))) {
+            q.title = String(q.title || "Imported quiz").slice(0, 60);
+            q.questions = q.questions.filter(x => x && x.text && Array.isArray(x.options) && x.options.length >= 2).map(x => ({text:String(x.text).slice(0, 200), options:x.options.slice(0, 4).map(o => String(o).slice(0, 80)), correct: Math.max(0, Math.min(x.options.length - 1, Number(x.correct) || 0)), time: Math.max(5, Math.min(120, Number(x.time) || 20)), img: typeof x.img === "string" && x.img.startsWith("data:image/") ? x.img : undefined, kind:"quiz"})).slice(0, 200);
+            const same = Quizzes.all().find(o => o.title === q.title);
+            if (same) { q.id = same.id; upd++; } else { q.id = "q" + uid(); n++; }
+            if (saveQuiz(q) === false) break; last = q.id; } }
+        catch(err) { toast(f.name + " isn't a Playzo quiz file."); } }
+      e.target.value = "";
+      if (last) { store.set("sp-lastexport", String(Date.now())); if (S.view === "editor") S.editId = last; else S.source = last;
+        toast(`📂 Opened ${n + upd} quiz${n + upd === 1 ? "" : "zes"}${upd ? ` (${upd} updated)` : ""}`); render(); } }
   });
 
   app.addEventListener("click", e => {
@@ -6552,9 +6576,8 @@ The Earth is flat. | True | *False</pre>
       qz.questions.push(...r.questions); if (!saveQuiz(qz)) return;
       document.getElementById("lines").value = ""; render();
       toast("Added " + r.questions.length + " question" + (r.questions.length>1?"s":"") + (r.bad.length ? ". Skipped line " + r.bad.join(", ") : "")); }
-    if (a === "export") { const qz = editing(); const blob = new Blob([JSON.stringify(qz, null, 1)], {type:"application/json"});
-      const url = URL.createObjectURL(blob), link = document.createElement("a"); link.href = url; link.download = (qz.title.replace(/[^\w-]+/g,"_") || "quiz") + ".json";
-      document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000); }
+    if (a === "export") { const qz = editing(); if (qz) downloadJSON(qz, "playzo-quiz-" + (qz.title.replace(/[^\w-]+/g, "_") || "quiz") + ".json"); }
+    if (a === "exportall") { const all = Quizzes.all(); downloadJSON({app:"Playzo", saved: new Date().toISOString(), quizzes: all}, "playzo-all-quizzes-" + new Date().toISOString().slice(0, 10) + ".json"); }
   });
 
   // close the rules sheet with Esc or a click outside it
