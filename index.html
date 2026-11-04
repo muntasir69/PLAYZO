@@ -1406,6 +1406,10 @@ body.boardmode .stage.tides{padding:8px 12px;gap:6px}body.boardmode .stage.tides
 .tutor.phone .ttv-s .t-q,.tutor.phone .ttv-s .t-big{font-size:.58rem}
 .tutor.phone .ttv-s .t-tile{font-size:.42rem;padding:2px 3px}
 .t-line i{font-size:.5rem}
+
+#soundtap{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:999;border:0;border-radius:99px;padding:12px 22px;font:inherit;font-weight:900;font-size:1rem;background:var(--t2);color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.45);cursor:pointer;animation:stbob 1.6s ease-in-out infinite}
+#soundtap.bye{opacity:0;transform:translate(-50%,20px);transition:.3s}
+@keyframes stbob{50%{transform:translate(-50%,-6px)}}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -5175,6 +5179,8 @@ const Sound = (() => {
   return {
     prefs,
     unlock(){ init(); if (wanted !== "off" && mood === "off") setMood(wanted); },
+    running(){ return !!ctx && ctx.state === "running"; },
+    tryAuto(){ if (!init()) return false; try { ctx.resume(); } catch(e){} if (wanted !== "off" && mood === "off") setMood(wanted); return ctx.state === "running"; },
     mood(m){ if (m === wanted) return; wanted = m; level = 1; if (ctx) { setMood(m); applyLevel(); } },
     intensity(n){ if (n === level) return; level = n; applyLevel(); },
     toggleMusic(){ prefs.music = !prefs.music; store.set("sp-music", prefs.music ? "1" : "0"); init(); setMood(wanted); return prefs.music; },
@@ -5238,9 +5244,15 @@ const Sound = (() => {
   };
 })();
 
-// Browsers only allow audio after a tap or click.
-addEventListener("pointerdown", () => Sound.unlock(), {capture:true});
-addEventListener("keydown", () => Sound.unlock(), {capture:true});
+// Browsers only allow audio after a tap or click. Try right away (works when the browser allows autoplay),
+// otherwise show a friendly "tap to turn on sound" bubble and start on the first tap or key anywhere.
+const soundGo = () => { Sound.unlock(); const b = document.getElementById("soundtap"); if (b) { b.classList.add("bye"); setTimeout(() => b.remove(), 400); } };
+["pointerdown", "keydown", "touchstart"].forEach(ev => addEventListener(ev, soundGo, {capture:true, passive:true}));
+setTimeout(() => {
+  if (Sound.tryAuto() || !(Sound.prefs.music || Sound.prefs.sfx) || JOIN) return;
+  setTimeout(() => { if (Sound.running() || document.getElementById("soundtap")) return;
+    const b = document.createElement("button"); b.id = "soundtap"; b.type = "button"; b.innerHTML = "🔊 Tap anywhere to turn on sound"; document.body.appendChild(b); }, 400);
+}, 300);
 
 /* ------------------------------------------------------------ network */
 const net = {
