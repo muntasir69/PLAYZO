@@ -3851,7 +3851,7 @@ const GAMES = {
   ludo: {name:"Ludo", tag:"Board", color:"#3d8bff", players:"2–200+", mins:"8–12 min",
     desc:"The classic race game. Roll the 3D dice and bring your tokens home first.",
     about:"A quick version of classic Ludo. Up to 4 players share a board, and big groups play on several boards at once. The host chooses 2 tokens each (quick, about 10 minutes) or 4 tokens each (classic, about 20 minutes).",
-    rules:["On your turn, tap Roll the dice on your phone.","Roll a 6 or a 1 to bring a token out of your yard.","Move a token forward by the number you rolled. If two moves are possible, your phone asks which token to move.","Rolling a 6 gives you another roll (three 6s in a row ends your turn).","Land on another player's token to send it back to its yard, unless it's on a ★ safe square.","Go all the way round, up your colored home path, and land exactly in the center.","First player to bring both tokens home wins the board. You have 20 seconds per turn."],
+    rules:["On your turn, tap Roll the dice on your phone.","Roll a 6 to bring a token out of your yard.","Move a token forward by the number you rolled. If two moves are possible, your phone asks which token to move.","Rolling a 6 gives you another roll (three 6s in a row ends your turn).","Land on another player's token to send it back to its yard, unless it's on a ★ safe square.","Go all the way round, up your colored home path, and land exactly in the center.","First player to bring both tokens home wins the board. You have 20 seconds per turn."],
     scoring:"Board winner: 300 points. Everyone else: up to 150 points for how far their tokens got."},
   tycoon: {name:"Tycoon Town", tag:"Board", color:"#2fae5f", players:"2–200+", mins:"10–15 min",
     desc:"Roll, buy streets, collect rent. The richest player after 12 rounds wins.",
@@ -4810,7 +4810,7 @@ function tutSteps(k){
     lineup: [S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${i === 12 ? "glow" : [6, 7, 8, 11].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""}"></i>`).join("")}</div>`, `<div class="t-hand">${T_.card("7♥", "#fff", "ttap dark")}${T_.card("K♠", "#fff", "dark")}</div>`, "Your team shares a hand of cards. Tap a card…"),
              S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${[6, 7, 8, 11, 12].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""} ${i === 12 ? "pop" : ""}"></i>`).join("")}</div>`, T_.txt("Placed on 7♥ ✓"), "…then tap the matching space on the board to put your team's chip there."),
              S(T_.big("🎉 5 in a row!"), T_.ok("5 in a row!"), "Make lines of 5 chips in a row to win!")],
-    ludo: [S(`<div class="t-mb">${tutLudo('<circle class="tk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.die(6) + T_.btn("🎲 Roll"), "Tap the dice on your phone. Roll a 6 or a 1 to bring a token out."),
+    ludo: [S(`<div class="t-mb">${tutLudo('<circle class="tk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.die(6) + T_.btn("🎲 Roll"), "Tap the dice on your phone. Roll a 6 to bring a token out."),
            S(`<div class="t-mb">${tutLudo('<circle class="tk walk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.txt("Tap a glowing token") + `<div class="t-tokpick"><i class="ttap"></i><i></i></div>`, "Tap the token you want to move. It walks square by square."),
            S(`<div class="t-mb">${tutLudo('<circle class="tk2 hitme" cx="45" cy="5" r="4" fill="#fff" stroke="#3d8bff" stroke-width="2"/><circle class="tk walk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.ok("Knocked home!"), "Land on someone to send them home (★ squares are safe). Get all your tokens home to win!")],
     tycoon: [S(`<div class="t-mb">${tutRing('<circle class="tp go" cx="78" cy="78" r="4" fill="#ff4d5e" stroke="#fff" stroke-width="1.2"/>')}</div>`, T_.die(5) + T_.btn("🎲 Roll"), "Roll two dice and move around Tycoon Town."),
@@ -5926,7 +5926,7 @@ function startHost(){
   }
 
 
-  /* ---- Ludo (quick rules: 2 tokens each, roll 6 or 1 to come out) ---- */
+  /* ---- Ludo (quick rules: 2 tokens each, roll a 6 to come out) ---- */
   function startLudo(){
     const ids = shuffle(online().map(([pid]) => pid)), nT = Math.ceil(ids.length / 4);
     S.ltables = Array.from({length:nT}, (_, i) => ({name:"Board " + (i + 1), players:[]}));
@@ -5934,7 +5934,7 @@ function startHost(){
     for (const T of S.ltables) {
       const order = T.players.length === 2 ? [0, 2] : [0, 1, 2, 3];
       T.seat = {}; T.tok = {}; T.players.forEach((pid, i) => { T.seat[pid] = order[i]; T.tok[pid] = Array(S.ludoTokens === 4 ? 4 : 2).fill(-1); });
-      Object.assign(T, {turn:0, dice:0, rolled:false, sixes:0, turnId:0, rollId:0, done:false, winner:null, moved:null, moveId:0, log:"Roll a 6 or a 1 to bring a token out"});
+      Object.assign(T, {turn:0, dice:0, rolled:false, sixes:0, turnId:0, rollId:0, done:false, winner:null, moved:null, moveId:0, log:"Roll a 6 to bring a token out"});
       ludoTurnStart(T);
     }
     S.phase = "ludo"; S.endsAt = 0; broadcast(); render();
@@ -5949,7 +5949,7 @@ function startHost(){
     const seat = T.seat[pid];
     return T.tok[pid].map((p, k) => {
       if (p >= LUDO_END) return null;
-      if (p < 0) return d === 6 || d === 1 ? {k, to:0} : null;
+      if (p < 0) return d === 6 ? {k, to:0} : null;
       return p + d <= LUDO_END ? {k, to:p + d} : null;
     }).filter(Boolean);
   }
@@ -6040,7 +6040,7 @@ function startHost(){
             <div class="lside">${T.dice ? dieHTML(T.dice, fresh("ld:" + T.name, T.rollId), one ? 84 : 46) : ""}
               <p class="cc-log ${one ? "" : "sm"}">${esc(T.log)}</p>
               <div class="cc-seats">${T.players.map(x => `<div class="seat ${x === cur && !T.done ? "turn" : ""} ${x === T.winner ? "win" : ""}" style="border-left:6px solid ${LUDO_COL[T.seat[x]]}">${Avatar.svg(avOf(x), one ? 36 : 26, {crown: x === T.winner})}<span class="sn">${esc(nm(x))}</span><span class="cnt">${T.tok[x].filter(p => p >= LUDO_END).length}/${T.tok[x].length} home</span></div>`).join("")}</div></div></div></div>`; }).join("")}</div>
-      <p class="hint">Roll a 6 or a 1 to bring a token out. A 6 rolls again. Landing on another player's token sends it home (★ squares are safe). First to bring all their tokens home wins.</p></section>`;
+      <p class="hint">Roll a 6 to bring a token out. A 6 rolls again. Landing on another player's token sends it home (★ squares are safe). First to bring all their tokens home wins.</p></section>`;
   }
 
   /* ---- Tycoon Town (property trading game, short rounds) ---- */
