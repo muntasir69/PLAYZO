@@ -1358,6 +1358,35 @@ body.boardmode .stage.tides{padding:8px 12px;gap:6px}body.boardmode .stage.tides
 .tstep.on .t-sea .shp.go{animation:tsail 2s ease-in-out .4s forwards}@keyframes tsail{to{left:58%;top:22%}}
 .t-sea .shp.at{left:56%;top:16%}.t-sea .boom{left:20%;top:30%;animation:kqzoom .5s 1s backwards}
 .t-sea .kr{font-size:2.4rem;top:20%;left:-10%}.tstep.on .t-sea .kr{animation:kraken 2.6s ease-in-out forwards}
+
+/* v31: mobile lobby fix + better lessons */
+@media (max-width:860px){.qrbox{position:static}.lobby > *{min-width:0}}
+.tutor.phone .tstage{height:auto;aspect-ratio:16/8.5;min-height:170px}
+.tutor.phone .tstep{gap:3%}.tutor.phone .ttv{width:60%}.tutor.phone .tph{width:30%;max-width:110px}
+.tutor.phone .ttv-s{border-width:4px;border-radius:8px;padding:4%}
+.tph-s .t-txt{font-size:.62rem;line-height:1.25;overflow-wrap:anywhere}
+.t-mb{position:relative;height:100%;aspect-ratio:1;display:grid;place-items:center}
+.t-mb svg{height:100%;width:auto;max-width:100%;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.t-mb .deed{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.58rem;background:#fff;color:#15122e;border-radius:4px;padding:3px 6px;border-top:4px solid #e5383b;animation:tin .4s .4s backwards}
+.t-mb .deed.own{border-top-color:#ffc23d}
+.tstep.on .t-lboard .tk.walk{animation:tlwalk 2.4s steps(4) .3s forwards}
+@keyframes tlwalk{0%{transform:translate(0,0)}25%{transform:translate(0,22px)}50%{transform:translate(10px,22px)}75%{transform:translate(20px,22px)}100%{transform:translate(30px,-10px)}}
+.tstep.on .t-lboard .tk2.hitme{animation:tlhit .7s 2.6s forwards}
+@keyframes tlhit{to{transform:translate(20px,60px);opacity:.3}}
+.tstep.on .t-rboard .tp.go{animation:trgo 2.2s steps(5) .3s forwards}
+@keyframes trgo{to{transform:translate(-60px,0)}}
+.tstep.on .t-sboard .sp.walk1{animation:tsw 1.6s steps(3) .2s forwards}@keyframes tsw{to{transform:translate(24px,0)}}
+.tstep.on .t-sboard .sp.up{animation:tsup 1.4s .5s ease-in-out forwards}@keyframes tsup{to{transform:translate(24px,-48px)}}
+.tstep.on .t-sboard .sp.down{animation:tsdn 1.6s .5s ease-in-out forwards}@keyframes tsdn{40%{transform:translate(-14px,32px)}to{transform:translate(-10px,62px)}}
+.t-lboard circle,.t-rboard circle,.t-sboard circle{transform-box:view-box}
+.tph .t-road.small{height:50%;width:100%}
+
+.tutor.phone .tcap{min-height:5.4em}.tutor .tcap p{line-height:1.3}
+.tph-s .t-txt{font-size:.72rem}
+.ttv-s .t-big.title{font-size:clamp(.6rem,1.2vw,.9rem);padding:1px 8px}
+.tutor.phone .ttv-s .t-q,.tutor.phone .ttv-s .t-big{font-size:.58rem}
+.tutor.phone .ttv-s .t-tile{font-size:.42rem;padding:2px 3px}
+.t-line i{font-size:.5rem}
 @media (prefers-reduced-motion:reduce){.demo .tvB,.demo .phD{opacity:1 !important;visibility:visible !important}}
 @keyframes w_tvA{0%,21%{opacity:1;visibility:visible}22%,100%{opacity:0;visibility:hidden}}
 @keyframes w_tvB{0%,21%{opacity:0;visibility:hidden}22%,39%{opacity:1;visibility:visible}40%,100%{opacity:0;visibility:hidden}}
@@ -4740,10 +4769,10 @@ function tutSteps(k){
            S(T_.q("Best pizza topping?") + T_.tiles(["Cheese", "Pepperoni", "Pineapple", "Mushroom"]), T_.btns(["", "", "", ""], 1), "Tap the answer you think the herd will choose 🐑"),
            S(`<div class="t-bars"><i style="--h:30%;--c:${TQ[0]}"></i><i class="win" style="--h:90%;--c:${TQ[1]}"></i><i style="--h:20%;--c:${TQ[2]}"></i><i style="--h:40%;--c:${TQ[3]}"></i></div>`, T_.ok("With the herd!", "+ 800"), "If you picked the most popular answer, you score!")],
     guess: [S(T_.q("How tall is the Eiffel Tower? (m)"), T_.txt("Your guess:") + `<div class="t-input">3<span class="t-type">30</span></div>`, "A number question shows on the big screen. Type your best guess."),
-            S(`<div class="t-line"><i style="left:20%">Ava 200</i><i class="win" style="left:62%">You 330</i><i style="left:88%">Leo 500</i><b style="left:60%">✓ 330</b></div>`, T_.ok("Closest!", "+ 500"), "The closest guess wins the most points. 🎯")],
+            S(`<div class="t-line"><i style="left:16%">Ava 200</i><i class="win" style="left:50%">You 330</i><i style="left:84%">Leo 500</i><b style="left:50%">✓ answer 330</b></div>`, T_.ok("Closest!", "+ 500"), "The closest guess wins the most points. 🎯")],
     imposter: [S(T_.big("🤫 Check your word"), `<div class="t-secret">PIZZA</div>`, "Everyone gets the same secret word on their phone…"),
                S(T_.big("🤫 Check your word"), `<div class="t-secret imp">You are the<br><b>IMPOSTER</b></div>`, "…except one secret imposter, who doesn't know it!"),
-               S(T_.big("💬 Say one word each") + `<div class="t-chat">${T_.av(1, "cheese")}${T_.av(2, "round")}${T_.av(3, "hot?")}</div>`, T_.txt("Give a clue that proves you know the word, but don't make it too easy!"), "Take turns saying ONE word about it out loud."),
+               S(T_.big("💬 Say one word each") + `<div class="t-chat">${T_.av(1, "cheese")}${T_.av(2, "round")}${T_.av(3, "hot?")}</div>`, T_.txt("🗣️ “cheese”"), "Take turns saying ONE word about it out loud."),
                S(T_.big("🗳️ Vote!"), T_.btns(["Sam", "Ava", "Leo"], 2), "Vote on your phone for who you think the imposter is.")],
     mafia: [S(T_.big("🎭 Check your role"), `<div class="t-role" style="--c:#e5383b">🔪<b>MAFIA</b></div>`, "Everyone gets a secret role: Mafia, Doctor, Detective or Villager."),
             S(T_.big("🌙 Night", "night"), T_.txt("Who will the Mafia eliminate?") + T_.btns(["Sam", "Ava"], 1), "At night the Mafia picks a victim. The Doctor saves someone. The Detective checks someone."),
@@ -4757,18 +4786,18 @@ function tutSteps(k){
             S(T_.big("🎉 Sam wins!"), `<div class="t-hand">${T_.card("4", "#ffc23d", "ttap")}</div>` + T_.txt("Last card!"), "Special cards skip, reverse or make others draw. First to empty their hand wins!")],
     lineup: [S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${i === 12 ? "glow" : [6, 7, 8, 11].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""}"></i>`).join("")}</div>`, `<div class="t-hand">${T_.card("7♥", "#fff", "ttap dark")}${T_.card("K♠", "#fff", "dark")}</div>`, "Your team shares a hand of cards. Tap a card…"),
              S(`<div class="t-grid">${Array.from({length:25}, (_, i) => `<i class="${[6, 7, 8, 11, 12].includes(i) ? "chip a" : [2, 16].includes(i) ? "chip b" : ""} ${i === 12 ? "pop" : ""}"></i>`).join("")}</div>`, T_.txt("Placed on 7♥ ✓"), "…then tap the matching space on the board to put your team's chip there."),
-             S(T_.big("🎉 5 in a row!"), T_.txt("Two-eyed Jacks are wild. One-eyed Jacks remove a chip."), "Make lines of 5 chips in a row to win!")],
-    ludo: [S(`<div class="t-ludo"><i class="tok"></i></div>`, T_.die(6) + T_.btn("🎲 Roll"), "Tap the dice on your phone. Roll a 6 or a 1 to bring a token out."),
-           S(`<div class="t-ludo"><i class="tok move"></i></div>`, T_.txt("Tap a glowing token") + `<div class="t-tokpick"><i class="ttap"></i><i></i></div>`, "Tap the token you want to move. It walks square by square."),
-           S(`<div class="t-ludo"><i class="tok hit"></i><i class="tok2 back"></i></div>`, T_.ok("Knocked home!"), "Land on someone to send them home (★ squares are safe). Get all your tokens home to win!")],
-    tycoon: [S(`<div class="t-ring"><i class="pc move"></i></div>`, T_.die(5) + T_.btn("🎲 Roll"), "Roll two dice and move around Tycoon Town."),
-             S(`<div class="t-ring"><i class="pc at"></i><b class="deed">Rocket Row $220</b></div>`, T_.btn("Buy for $220", "green"), "Land on an empty street? Buy it!"),
-             S(`<div class="t-ring"><i class="pc at"></i><b class="deed own">💰 +$22 rent</b></div>`, T_.txt("Your cash") + T_.big("$1,722", "money"), "Others pay you rent when they land on your streets. Richest player wins!")],
-    snakes: [S(`<div class="t-sl"><i class="pc"></i></div>`, T_.die(4) + T_.btn("🎲 Roll"), "Tap Roll the dice. Your token moves forward."),
-             S(`<div class="t-sl"><i class="pc up"></i><b class="lad">🪜</b></div>`, T_.ok("Climbed a ladder!"), "Land on a ladder and climb up! 🪜"),
-             S(`<div class="t-sl"><i class="pc down"></i><b class="snk">🐍</b></div>`, T_.no("Snake! Slide down"), "Land on a snake's head and slide down. First to 100 wins!")],
+             S(T_.big("🎉 5 in a row!"), T_.ok("5 in a row!"), "Make lines of 5 chips in a row to win!")],
+    ludo: [S(`<div class="t-mb">${tutLudo('<circle class="tk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.die(6) + T_.btn("🎲 Roll"), "Tap the dice on your phone. Roll a 6 or a 1 to bring a token out."),
+           S(`<div class="t-mb">${tutLudo('<circle class="tk walk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.txt("Tap a glowing token") + `<div class="t-tokpick"><i class="ttap"></i><i></i></div>`, "Tap the token you want to move. It walks square by square."),
+           S(`<div class="t-mb">${tutLudo('<circle class="tk2 hitme" cx="45" cy="5" r="4" fill="#fff" stroke="#3d8bff" stroke-width="2"/><circle class="tk walk" cx="15" cy="15" r="4" fill="#fff" stroke="#e5383b" stroke-width="2"/>')}</div>`, T_.ok("Knocked home!"), "Land on someone to send them home (★ squares are safe). Get all your tokens home to win!")],
+    tycoon: [S(`<div class="t-mb">${tutRing('<circle class="tp go" cx="78" cy="78" r="4" fill="#ff4d5e" stroke="#fff" stroke-width="1.2"/>')}</div>`, T_.die(5) + T_.btn("🎲 Roll"), "Roll two dice and move around Tycoon Town."),
+             S(`<div class="t-mb">${tutRing('<circle cx="18" cy="78" r="4" fill="#ff4d5e" stroke="#fff" stroke-width="1.2"/>')}<b class="deed">🏠 Rocket Row · $220</b></div>`, T_.btn("Buy for $220", "green"), "Land on an empty street? Buy it!"),
+             S(`<div class="t-mb">${tutRing('<circle cx="18" cy="78" r="4" fill="#3d8bff" stroke="#fff" stroke-width="1.2"/><rect x="13" y="72" width="10" height="3" fill="#ff4d5e"/>')}<b class="deed own">💰 +$22 rent to you!</b></div>`, T_.txt("Your cash") + T_.big("$1,722", "money"), "Others pay you rent when they land on your streets. Richest player wins!")],
+    snakes: [S(`<div class="t-mb">${tutSnakes('<circle class="sp walk1" cx="8" cy="72" r="4" fill="#7b5cff" stroke="#fff" stroke-width="1.2"/>')}</div>`, T_.die(4) + T_.btn("🎲 Roll"), "Tap Roll the dice. Your token moves forward."),
+             S(`<div class="t-mb">${tutSnakes('<circle class="sp up" cx="30" cy="68" r="4" fill="#7b5cff" stroke="#fff" stroke-width="1.2"/>')}</div>`, T_.ok("Climbed a ladder!"), "Land on a ladder and climb up! 🪜"),
+             S(`<div class="t-mb">${tutSnakes('<circle class="sp down" cx="70" cy="10" r="4" fill="#7b5cff" stroke="#fff" stroke-width="1.2"/>')}</div>`, T_.no("Snake! Slide down"), "Land on a snake's head and slide down. First to 100 wins!")],
     race: [S(`<div class="t-road"><i class="car"></i></div>`, `<div class="t-road small"><i class="car"></i></div><div class="t-ctl"><b class="ttap">◀</b><b>NITRO</b><b>▶</b></div>`, "Your car speeds up by itself. Hold ◀ ▶ (or tilt your phone) to steer."),
-           S(`<div class="t-road"><i class="car dodge"></i><i class="traffic"></i></div>`, T_.txt("Dodge the traffic! 🚗💥"), "Stay on the road and dodge traffic. Crashes slow you down."),
+           S(`<div class="t-road"><i class="car dodge"></i><i class="traffic"></i></div>`, `<div class="t-road small"><i class="car dodge"></i><i class="traffic"></i></div>` + T_.txt("Dodge! 💥"), "Stay on the road and dodge traffic. Crashes slow you down."),
            S(`<div class="t-road nitro"><i class="car"></i></div>`, `<div class="t-ctl"><b>◀</b><b class="ttap nb">NITRO</b><b>▶</b></div>`, "Grab blue N₂O cans, then tap NITRO for a huge boost! First across the line wins 🏁")],
     rps: [S(T_.big("Sam ✊ vs ✊ You"), T_.btns(["✊", "✋", "✌️"]), "You're paired with an opponent each round."),
           S(T_.big("Sam ✊ vs ✊ You", "shake"), T_.btns(["✊", "✋", "✌️"], 1), "Pick Rock, Paper or Scissors on your phone before time runs out."),
@@ -4794,12 +4823,27 @@ function tutSteps(k){
   };
   return L[k] || [];
 }
+function tutLudo(extra){ const C = ["#e5383b","#2fbf71","#3d8bff","#f5b622"];
+  let r = ""; for (let y = 0; y < 9; y++) for (let x = 0; x < 9; x++) { const yard = (x < 3 || x > 5) && (y < 3 || y > 5), mid = x >= 3 && x <= 5 && y >= 3 && y <= 5;
+    if (yard || mid) continue; const home = (y === 4 && x > 0 && x < 3) ? C[0] : (x === 4 && y > 0 && y < 3) ? C[1] : (y === 4 && x > 5 && x < 8) ? C[3] : (x === 4 && y > 5 && y < 8) ? C[2] : "#fff";
+    r += `<rect x="${x * 10}" y="${y * 10}" width="10" height="10" fill="${home}" stroke="#ccc" stroke-width=".5"/>`; }
+  const yd = (x, y, c) => `<rect x="${x}" y="${y}" width="30" height="30" fill="${c}"/><rect x="${x + 6}" y="${y + 6}" width="18" height="18" rx="3" fill="#fff"/>`;
+  return `<svg viewBox="0 0 90 90" class="t-lboard">${yd(0, 0, C[0])}${yd(60, 0, C[1])}${yd(0, 60, C[2])}${yd(60, 60, C[3])}${r}
+    <polygon points="30,30 60,30 45,45" fill="${C[1]}"/><polygon points="60,30 60,60 45,45" fill="${C[3]}"/><polygon points="60,60 30,60 45,45" fill="${C[2]}"/><polygon points="30,60 30,30 45,45" fill="${C[0]}"/>${extra || ""}</svg>`; }
+function tutRing(extra){ let t = ""; const B = ["#8d5a3b","#7cc8f2","#e86ab0","#f59331","#e5383b","#f5cf22","#2fae5f","#2f6fd6"];
+  for (let i = 0; i < 24; i++) { const s = i < 7 ? [6, 6 - i] : i < 13 ? [12 - i, 0] : i < 19 ? [0, i - 12] : [i - 18, 6], x = s[1] * 12, y = s[0] * 12;
+    t += `<rect x="${x}" y="${y}" width="12" height="12" fill="#fbf6e6" stroke="#2a1a0e" stroke-width=".6"/>${i % 6 ? `<rect x="${x}" y="${y}" width="12" height="3" fill="${B[Math.floor(i / 3) % 8]}"/>` : ""}`; }
+  return `<svg viewBox="0 0 84 84" class="t-rboard"><rect width="84" height="84" fill="#2a1a0e"/><rect x="12" y="12" width="60" height="60" fill="#2b8a3e"/>${t}<text x="42" y="46" text-anchor="middle" font-size="8" font-weight="900" fill="#ffc23d">TYCOON</text>${extra || ""}</svg>`; }
+function tutSnakes(extra){ let c = ""; for (let r = 0; r < 5; r++) for (let k = 0; k < 5; k++) { const n = r % 2 === 0 ? r * 5 + k + 1 : r * 5 + (4 - k) + 1;
+    c += `<rect x="${k * 16}" y="${(4 - r) * 16}" width="16" height="16" fill="${(r + k) % 2 ? "#fdf3d0" : "#d8efff"}"/><text x="${k * 16 + 2}" y="${(4 - r) * 16 + 6}" font-size="4.5" fill="#7a7392">${n}</text>`; }
+  return `<svg viewBox="0 0 80 80" class="t-sboard">${c}<g stroke="#a0652a" stroke-width="1.6"><path d="M28 70 L52 22 M34 73 L58 25"/><path d="M30 66 l6 3 M34 58 l6 3 M38 50 l6 3 M42 42 l6 3 M46 34 l6 3 M50 26 l6 3" stroke-width="1.2"/></g>
+    <path d="M70 10 C 50 20, 76 36, 58 46 S 40 62, 60 74" stroke="#2f8a2f" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="70" cy="10" r="4" fill="#2f8a2f"/><circle cx="69" cy="9" r="1" fill="#fff"/>${extra || ""}</svg>`; }
 function tutDoodle(){ return `<svg viewBox="0 0 100 70" class="t-cat"><path d="M30 55 Q20 30 35 25 L38 12 L45 22 Q50 20 55 22 L62 12 L65 25 Q80 30 70 55 Z M42 38 A2 2 0 1 0 42.1 38 M58 38 A2 2 0 1 0 58.1 38 M47 46 Q50 49 53 46" fill="none" stroke="#15122e" stroke-width="2.5" stroke-linecap="round"/></svg>`; }
 function tutorHTML(k, mode = "full"){
   const steps = tutSteps(k); if (!steps.length) return "";
   return `<div class="tutor ${mode}" data-n="${steps.length}" aria-label="How to play animation">
     <div class="tstage">${steps.map((s, i) => `<div class="tstep" data-i="${i}">
-      ${mode === "full" ? `<div class="ttv"><div class="ttv-s">${s.tv}</div><i class="ttv-leg"></i></div>` : ""}
+      <div class="ttv"><div class="ttv-s">${s.tv}</div><i class="ttv-leg"></i></div>
       <div class="tph"><div class="tph-s">${s.ph}</div><span class="t-finger">👆</span></div></div>`).join("")}</div>
     <div class="tcap">${steps.map((s, i) => `<p data-i="${i}"><b>${i + 1}</b>${s.cap}</p>`).join("")}</div>
     <div class="tdots">${steps.map((_, i) => `<i data-i="${i}"></i>`).join("")}</div></div>`;
